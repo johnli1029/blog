@@ -8,9 +8,15 @@ Right Track Wrong Train
 
 Contents:
 
+.. _language:
+
+语言
+--------
+
 .. toctree::
    :maxdepth: 2
 
+   language/clojure
 
 
 Indices and tables
