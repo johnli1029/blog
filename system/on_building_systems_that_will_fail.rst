@@ -1,5 +1,5 @@
-On Building Systems That Will Fail
-=======================================
+On Building Systems That Will Fail 笔记
+=========================================
 
 `Fernando J. Corbató <http://en.wikipedia.org/wiki/Fernando_J._Corbat%C3%B3>`_ 领导并组织构建了 `CTSS <http://en.wikipedia.org/wiki/Compatible_Time-Sharing_System>`_ 和 `Multics <http://en.wikipedia.org/wiki/Multics>`_ 系统。
 
