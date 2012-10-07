@@ -1,0 +1,12 @@
+digraph sdshdr {
+    rankdir = LR;
+    label = "通过指针运算，用 sds 指针计算出指向 sdshdr 结构的指针"
+    start_of_sdshdr [label="sds - sizeof(struct sdshdr)", shape=plaintext];
+    start_of_buf [label="sds", shape=plaintext];
+
+    node[shape=record];
+    sdshdr [label="struct sdshdr|{<len>len|<free>free|<start_of_buf>buf}"];
+
+    start_of_sdshdr -> sdshdr;
+    start_of_buf -> sdshdr:start_of_buf;
+}
