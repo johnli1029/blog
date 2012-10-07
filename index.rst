@@ -6,8 +6,6 @@
 Right Track Wrong Train
 ===================================================
 
-Contents:
-
 .. _language:
 
 语言
@@ -27,6 +25,17 @@ Contents:
    :maxdepth: 2
 
    system/on_building_systems_that_will_fail
+
+.. _friend:
+
+朋友们
+---------
+
+    `运维和开发 <http://www.hoterran.info/>`_ hoterran
+
+    `麥町 · 乌冬 <http://udonmai.com/>`_ udonmai
+
+    `台北小碼農 <http://blog.lisp.tw/>`_ Juanito Fatas
 
 
 Indices and tables
