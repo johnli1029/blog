@@ -29,7 +29,7 @@ Right Track Wrong Train
 .. toctree::
    :maxdepth: 1
 
-   language/clojure
+   language/clojure/index
 
 
 .. _storage:
