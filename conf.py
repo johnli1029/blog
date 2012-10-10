@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Right Track Wrong Train'
+project = u'Huangz/Notes'
 copyright = u'2012, huangz'
 
 # The version info for the project you're documenting, acts as replacement for
