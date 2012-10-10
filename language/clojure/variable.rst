@@ -106,3 +106,23 @@ Var 的定义默认被所有线程所共享的，在某个线程里更改一个 
 
     user=> (+ x y)
     3
+
+
+单次赋值
+---------
+
+``defonce`` 提供了 ``def`` 的一个变种：当前仅当给定符号还没有绑定时，它才为这个符号设置绑定：
+
+::
+
+    user=> (defonce s "a string")
+    #'user/s
+
+    user=> s
+    "a string"
+
+    user=> (defonce s "another string")     ; 设置无效
+    nil
+
+    user=> s
+    "a string"
