@@ -187,3 +187,29 @@ nil
     #<user$eval94$fn__95 user$eval94$fn__95@155bb17>
 
 稍后的章节会介绍更多和函数相关的内容。
+
+
+元数据
+-------
+
+元数据（metadata）是一个映射，可以添加到一个符号或者一个 collection 当中，用作编译提示，或者给开发者提供额外的信息。
+
+``with-meta`` 用于为对象添加元数据：
+
+::
+
+    user=> (def s (with-meta 'a-symbol {:author "huangz"}))
+    #'user/s
+
+    user=> s
+    a-symbol
+
+以上代码为符号 ``s`` 添加了包含 ``:author`` 信息的元数据。
+
+``meta`` 函数用于取出对象的元数据：
+
+::
+
+    user=> (meta s)
+    {:author "huangz"}
+
