@@ -213,3 +213,21 @@ nil
     user=> (meta s)
     {:author "huangz"}
 
+
+正则表达式
+------------
+
+正则表达式可以通过 reader 宏 ``#"pattern"`` 在读入期创建，或者使用 ``re-pattern`` 函数在运行时创建，这两种方式都会创建一个 ``java.util.regexp.Pattern`` 对象。
+
+::
+
+    user=> (class #"pattern")
+    java.util.regex.Pattern
+
+    user=> (re-seq #"[0-9]+" "abs123def345ghi567")
+    ("123" "345" "567")
+
+    user=> (re-seq #"\w+" "one-two/three")
+    ("one" "two" "three")
+
+``re-seq`` 函数惰性地返回字符串中的所有匹配。
