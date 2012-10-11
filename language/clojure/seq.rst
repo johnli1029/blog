@@ -88,3 +88,30 @@
 ----------
 
 Clojure 提供了一集非常丰富的函数来对序列进行操作，比如常见的 ``map`` 、 ``filter`` 、 ``reduce`` 等等，在\ `Sequence 的文档页面 <http://clojure.org/sequences>`_\ 详细地列出了这些 API 。
+
+
+惰性序列
+---------
+
+Clojure 实现了惰性序列，用于处理非常昂贵的计算，或者是无限序列。
+
+创建一个惰性序列非常简单，只要用 ``lazy-seq`` 宏包裹一个创建 seq 对象的序列即可。
+
+以下是一个惰性的 ``map`` 函数定义，它是内置 ``map`` 函数的简化版本：
+
+::
+
+    (defn lazy-map [f coll]
+        (lazy-seq
+            (when-let [s (seq coll)]
+                (cons (f (first s)) 
+                      (map f (rest s))))))
+
+测试 ``lazy-map`` ：
+
+::
+
+    user=> (take 10 (lazy-map #(* % 2) (range)))
+    (0 2 4 6 8 10 12 14 16 18)
+
+所有作用于序列对象上的操作，都可以用于处理惰性序列。
