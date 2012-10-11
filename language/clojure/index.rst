@@ -8,6 +8,7 @@ Clojure
 
    basic_type
    composite_type
+   seq
    variable
    function
    condition
