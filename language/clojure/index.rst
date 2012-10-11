@@ -12,4 +12,4 @@ Clojure
    variable
    function
    condition
-   package
+   namespace
