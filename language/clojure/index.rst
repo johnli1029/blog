@@ -13,3 +13,4 @@ Clojure
    function
    condition
    namespace
+   misc
