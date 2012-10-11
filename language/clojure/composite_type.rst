@@ -40,13 +40,6 @@ Clojure 中的复合类型被统称为 collection ，所有 collection 都是不
     user=> (conj l 'alpha)
     (alpha a b c)
 
-``cons`` 和 ``conj`` 的作用一样，但是参数摆放的形式和 ``conj`` 不同：
-
-::
-
-    user=> (cons 'alpha l)
-    (alpha a b c)
-
 
 向量
 -----
