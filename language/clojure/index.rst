@@ -13,4 +13,5 @@ Clojure
    function
    condition
    namespace
+   multimethod
    misc
