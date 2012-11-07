@@ -15,4 +15,5 @@ Clojure
    namespace
    multimethod
    record
+   protocol
    misc
