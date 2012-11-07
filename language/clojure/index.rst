@@ -14,4 +14,5 @@ Clojure
    condition
    namespace
    multimethod
+   record
    misc
