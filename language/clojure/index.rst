@@ -16,4 +16,5 @@ Clojure
    multimethod
    record
    protocol
+   concurrency-and-parallelism
    misc
