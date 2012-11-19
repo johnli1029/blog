@@ -99,3 +99,83 @@
     10086
 
 当对一个未有值的 ``promise`` 变量进行求值时，当前线程会被阻塞，直到有其他线程对这个变量进行 ``deliver`` 为止。
+
+
+并行
+-----------------
+
+使用线程，将计算任务分配到多个内核上并行执行，从而加快计算速度。
+
+pmap
+^^^^^^
+
+``map`` 函数的并行版本。
+
+::
+
+    ; 串行运行， 4 个元素，每个等待 3 秒，共等待 12 秒
+    user=> (time 
+             (dorun 
+               (map (fn [x] (Thread/sleep 3000)) 
+                    (range 4))))
+    "Elapsed time: 12000.767484 msecs"
+    nil
+
+    ; 并行运行， 4 个元素，每个等待 3 秒，共等待 3 秒
+    user=> (time 
+             (dorun 
+               (pmap (fn [x] (Thread/sleep 3000))
+                     (range 4))))
+    "Elapsed time: 3002.602211 msecs"
+    nil
+
+``pmap`` 使用 ``future`` 实现，所以会产生一些和线程有关的消耗，如果要处理的操作并不耗时，就不要使用 ``pmap`` ，否则反而会影响性能。
+
+
+pcalls
+^^^^^^^
+
+并行运行多个无参数函数，并以惰性序列的形式返回它们的值。
+
+::
+
+    ; 并行运行 3 个等待 3 秒的线程，共等待 3 秒
+    user=> (pcalls 
+             #(Thread/sleep 3000) 
+             #(Thread/sleep 3000)
+             #(Thread/sleep 3000))
+    (nil nil nil)
+
+
+pvalues
+^^^^^^^^^
+
+并行对多个表达式进行求值，并以惰性序列的形式返回它们的值。
+
+::
+
+    ; 以下多个表达式的最大求值时间为 3 秒
+    user=> (pvalues 
+             (Thread/sleep 3000)
+             10086
+             (Thread/sleep 3000)
+             "hello moto")
+    (nil 10086 nil "hello moto")
+
+.. note::
+
+    因为 ``pcalls`` 和 ``pvalues`` 的返回值都是惰性序列，因此，如果有一个非常耗时的表达式阻塞在其他一些表达式的前面，那么就算这些表达式已经计算完了，它们也不能被返回。
+
+    以下是这样一个实例，在序列前面的三个元素，可以立即被返回，但是，后面的三个元素只有等待 ``3`` 秒之后，才会被返回，尽管它们早就在并发线程里被求值完了：
+
+    ::
+
+       user=> (for [i (pvalues 1 2 3 (Thread/sleep 3000) 4 5 6)] (println i))
+       (1
+       2
+       nil 3    ; 打印出这里之后，会停滞 3 秒
+       nil nil
+       nil 4
+       nil 5
+       nil 6
+       nil nil)
