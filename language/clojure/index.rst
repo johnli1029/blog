@@ -17,4 +17,5 @@ Clojure
    record
    protocol
    concurrency-and-parallelism
+   reference-type
    misc
