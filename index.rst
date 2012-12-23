@@ -42,6 +42,17 @@ Huangz/Notes
    os/apue/index
 
 
+.. _algorithm:
+
+算法
+---------
+
+.. toctree::
+   :maxdepth: 1
+
+   algorithm/arithmetic/index
+
+
 .. _system:
 
 系统
