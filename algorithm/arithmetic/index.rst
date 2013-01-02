@@ -5,3 +5,4 @@
    :maxdepth: 1
 
    power-law
+   exponential-backoff
