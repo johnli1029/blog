@@ -135,3 +135,10 @@
     thread 1 exit code 0
     thread 2 exit code 2
 
+
+参考资料
+------------
+
+https://computing.llnl.gov/tutorials/pthreads
+
+一个教程，很规范地列举了关于线程、mutex、条件变量等知识，以及 API 的使用方式。
