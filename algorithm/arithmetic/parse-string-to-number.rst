@@ -6,6 +6,8 @@
 
 TODO: 补充介绍和所使用的算法。
 
+.. 来自 redis 源码中 util.c 文件的 string2ll 函数
+
 .. code-block:: python
 
     def parset_int(s):
