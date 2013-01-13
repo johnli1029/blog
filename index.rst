@@ -62,3 +62,13 @@ Huangz/Notes
    :maxdepth: 1
 
    system/on_building_systems_that_will_fail
+
+.. _thinking_and_learning:
+
+思考与学习
+--------------
+
+.. toctree::
+   :maxdepth: 1
+
+   thinking_and_learning/pragmatic_thinking_and_learning/index
