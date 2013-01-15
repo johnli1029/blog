@@ -7,3 +7,4 @@
    :maxdepth: 2
 
    chp2
+   chp3
