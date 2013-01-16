@@ -5,5 +5,6 @@
    :maxdepth: 2
 
    use-code
+   chp8
    chp11
    chp14
