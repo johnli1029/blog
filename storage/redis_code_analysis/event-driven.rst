@@ -82,8 +82,7 @@ Redis 有两种事件类型，分别是文件事件和时间事件。
         int mask;   
     } aeFiredEvent;
 
-尽管听上去 ``aeFiredEvent`` 像是一种新的事件，但它实际上不是：
-
+尽管听上去 ``aeFiredEvent`` 像是一种新的事件，但它实际上不是 ——
 每个 ``aeFiredEvent`` 结构都保存了一个待处理文件事件的信息，通过读取 ``aeEventLoop.fired`` 数组，事件处理程序可以知道 ``aeEventLoop.events`` 数组中，哪些事件可以被（无阻塞地）执行。
 
 
