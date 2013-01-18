@@ -399,3 +399,49 @@ vfork
     $ ./8-get-exit-status.out 
     child id 9761 ,normal terminated with status 2 .
 
+
+执行程序
+-------------
+
+在创建子进程之后，一个常见的操作是执行某个给定程序，
+这个操作可以用其中一种 ``exec`` 函数来完成，
+包括：
+
+::
+
+    #include <unistd.h>
+
+    extern char **environ;
+
+    int execl(const char *path, const char *arg, ...);
+    int execlp(const char *file, const char *arg, ...);
+    int execle(const char *path, const char *arg, ..., char * const envp[]);
+    int execv(const char *path, char *const argv[]);
+    int execvp(const char *file, char *const argv[]);
+    int execvpe(const char *file, char *const argv[], char *const envp[]);
+
+除了 ``execve`` 是系统调用之外，其他都是库函数。
+
+以下代码示例创建一个子进程，并让它执行一个 ``hello_world`` 程序：
+
+..  编译警告是什么回事？ 
+    8-exec.c: 在函数‘main’中:
+    8-exec.c:16:9: 警告： 变量实参太少，不足以填满一个哨兵 [-Wformat]
+
+.. literalinclude:: code/8-exec.c
+
+执行结果：
+
+::
+
+    $ ./8-exec.out 
+    $ hello world
+
+当进程调用 ``exec`` 函数时，该进程执行的程序完全替换为新程序，而新程序则从其 ``main`` 函数开始执行。
+因为调用 ``exec`` 并不创建新进程，所以前后的进程 ID 并未改变。
+``exec`` 只是用一个全新的程序替换（overwritten）了当前进程的正文、数据、堆和栈。
+
+除了进程 ID 之外， ``exec`` 函数执行之后，原来的进程组 ID 、父 ID 、文件锁、根目录等都会被保留，
+而描述符是否关闭取决于 ``close-on-exec`` 标志，
+POSIX.1 要求在执行 ``exec`` 时关闭打开的目录流，
+等等，具体信息请参考文档。
