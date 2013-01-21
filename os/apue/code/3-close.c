@@ -11,7 +11,7 @@ int main(void) {
 
     int fd = creat(filename, mode);
 
-    if (fd < 0) {
+    if (fd == -1) {
         printf("creat file fail\n");
         return 1;
     }

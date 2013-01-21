@@ -11,7 +11,7 @@ int main(void) {
 
     mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;    // 644
 
-    if (creat(filename, mode) < 0) {
+    if (creat(filename, mode) == -1) {
         printf("creat file fail\n");
         return 1;
     } 

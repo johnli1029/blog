@@ -16,7 +16,7 @@ int main(void) {
 
     mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;    // 644
 
-    if (open(filename, flag, mode) < 0) {
+    if (open(filename, flag, mode) == -1) {
         if (errno == EEXIST) {
             printf("open fail cause file already exists.\n");
         } else {

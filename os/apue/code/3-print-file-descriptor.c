@@ -12,7 +12,7 @@ int main(void) {
     mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;    // 644
 
     int fd = open(filename, flag, mode);
-    if (fd < 0) {
+    if (fd == -1) {
         printf("open/create file fail\n");
         return 1;
     }
