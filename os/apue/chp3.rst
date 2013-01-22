@@ -331,6 +331,8 @@ open 的返回值
 
 当打开一个文件时，除非指定 ``O_APPEND`` 选项，否则偏移量被初始化为 ``0`` ，也就是文件第一个字节所在的位置。
 
+.. note:: 设置一个文件的偏移量并不引发任何 I/O 操作，后面介绍文件表的时候会说到这一点。
+
 
 设置文件偏移量
 -----------------
@@ -364,3 +366,82 @@ open 的返回值
 
     $ ./3-lseek.out 
     file conent: hello moto
+
+
+文件空洞
+-----------
+
+``lseek`` 的偏移量并不一定要小于文件的大小，
+当偏移量大于文件的大小时，对该文件的下一次写将加长该文件，并在文件中构成一个空洞（hole），这一点是允许的。
+位于文件中但没有写过的字节都被读为 ``0`` 
+
+空洞并不要求在磁盘上占用储存区，无须为它分配磁盘块。
+
+以下程序创建一个带空洞的文件：
+
+.. literalinclude:: code/3-hole.c
+
+使用 ``od`` 命令，并以字符串模式打开程序创建的文件，可以看到文件中的空洞：
+
+::
+
+    ./3-hole.out 
+
+    $ ls -l test-3-hole 
+    -rw-r--r-- 1 huangz huangz 275  1月 22 13:27 test-3-hole
+
+    $ od -c test-3-hole 
+    0000000   a   b   c   d   e   f   g  \0  \0  \0  \0  \0  \0  \0  \0  \0
+    0000020  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+    *
+    0000400  \0  \0  \0  \0  \0  \0  \0  \0   h   e   l   l   o       m   o
+    0000420   t   o  \0
+    0000423
+
+
+SEEK_DATA 和 SEEK_HOLE
+-----------------------------
+
+从 Linux 3.1 开始， ``lseek`` 函数的 ``whence`` 参数还可以是 ``SEEK_DATA`` 或者 ``SEEK_HOLE`` ，
+这两个参数的作用如下：
+
+- ``lseek(fd, offset, SEEK_DATA)`` ：将偏移量移动到下一个包含数据的位置，该位置大于等于 ``offset`` 。如果 ``offset`` 已经指向数据，那么将偏移量设置为 ``offset`` 。
+
+- ``lseek(fd, offset, SEEK_HOLE)`` ：将偏移量移动到下一个包含空洞的位置，该位置大于等于 ``offset`` 。如果 ``offset`` 已经指向空洞，那么将偏移量设置为 ``offset`` 。如果在 ``offset`` 之后没有任何空洞，那么偏移量设置为文件的最末尾。（文件末尾也被视为是一个空洞，因为它同样以 ``0`` 结尾。）
+
+以下程序读入一个文件，并分别打印它的首个数据偏移量，以及它的首个空洞偏移量：
+
+.. literalinclude:: code/3-seek-data-and-hole.c
+
+执行结果：
+
+::
+
+    // 要使用 GNU 扩展来支持 SEEK_DATA 和 SEEK_HOLE
+
+    $ gcc 3-seek-data-and-hole.c -D_GNU_SOURCE -o 3-seek-data-and-hole.out
+
+    // 读入并分析一个带空洞的文件
+
+    $ ./3-seek-data-and-hole.out test-3-hole 
+    first data offset of file test-3-hole is 0
+    first hole offset of file test-3-hole is 275
+
+    // 被读入的带空洞文件
+
+    $ od -c test-3-hole 
+    0000000   a   b   c   d   e   f   g  \0  \0  \0  \0  \0  \0  \0  \0  \0
+    0000020  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+    *
+    0000400  \0  \0  \0  \0  \0  \0  \0  \0   h   e   l   l   o       m   o
+    0000420   t   o  \0
+    0000423
+
+注意，程序打印的首个空洞的位置是错误的， ``275`` 是文件的末尾，但并不是第一个空洞，
+另外，程序的首个数据位置似乎是正确的，但这只是个巧合！
+
+实际上， Linux 并不支持真正的 ``SEEK_DATA`` 和 ``SEEK_HOLE`` 选项：
+``SEEK_DATA`` 总是将整个文件看作是数据，所以首个数据偏移量总是 ``0`` ，
+而 ``SEEK_HOLE`` 总是指向文件末尾。
+
+具体请参考 http://lists.freebsd.org/pipermail/freebsd-fs/2011-September/012340.html 。
