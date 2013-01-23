@@ -6,6 +6,7 @@
 
    use-code
    chp3
+   chp4
    chp8
    chp10
    chp11
