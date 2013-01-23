@@ -647,3 +647,58 @@ SEEK_DATA 和 SEEK_HOLE
     $ ./3-pread.out 3-pread.c
     after read 10 bytes from file, offset move from 0 to 10
     after pread 10 bytes from file, offset move from 10 to 10
+
+
+复制文件描述符
+------------------
+
+以下函数可以用于复制一个文件描述符：
+
+::
+
+    #include <unistd.h>
+
+    int dup(int oldfd);
+    int dup2(int oldfd, int newfd);
+
+    #define _GNU_SOURCE             /* See feature_test_macros(7) */
+    #include <fcntl.h>              /* Obtain O_* constant definitions */
+    #include <unistd.h>
+
+    int dup3(int oldfd, int newfd, int flags);
+
+``dup`` 复制 ``oldfd`` ，并返回一个最小可用描述符。
+
+``dup2`` 复制 ``oldfd`` 为 ``newfd`` ，但是：
+
+- 如果 ``newfd`` 已存在，那么先关闭它。
+
+- 如果 ``newfd == oldfd`` ，那么 ``dup2`` 不做任何事，也不关闭 ``newfd`` 。
+
+以上两个函数创建出来的描述符都不共享 ``close-on-excl`` 标志，复制出的描述符都关闭了这个标志。
+
+``dup3`` 作用和 ``dup2`` 类似，但是：
+
+- 如果 ``oldfd == newfd`` ，那么引发错误 ``EINVAL`` 。
+
+- ``dup3`` 可以通过指定参数 ``flags`` 为 ``O_CLOEXEC`` 而强制为复制出的描述符打开 ``close-on-exec`` 标志。
+
+以上两个函数成功调用之后，
+新创建的 ``newfd`` 和原来的 ``oldfd`` 通过共享文件描述符项，从而实现文件偏移量、以及文件状态标识的共享。
+在逻辑上， ``newfd``  和 ``oldfd`` 是可互换的（interchangeably）。
+
+以下代码演示了如何用三个不同的函数来复制标准输出：
+
+.. literalinclude:: code/3-dup.c
+
+执行结果：
+
+::
+
+    $ ./3-dup.out 
+    file descriptor duplicated by dup, number = 3
+    file descriptor duplicated by dup2 with newfd 123, number = 123
+    file descriptor duplicated by dup3 with newfd 456, number = 456
+
+
+.. todo 介绍 fcntl 函数时说明 p61 的用法。
