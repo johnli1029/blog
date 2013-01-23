@@ -148,3 +148,87 @@
     $ ./4-print-type-2.out 4-print-type-2.c
     regular
 
+
+文件所有者
+---------------
+
+文件所有者的用户 ID 和组 ID 分别保存在 ``st_uid`` 和 ``st_gid`` 中。
+
+以下程序打印出文件所有者的用户 ID 以及组 ID ：
+
+.. literalinclude:: code/4-owner.c
+
+执行：
+
+::
+
+    $ ./4-owner.out 4-owner.c
+    file owner uid = 1000 , gid = 1000 .
+
+    $ ./4-owner.out /
+    file owner uid = 0 , gid = 0 .
+
+
+文件的权限
+--------------
+
+文件的权限保存在 ``st_mode`` 属性当中，通过和以下常量做二进制并计算，可以检查文件是否拥有某种特定权限：
+
+**拥有者**
+
+===========    =============================================
+常量            含义
+===========    =============================================
+S_IRWXU         mask for file owner permissions
+
+S_IRUSR         owner has read permission
+S_IWUSR         owner has write permission
+S_IXUSR         owner has execute permission
+===========    =============================================
+
+**组**
+
+===========    =============================================
+常量            含义
+===========    =============================================
+S_IRWXG         mask for group permissions
+
+S_IRGRP         group has read permission
+S_IWGRP         group has write permission
+S_IXGRP         group has execute permission
+===========    =============================================
+
+**其他人**
+
+===========    =================================================================
+常量            含义
+===========    =================================================================
+S_IRWXO         mask for permissions for others (not in group)
+
+S_IROTH         others have read permission
+S_IWOTH         others have write permission
+S_IXOTH         others have execute permission
+===========    =================================================================
+
+以下程序演示了如何以数字形式打印文件的权限：
+
+.. literalinclude:: code/4-permission.c
+
+执行：
+
+::
+
+    $ ls -l /tmp/t
+    -rw-rw-r-- 1 huangz huangz 0  1月 24 00:52 /tmp/t
+
+    $ ./4-permission.out /tmp/t
+    file /tmp/t permission = 664
+
+    $ chmod u+x /tmp/t
+
+    $ ls -l /tmp/t
+    -rwxrw-r-- 1 huangz huangz 0  1月 24 00:52 /tmp/t
+
+    $ ./4-permission.out /tmp/t
+    file /tmp/t permission = 764
+
