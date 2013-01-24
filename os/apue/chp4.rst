@@ -447,3 +447,44 @@ S_ISVTX         设置粘住位
     Get file info fail: No such file or directory
 
 程序使用了 ``lstat`` 函数而不是 ``stat`` 函数，在遇上符号链接时，它返回符号链接本身的大小，而不是符号链接所指向文件的大小。
+
+
+截断文件为指定大小
+----------------------
+
+使用 ``truncate`` 和 ``ftruncate`` 可以将一个文件的大小截断为给定的字节，
+它们的唯一区别是前者接受文件路径名为输入，而后者接受文件描述符为输入：
+
+::
+
+    #include <unistd.h>
+    #include <sys/types.h>
+
+    int truncate(const char *path, off_t length);
+    int ftruncate(int fd, off_t length);
+
+    // 执行成功返回 0 ，出错返回 -1
+
+如果文件原本的大小比 ``length`` 要大，那么截断之后， ``length`` 字节后的数据不再存在。
+
+如果文件原本的大小比 ``length`` 要小，那么截断之后，文件的长度被扩展为 ``length`` ，其中新分配的空间以 ``\0`` 填充。
+
+两个函数都不会修改文件的当前偏移量。
+
+当执行 ``ftruncate()`` 时，文件需要以写模式打开，而 ``truncate()`` 执行时，文件应该对进程是可写的。
+
+以下程序可以接受两个参数，一个文件路径和一个长度，并将文件截断为给定的长度：
+
+.. literalinclude:: code/4-truncate.c
+
+以下示例展示了如何将一个四百多字节的文件截断为一百字节：
+
+::
+
+    $ ls -l test-4-truncate 
+    -rw-rw-r-- 1 huangz huangz 467  1月 24 19:51 test-4-truncate
+
+    $ ./a.out test-4-truncate 100
+
+    $ ls -l test-4-truncate 
+    -rw-rw-r-- 1 huangz huangz 100  1月 24 19:51 test-4-truncate
