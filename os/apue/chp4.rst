@@ -300,3 +300,56 @@ S_IXOTH         others have execute permission
     $ ./4-permission.out /tmp/t
     file /tmp/t permission = 764
 
+
+特殊权限
+-----------
+
+除了上一节提到的访问权限之外，文件还可以带有设置用户 ID 位（set-user-ID bit）、设置组 ID 位（set-group-ID bit）和粘住位（sticky bit）三种特殊权限。
+
+设置用户 ID 位用于在进程执行文件时，将进程的有效用户 ID 设置为文件所有者的用户 ID （\ ``st_uid``\ ）。
+
+与此类似，设置用户 ID 用于在进程执行文件时，将进程的有效组 ID 设置为文件所有者的组 ID （\ ``st_gid``\ ）。
+
+``passwd`` 程序是设置用户 ID 的一个例子：这个程序让任何用户都可以修改密码，但对密码文件的实际写入工作，却是通过设置位 ID 获得的 root 权限来执行的。
+
+.. tip:: 关于有效用户 ID 和实际用户 ID 等讨论，请参见进程相关章节。
+
+粘住位作用于文件夹，当一个文件夹设置了粘住位之后，要对文件夹中的文件进行改名或者删除，必须满足以下任一条件：
+
+- 当前用户是文件的所有者（owner）
+
+- 当前用户是文件夹的所有者
+
+- 特权进程
+
+作为例子， ``/tmp`` 文件通过使用粘住位，确保文件夹中的临时文件一般情况下只能被创建者自己删除。
+
+和检查访问权限一样，相应的特殊权限也可以通过对 ``st_mode`` 属性做二进制并计算来得出：
+
+===========  ==========================================
+常量            含义
+===========  ==========================================
+S_ISUID         设置用户 ID 位
+S_ISGID         设置组 ID 位 
+S_ISVTX         设置粘住位
+===========  ==========================================
+
+以下程序检查给定文件是否设置了以上三个特殊权限：
+
+.. literalinclude:: code/4-special-permission.c
+
+执行：
+
+::
+
+    $ ./a.out /tmp
+    sticky bit is set
+    
+    $ ./a.out /usr/bin/passwd 
+    set-user-ID bit is set
+    set-group-ID bit is set
+
+    $ ./a.out 4-special-permission.c 
+    set-user-ID bit is not set
+    set-group-ID bit is not set
+
