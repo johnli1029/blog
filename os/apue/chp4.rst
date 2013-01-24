@@ -394,3 +394,56 @@ S_ISVTX         设置粘住位
     -rwxrw-r-- 1 huangz huangz 0  1月 24 13:49 /tmp/ttt
 
 
+文件长度
+------------
+
+``stat`` 结构的 ``st_size`` 属性以字节大小保存了普通文件或符号链接的大小。
+
+其中符号链接的大小是它所指向的目标路径的长度（不带末尾的 ``\0`` ）。 以下是这方面的一个例子：
+
+::
+
+    lrwxrwxrwx  1 huangz huangz   12 12月  6 12:26 redis -> code/c/redis
+
+``redis`` 指向 ``code/c/redis`` 路径，路径的长度为 ``12`` 字节。
+
+以下程序打印输入文件的大小：
+
+.. literalinclude:: code/4-print-size.c
+
+输入为普通文件：
+
+::
+
+    $ ./a.out 4-print-type.c
+    4-print-type.c length = 951 bytes .
+
+    $ ls -l 4-print-type.c
+    -rw-rw-r-- 1 huangz huangz 951  1月 23 21:20 4-print-type.c
+
+输入为符号链接：
+
+::
+
+    $ ./a.out /home/huangz/redis
+    /home/huangz/redis length = 12 bytes .
+
+    $ ls -l /home/huangz/redis
+    lrwxrwxrwx 1 huangz huangz 12 12月  6 12:26 /home/huangz/redis -> code/c/redis
+
+输入为没有大小的块设备：
+
+::
+
+    $ ./a.out /dev/sda
+    /dev/sda is not regular file or symbolic link , length unknow.
+
+
+输入为不存在的文件：
+
+::
+
+    $ ./a.out not-exists-file
+    Get file info fail: No such file or directory
+
+程序使用了 ``lstat`` 函数而不是 ``stat`` 函数，在遇上符号链接时，它返回符号链接本身的大小，而不是符号链接所指向文件的大小。
