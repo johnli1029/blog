@@ -353,3 +353,44 @@ S_ISVTX         设置粘住位
     set-user-ID bit is not set
     set-group-ID bit is not set
 
+
+设置权限
+----------
+
+设置文件权限的工作可以使用 ``chmod`` 或者 ``fchmod`` 两个函数来完成，其中前者输入文件的路径，而后者输入文件描述符：
+
+::
+
+    #include <sys/stat.h>
+
+    int chmod(const char *path, mode_t mode);
+    int fchmod(int fd, mode_t mode);
+
+    // 执行成功返回 0 ，失败返回 -1 
+
+``mode`` 参数的值可以是前面提到的，任意和权限相关的 ``S_IXXXX`` 常量的二进制或，比如 ``S_ISUID`` 可以设置文件的设置 UID 位，而 ``S_ISUID | S_IRWXU`` 则设置文件的设置 ID 位、以及拥有者的读写和执行权限，诸如此类。
+
+以下程序在保留输入文件原有权限的前提下，为文件添加拥有者执行权限：
+
+.. literalinclude:: code/4-set-owner-x-permission.c
+
+.. note::
+
+    ``chmod`` 修改权限的方式是“设置”而不是“添加”，
+    程序使用了 ``stat.st_mode | new_permission`` 的形式来增加新的权限。
+
+    如果只将 ``mode`` 参数设置为 ``new_permission`` 的话，文件原来的权限就会被清除掉， 这一点要小心处理。
+
+执行：
+
+::
+
+    $ ls -l /tmp/ttt
+    -rw-rw-r-- 1 huangz huangz 0  1月 24 13:49 /tmp/ttt
+
+    $ ./a.out /tmp/ttt
+
+    $ ls -l /tmp/ttt
+    -rwxrw-r-- 1 huangz huangz 0  1月 24 13:49 /tmp/ttt
+
+
