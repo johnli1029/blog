@@ -189,6 +189,54 @@
     file owner uid = 0 , gid = 0 .
 
 
+修改所有者的用户 ID 和组 ID
+---------------------------------
+
+以下函数可以用于更改文件的用户 ID 和组 ID ：
+
+::
+
+    #include <unistd.h>
+
+    int chown(const char *path, uid_t owner, gid_t group);
+
+    int fchown(int fd, uid_t owner, gid_t group);
+
+    int lchown(const char *path, uid_t owner, gid_t group);
+
+    // 设置成功返回 0 ，失败返回 -1 ，并将错误代码设置到 errno 
+
+三个函数的作用都是类似的，区别在于：
+
+- ``chown`` 和 ``lchown`` 修改的是给定路径上的文件，而 ``fchown`` 修改的则是给定的文件描述符。
+
+- ``chown`` 在遇上符号链接时，修改的是符号链接所指向的文件，而 ``lchown`` 则修改符号链接本身。
+
+``owner`` 和 ``group`` 参数用于指定文件的新用户 ID 和新组 ID ，
+如果 ``owner`` / ``group`` 参数的值为 ``-1`` ，那么维持该文件原有的用户/组 ID 不变。
+
+以下程序将给定文件的用户 ID 和组 ID 都设为 ``0`` ，也即是，将给定文件的用户和组都设置为 root ：
+
+.. literalinclude:: code/4-change-owner.c
+
+执行结果：
+
+::
+
+    $ ls -l /tmp/ttt
+    -rw-rw-r-- 1 huangz huangz 0  1月 24 10:27 /tmp/ttt
+
+    $ ./a.out /tmp/ttt
+    Change owner fail: Operation not permitted
+
+    $ sudo ./a.out /tmp/ttt
+
+    $ ls -l /tmp/ttt
+    -rw-rw-r-- 1 root root 0  1月 24 10:27 /tmp/ttt
+
+.. note:: 一般来说，需要有 root 权限才能修改文件的所有者。
+
+
 文件的权限
 --------------
 
