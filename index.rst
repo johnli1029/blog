@@ -15,7 +15,7 @@ Huangz/Notes
 --------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    language/clojure/index
 
@@ -26,7 +26,7 @@ Huangz/Notes
 ---------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    storage/redis_code_analysis/index
 
@@ -37,7 +37,7 @@ Huangz/Notes
 ------------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
     
    os/apue/index
 
@@ -48,7 +48,7 @@ Huangz/Notes
 ---------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    algorithm/arithmetic/index
 
@@ -59,7 +59,7 @@ Huangz/Notes
 ------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    system/on_building_systems_that_will_fail
 
@@ -69,6 +69,6 @@ Huangz/Notes
 --------------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    thinking_and_learning/pragmatic_thinking_and_learning/index
