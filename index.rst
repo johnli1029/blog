@@ -3,11 +3,33 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Huangz/Notes
-================
+Right Track Wrong Train
+============================
 
-这里是 `huangz <http://huangz.me>`_ 的个人笔记页面和资料存档库。
+这里是 huangz 的博客、笔记本和资料存档库。
 
+以下是我的个人日记，以及一些单独的技术文章：
+
+.. toctree::
+   :maxdepth: 2
+
+   diary/2012/index
+
+以下是一些我撰写或翻译的一些书籍或文档：
+
+- `Redis 设计与实现 <http://www.redisbook.com/>`_
+
+- `Redis 命令参考 <http://redis.rtfd.org/>`_
+
+- `SICP 解题集 <http://sicp.rtfd.org/>`_
+
+- `Clojure API 文档中文版 <http://clojure-api-cn.rtfd.org/>`_
+
+- `Real World Haskell 中文版 <http://rwh.rtfd.org/>`_
+
+- `Python Storm ORM 教程中文版 <http://storm_orm_tutorial_cn.readthedocs.org/>`_
+
+除了这里之外，我还出现在 `豆瓣 <http://www.douban.com/people/i_m_huangz/>`_ 、 `github <https://github.com/huangz1990>`_ 和 `twitter <https://github.com/huangz1990>`_ 。
 
 .. _language:
 
