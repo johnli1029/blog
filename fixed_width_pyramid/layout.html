@@ -190,6 +190,8 @@
           <div class="body">
             {% block body %} {% endblock %}
 
+            {% include "disqus.html" %}
+
           </div>
       {%- if render_sidebar %}
         </div>
