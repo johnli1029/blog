@@ -77,6 +77,7 @@ Right Track Wrong Train
    :maxdepth: 2
 
    network/unp/index
+   network/distrubuted_systems_concepts_and_design/index
 
 
 .. _algorithm:
