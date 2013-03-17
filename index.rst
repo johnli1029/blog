@@ -13,6 +13,7 @@ Right Track Wrong Train
 .. toctree::
    :maxdepth: 2
 
+   diary/2013/index
    diary/2012/index
 
 以下是一些我撰写或翻译的一些书籍或文档：
