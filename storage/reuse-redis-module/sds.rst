@@ -44,4 +44,4 @@ Sds 模块
 完整源码
 -----------------
 
-重用程序的完整代码可以在 `reuse_redis_module 项目 <https://github.com/huangz1990/reuse_redis_module>`_ 的 ``sds`` 文件夹中找到。
+重用程序的完整代码可以在 https://github.com/huangz1990/blog/tree/master/storage/reuse-redis-module/code 的 ``sds`` 文件夹中找到。
