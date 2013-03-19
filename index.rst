@@ -56,6 +56,7 @@ Right Track Wrong Train
    :maxdepth: 2
 
    storage/redis_code_analysis/index
+   storage/reuse-redis-module/index
 
 
 .. _os:
