@@ -105,6 +105,7 @@ void test_iterator(void)
 
     // 释放
     listRelease(l);
+    listReleaseIterator(itertor);
 }
 
 void main(void)
