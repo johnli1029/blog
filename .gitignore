@@ -2,4 +2,3 @@ _build/
 *.swp
 *.out
 *.o
-storage/reuse-redis-module/code/
