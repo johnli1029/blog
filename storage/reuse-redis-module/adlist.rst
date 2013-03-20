@@ -26,9 +26,17 @@ Redis 实现的是一个典型的双端链表，
 
 2. 将 ``zmalloc.c`` 中的 ``#include "config.h"`` 一行删掉。
 
+3. 添加 ``#include <stddef.h>`` 到 ``zamlloc.h`` ，解决 ``size_t`` 未定义的问题。
+
 
 测试驱动程序
 -------------------
+
+以下是用作节点值的空对象：
+
+.. literalinclude:: code/adlist/object.h
+
+.. literalinclude:: code/adlist/object.c
 
 以下程序进行了三项测试：
 

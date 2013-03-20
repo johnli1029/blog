@@ -1,8 +1,12 @@
+// main.c
+
 #include <assert.h>
 #include <stdlib.h>
-#include "adlist.h"
 
-void create_a_empty_list(void)
+#include "adlist.h"
+#include "object.h"
+
+void test_empty_list(void)
 {
     // 创建一个新链表
     list* l = listCreate();
@@ -29,90 +33,111 @@ void create_a_empty_list(void)
     listRelease(l);
 }
 
-void add_node_to_list(void)
+
+void test_add_node_and_advance_by_pointer(void)
 {
-    int one = 1,
-        two = 2,
-        three = 3;
 
+    // 初始化值对象
+    object *x = create_object(),
+           *y = create_object(),
+           *z = create_object();
+
+
+    // 创建列表
     list* l = listCreate();
+    // l = [x]
+    listAddNodeHead(l, x);
+    // l = [x, z]
+    listAddNodeTail(l, z);
+    // l = [x, y, z]
+    listNode* node_contain_x = listSearchKey(l, x);
+    listInsertNode(l, node_contain_x, y, 1);   //insert y after x
 
-    // l = [1]
-    listAddNodeHead(l, &one);
 
-    // l = [1, 3]
-    listAddNodeTail(l, &three);
+    // 手动遍历节点
+    listNode* current;
 
-    // l = [1, 2, 3]
-    listNode* node = listSearchKey(l, &one);
-    listInsertNode(l, node, &two, 1);  // insert 2 after 1
-
-    // current 现在包含值 1 
-    listNode* current = listFirst(l);
+    // x
+    current = listFirst(l);
     assert(
-        current->value == &one
+        current->value == x
     );
 
-    // current 现在包含值 2
+    // y
     current = listNextNode(current);
     assert(
-        current->value == &two
+        current->value == y
     );
 
-    // current 现在包含值 3
+    // z
     current = listNextNode(current);
     assert(
-        current->value == &three
+        current->value == z
     );
 
-    // 释放
+    
+    // 释放空间
+    free_object(x);
+    free_object(y);
+    free_object(z);
+
     listRelease(l);
 }
 
+
 void test_iterator(void)
 {
-    int one = 1,
-        two = 2,
-        three = 3;
+    // 初始化值对象
+    object *x = create_object(),
+           *y = create_object(),
+           *z = create_object();
 
-    // l = [1, 2, 3]
+
+    // 创建列表
     list* l = listCreate();
-    listAddNodeTail(l, &one);
-    listAddNodeTail(l, &two);
-    listAddNodeTail(l, &three);
+    listAddNodeTail(l, x);
+    listAddNodeTail(l, y);
+    listAddNodeTail(l, z);
 
-    // 取得一个从表头向表尾迭代的迭代器
+
+    // 从表头向表尾遍历节点
     listIter* itertor = listGetIterator(l, AL_START_HEAD);
     listNode* current;
     
     // 第一个节点
     current = listNext(itertor);
     assert(
-        current->value == &one
+        current->value == x
     );
 
     // 第二个节点
     current = listNext(itertor);
     assert(
-        current->value == &two
+        current->value == y
     );
 
     // 第三个节点
     current = listNext(itertor);
     assert(
-        current->value == &three
+        current->value == z
     );
 
+
     // 释放
+    free_object(x);
+    free_object(y);
+    free_object(z);
+
     listRelease(l);
+
     listReleaseIterator(itertor);
 }
 
 void main(void)
 {
-    create_a_empty_list();
+    test_empty_list();
 
-    add_node_to_list();
+    test_add_node_and_advance_by_pointer();
 
     test_iterator();
 }
