@@ -7,3 +7,4 @@
    sds
    adlist
    dict
+   intset
