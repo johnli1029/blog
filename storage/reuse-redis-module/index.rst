@@ -8,3 +8,4 @@
    adlist
    dict
    intset
+   ziplist
