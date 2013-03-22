@@ -40,3 +40,9 @@
 3. 检查整数集合的升级状态
 
 .. literalinclude:: code/intset/main.c
+
+
+完成源码
+------------------------
+
+测试程序的完整源码可以在 `这里 <https://github.com/huangz1990/blog/tree/master/storage/reuse-redis-module/code>`_ 的 ``intset`` 文件夹找到。
