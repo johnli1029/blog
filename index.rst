@@ -31,8 +31,9 @@ Right Track Wrong Train
 - `Python Storm ORM 教程中文版 <http://storm_orm_tutorial_cn.readthedocs.org/>`_
 
 除了这里之外，我还出现在
+`github <https://github.com/huangz1990>`_ 、
 `豆瓣 <http://www.douban.com/people/i_m_huangz/>`_ 、
-`github <https://github.com/huangz1990>`_ 
+`微博 <http://weibo.com/huangz1990>`_
 和 
 `twitter <https://twitter.com/huangz1990>`_ 。
 
