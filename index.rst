@@ -16,7 +16,7 @@ Right Track Wrong Train
    diary/2013/index
    diary/2012/index
 
-以下是我撰写或翻译的一些书籍或文档：
+以下是我撰写或翻译的一些书籍和文档：
 
 - `Redis 设计与实现 <http://www.redisbook.com/>`_
 
