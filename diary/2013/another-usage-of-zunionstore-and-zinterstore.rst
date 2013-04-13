@@ -27,23 +27,23 @@ Redis 的 ZUNIONSTORE 命令和 ZINTERSTORE 命令的另一种用法
 
 ::
 
-    redis 127.0.0.1:6379> SADD huangz orange banana tomato
+    redis> SADD huangz orange banana tomato
     (integer) 3
 
-    redis 127.0.0.1:6379> SADD peter apple strawberry orange banana
+    redis> SADD peter apple strawberry orange banana
     (integer) 4
 
-    redis 127.0.0.1:6379> SADD john lemon tomato orange apple
+    redis> SADD john lemon tomato orange apple
     (integer) 4
 
 接着，用 ``ZUNIONSTORE`` 命令计算三人爱好水果的并集：
 
 ::
 
-    redis 127.0.0.1:6379> ZUNIONSTORE favorite-fruits-union 3 huangz peter john
+    redis> ZUNIONSTORE favorite-fruits-union 3 huangz peter john
     (integer) 6
 
-    redis 127.0.0.1:6379> ZRANGE favorite-fruits-union 0 -1 WITHSCORES
+    redis> ZRANGE favorite-fruits-union 0 -1 WITHSCORES
     1) "lemon"
     2) "1"
     3) "strawberry"
@@ -63,7 +63,7 @@ Redis 的 ZUNIONSTORE 命令和 ZINTERSTORE 命令的另一种用法
 
 ::
 
-    redis 127.0.0.1:6379> SUNION huangz peter john
+    redis> SUNION huangz peter john
     1) "tomato"
     2) "banana"
     3) "apple"
@@ -83,10 +83,10 @@ Redis 的 ZUNIONSTORE 命令和 ZINTERSTORE 命令的另一种用法
 
 ::
 
-    redis 127.0.0.1:6379> ZINTERSTORE favorite-fruits-inter 3 huangz peter john
+    redis> ZINTERSTORE favorite-fruits-inter 3 huangz peter john
     (integer) 1
 
-    redis 127.0.0.1:6379> ZRANGE favorite-fruits-inter 0 -1 WITHSCORES
+    redis> ZRANGE favorite-fruits-inter 0 -1 WITHSCORES
     1) "orange"
     2) "3"
 
@@ -98,7 +98,7 @@ Redis 的 ZUNIONSTORE 命令和 ZINTERSTORE 命令的另一种用法
 
 ::
 
-    redis 127.0.0.1:6379> SINTER huangz peter john
+    redis> SINTER huangz peter john
     1) "orange"
 
 
