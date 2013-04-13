@@ -146,7 +146,7 @@ Redis 在 2.6 版本以前的问题
 EVAL
 ----------------
 
-[EVAL](http://redis.readthedocs.org/en/latest/script/eval.html) 是 Redis 2.6 版本新增命令的其中一个，同时也是最重要的一个，通过这个命令，可以直观、优雅且高效地解决像 ``LPOPRPUSH`` 这类 CAS 问题，文章稍后就会给出用脚本实现 ``LPOPRPUSH`` 的代码，但在此之前，不妨先来简单认识一下 ``EVAL`` 命令。
+`EVAL <http://redis.readthedocs.org/en/latest/script/eval.html>`_ 是 Redis 2.6 版本新增命令的其中一个，同时也是最重要的一个，通过这个命令，可以直观、优雅且高效地解决像 ``LPOPRPUSH`` 这类 CAS 问题，文章稍后就会给出用脚本实现 ``LPOPRPUSH`` 的代码，但在此之前，不妨先来简单认识一下 ``EVAL`` 命令。
 
 ``EVAL`` 命令的调用形式是 ``EVAL script numkeys key [key ...] arg [arg ..]`` ，它的参数分别是：
 
