@@ -220,8 +220,8 @@ ReadTheDocs 也直接支持 `Google Analytics 访问统计 <https://www.google.c
 你只要填入你的 analytics 跟踪代码，
 就可以对你的文档的访问情况进行记录了。
 
-如果你想将你的 Sphinx 文档发布到网上，
-那么 ReadTheDocs 应该是你的不二选择。
+要将 Sphinx 文档发布到网上，
+ReadTheDocs 应该是你的不二之选。
 
 
 结尾
