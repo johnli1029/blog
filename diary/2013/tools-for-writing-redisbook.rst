@@ -19,9 +19,7 @@
 Sphinx 是一个静态文档生成器，
 它的源码文件由 `reStructuredText <http://docutils.sourceforge.net/rst.html>`_ （简称 rst）格式写成，
 rst 格式和 markdown 格式一样，
-都是一种标记语言（markup language），
-并且 rst 和 md 一样，
-都不难学。
+都是一种易懂、易学的标记语言（markup language）。
 
 Sphinx 这个项目本身是作为 `Python 官方文档 <http://docs.python.org/3/>`_ 的生成器而出现的，
 它具备了一系列强大的特性，
@@ -155,17 +153,15 @@ Graphviz 提供了大量的功能和参数，
 -----------------------------------------
 
 《设计与实现》是通过阅读并提取 Redis 源码中的设计思想来创作的，
-我的编辑器是 VIM ，
-我使用它阅读 Redis 的源码，
-并为源码添加注释。
+我使用 VIM 阅读和注释源码。
 （至于我是如何阅读 Redis 源码的，可以参考 `InfoQ 上对《Redis 设计与实现》的报道 <http://www.infoq.com/cn/news/2013/03/redis-book>`_ ，我在里面有说到。）
 
-有时候为了熟悉代码的行为，
-我会修改并测试代码。
+有时候为了了解代码的行为，
+我会修改并对代码进行测试。
 测试代码使用的是源码本身配套的、用 TCL 语言编写的 test suit ：
 每次做了实验性的修改之后，
 我都会 ``make test`` 一下，
-看会产生什么效果。
+看会产生什么结果。
 
 测试代码没有用到 GBD 之类的调试工具：
 ``make test`` 、 Redis 的断言函数，
