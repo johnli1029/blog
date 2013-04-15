@@ -158,6 +158,7 @@ Graphviz 提供了大量的功能和参数，
 我的编辑器是 VIM ，
 我使用它阅读 Redis 的源码，
 并为源码添加注释。
+（至于我是如何阅读 Redis 源码的，可以参考 `InfoQ 上对《Redis 设计与实现》的报道 <http://www.infoq.com/cn/news/2013/03/redis-book>`_ ，我在里面有说到。）
 
 有时候为了熟悉代码的行为，
 我会修改并测试代码。
