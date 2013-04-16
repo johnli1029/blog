@@ -41,7 +41,7 @@ Sphinx 这个项目本身是作为 `Python 官方文档 <http://docs.python.org/
   
   比如《设计与实现》就使用了其中的 `mathjax 插件 <http://sphinx-doc.org/ext/math.html#module-sphinx.ext.mathjax>`_ 来显示 LaTeX 格式的算法复杂度；文章接下来会介绍的 Graphviz 图片生成工具，也有 `相应的 Sphinx 插件 <http://sphinx-doc.org/ext/graphviz.html>`_ ；另外，前面提到的，对跨文档链接的支持，也是通过插件来完成的。
 
-- Sphinx `内置了多个蛮不错的外观样式 <http://sphinx-doc.org/theming.html>`_ ，更换不同的样式、或者自己 `修改样式 <http://sphinx-doc.org/templating.html>`_ 都非常简单。《设计与实现》所使用的样式就是通过修改内置的 pyramid 样式而来的，可以在 github 找到这个样式： https://github.com/huangz1990/der 。
+- Sphinx `内置了多个蛮不错的外观样式 <http://sphinx-doc.org/theming.html>`_ ，更换不同的样式、或者自己 `修改样式 <http://sphinx-doc.org/templating.html>`_ 都非常简单。《设计与实现》所使用的样式就是通过修改内置的 pyramid 样式而来的，可以在 github 找到这个样式： `github.com/huangz1990/der <https://github.com/huangz1990/der>`_ 。
 
 在编写《设计与实现》之前，
 我就已经用 Sphinx 做了多个文档，
@@ -172,7 +172,8 @@ Graphviz 提供了大量的功能和参数，
 并记录任务 TODO 。
 
 另外，
-我想一块大白板和一些便事贴应该能处理一些大小不适合使用 A4 纸来记录的信息，
+之前曾打算购买一块大白板和一些记事贴来处理一些大小不适合使用 A4 纸来记录的信息，
+不过后来就把这事给忘记了，
 写这篇文章的时候忽然回忆到了，
 得赶紧去买才行。
 
@@ -197,7 +198,7 @@ Sphinx 可以生成 HTML 格式的网页，
 你只要在 ReadTheDocs 注册一个帐号，
 然后填写你的 Sphinx 项目的相关信息（比如项目在 github 上的地址），
 ReadTheDocs 就会自动为你的文档生成一个特有的子域名，
-比如 https://redisbook.readthedocs.org ，
+比如 `redisbook.readthedocs.org <https://redisbook.readthedocs.org>`_ ，
 然后任何人只要访问这个子域名，
 就可以观看你的文档了。
 
@@ -210,6 +211,7 @@ ReadTheDocs 都会自动帮你重新编译文档，
 ReadTheDocs 还提供了子域名绑定功能，
 你可以将你的文档和你名下的域名进行绑定，
 从而为你的文档提供一个更简洁的访问地址。
+比如 `www.redisbook.com <http://www.redisbook.com/>`_ 。
 
 另外，
 ReadTheDocs 也直接支持 `Google Analytics 访问统计 <https://www.google.com/analytics>`_ ，
