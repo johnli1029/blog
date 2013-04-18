@@ -18,3 +18,4 @@ Redis 源码分析
    pubsub
    transaction
    watch-and-unwatch
+   keyspace-notification
