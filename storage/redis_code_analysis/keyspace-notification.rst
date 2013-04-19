@@ -305,3 +305,7 @@ Redis 只用了不到 150 行代码就实现了键空间通知功能，
 
 如果有兴趣弄清楚订阅与发布模块是如何分发信息的，
 可以参考 `订阅与发布模块的源码分析文章 <http://www.huangz.me/en/latest/storage/redis_code_analysis/pubsub.html>`_ ，或者《\ `Redis 设计与实现 <http://redisbook.com>`_\ 》中的《\ `订阅与发布 <http://www.redisbook.com/en/latest/feature/pubsub.html>`_\ 》章节。
+
+
+| huangz
+| 2013.4.18
