@@ -290,6 +290,129 @@ Redis 中每个对键进行了修改的命令，
 ``notifyKeyspaceEvent`` 的使命就此完成。
 
 
+实例
+------------
+
+文章上一节对键空间事件的底层实现进行了介绍，
+为了更透彻地理解键空间事件的具体运作方式，
+让我们来看一个实际的例子。
+
+首先，
+启动 Redis 服务器，
+将服务器的 ``notify-keyspace-events`` 选项的参数设置为 ``Es`` ，
+让服务器只发送和集合有关的键事件通知：
+
+::
+
+    redis 127.0.0.1:6379> CONFIG SET notify-keyspace-events Es
+    OK
+
+接着，
+让客户端订阅模式 ``__keyevent*`` ，
+接收所有键事件通知：
+
+::
+
+    # 0 号终端
+
+    redis 127.0.0.1:6379> PSUBSCRIBE __keyevent*
+    Reading messages... (press Ctrl-C to quit)
+    1) "psubscribe"
+    2) "_keyevent*"
+    3) (integer) 1
+
+然后，
+开启另一个终端，
+启动 Redis 客户端，
+发送以下命令：
+
+::
+
+    # 1 号终端
+
+    redis 127.0.0.1:6379> SADD favorite-fruits orange
+    (integer) 1
+
+命令发送完毕之后，
+切换回 ``0`` 号终端，
+可以看到，
+客户端接收到了新的键事件通知：
+
+::
+
+    # 0 号终端
+
+    1) "pmessage"
+    2) "__keyevent*"            # 被匹配的模式
+    3) "__keyevent@0__:sadd"    # 消息的来源频道
+    4) "favorite-fruits"        # 执行 SADD 命令的键
+
+以下是这个通知的完整发送步骤：
+
+1. Redis 接收并处理输入的 `SADD <http://redis.readthedocs.org/en/latest/set/sadd.html>`_ 命令，并执行前面说过的 ``saddCommand`` 函数。
+
+2. ``saddCommand`` 函数执行将新元素添加到集合的动作，然后以 ``"sadd"`` 为通知内容，调用 ``notifyKeyspaceEvent`` 函数：
+
+  ::
+
+      void saddCommand(redisClient *c) {
+
+          // ...
+
+          // 如果有至少一个元素被成功添加，那么执行以下程序
+          if (added) {
+
+              // ...
+
+              // 发送添加元素通知
+              notifyKeyspaceEvent(REDIS_NOTIFY_SET,"sadd",c->argv[1],c->db->id);
+          }
+
+          // ...
+      }
+
+3. ``notifyKeyspaceEvent`` 首先检查 ``server.notify_keyspace_events`` 属性，确保键空间事件功能已开启，并且 ``"sadd"`` 是服务器允许发送的通知之一：
+
+  ::
+
+      // 如果服务器配置为不发送 type 类型的通知，那么直接返回
+      if (!(server.notify_keyspace_events & type)) return;
+
+
+4. 接着 ``notifyKeyspaceEvent`` 检查是否需要发送键空间通知：
+
+  ::
+
+      /* __keyspace@<db>__:<key> <event> notifications. */
+      // 发送键空间通知
+      if (server.notify_keyspace_events & REDIS_NOTIFY_KEYSPACE) {
+
+          // ...
+
+      }
+
+  因为前面我们设置 ``keyspace-notify-events`` 选项的时候，并未包含字符 ``'K'`` ，所以这一检测的结果为假， ``notifyKeyspaceEvent`` 不会发送键空间通知。
+
+5. 最后 ``notifyKeyspaceEvent`` 检查是否需要发送键事件通知：
+
+  ::
+
+
+      /* __keyevente@<db>__:<event> <key> notifications. */
+      // 发送键事件通知
+      if (server.notify_keyspace_events & REDIS_NOTIFY_KEYEVENT) {
+
+          // ...
+
+      }
+
+  因为我们提供给服务器的 ``keyspace-notify-event`` 选项包含字符 ``'E'`` ，所以这个检测为真。
+  
+  程序将构建一条内容为 ``"favorite-fruits"`` 的事件通知，并调用 ``pubsubPublishMessage`` 函数，将通知发送到 ``__keyevent@0__:sadd`` 频道。
+
+6. 至此， ``notifyKeyspaceEvent`` 执行完毕，整个发送步骤完成。
+
+
 总结
 -----------
 
