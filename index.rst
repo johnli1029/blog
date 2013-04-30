@@ -28,7 +28,7 @@ Right Track Wrong Train
 
 - `Real World Haskell 中文版 <http://rwh.rtfd.org/>`_
 
-- `Python Storm ORM 教程中文版 <http://storm_orm_tutorial_cn.readthedocs.org/>`_
+- `Python Storm ORM 教程中文版 <https://strom-orm-tutorial.readthedocs.org>`_
 
 除了这里之外，我还出现在
 `github <https://github.com/huangz1990>`_ 、
