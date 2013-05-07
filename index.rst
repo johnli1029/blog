@@ -103,6 +103,7 @@ Right Track Wrong Train
    :maxdepth: 2
 
    system/on_building_systems_that_will_fail
+   system/csapp/index
 
 .. _thinking_and_learning:
 
