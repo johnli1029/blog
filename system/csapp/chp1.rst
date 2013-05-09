@@ -28,48 +28,27 @@
 
 .. image:: image/hello_c_in_ascii.png
 
-- ``hello.c`` is a *source file* (or *source program*),
-  it's a sequence of bits,
-  each with a value ``0`` or ``1`` ,organized in 8-bit chucks called *bytes* ,
-  each byte represents some text character in the program.
-
 - ``hello.c`` 可以被称为源文件，或者源程序，
   它由一系列位组成，
   每个位的值可以是 ``0`` 或者 ``1`` ，
   每 8 个位组成一个块（chunk），
   每个字节都表示了源文件中的某个字符。
 
-- most modern systems represent text characters using the ASCII standard that represents each character with a unique byte-sized integer value.
-
 - 大多数现代系统都使用 ASCII 标识来表示字符，
   在这个标准中，
   每个字符都被表示成长度为一个字节的、不相同（unique）的整数。
-
-- a file that consist exclusively of ASCII characters are known as *text files*,
-  all other files are known as *binary files*.
 
 - 一个只包含 ASCII 字符的文件被称为文本文件，
   而其他所有文件都被称为二进制文件。
 
 ----
 
-- All information in a system—
-  including disk files, programs stored in memory, user data stored in
-  memory, and data transferred across a network—is represented as a bunch of bits.
-
 - 系统中的所有信息 ——
   包括磁盘文件，内存中的程序，内存中的用户数据，
   通过网络传送的数据，等等，
   都是由一系列字节来表示的。
 
-- The only thing that distinguishes different data objects is the context in which
-  we view them.
-
 - 不同数据对象的区别在于，我们在什么上下文中处理它们。
-
-- For example, in different contexts, the same sequence of bytes
-  might represent an integer, floating-point number, character string, or machine
-  instruction.
 
 - 比如说，
   在不同的上下文中，
@@ -80,21 +59,13 @@
 1.2 源码由程序转换为不同的格式
 ---------------------------------
 
-- C program can be read and understood by human beings in high-level form.
-
 - C 语言是高层次的，它可以被人类阅读和理解。
-
-- However, in order to run program on the system, the individual C statements must be translated by other programs into a sequence of low-level *machine-language* instructions.
 
 - 但是为了在系统中执行这个 C 程序，
   我们必须使用一些程序，
   将这个 C 程序转换为一串低层次 *机器语言* 指令。
 
-- Machine-language instructions are then packaged in a form called an *executable object program* and stored as a binary disk file.
-
 - 这些机器指令之后会被打包为一个 *可执行对象程序* ，并保存为二进制文件。
-
-- Object programs are also referred to as *executable object files*.
 
 - 对象程序通常也被成为 *可执行对象文件* 。
 
@@ -407,4 +378,139 @@ processor（处理器）
 每个线程都带有自己的执行上下文，
 并且共享相同的程序代码和全局数据。
 
+1.7.3 虚拟内存
+^^^^^^^^^^^^^^^^^^^
 
+- 虚拟内存（virtual memory）是一种抽象，
+  它为每个进程提供了一种似乎进程在独占内存的假象。
+
+- 每个进程都将内存看作是虚拟地址空间（virtual address space）。
+
+- 下图展示了 Linux 系统的进程的虚拟地址空间（其他 UNIX 系统的布局也是相似的）：
+
+  .. image:: image/1.13.png
+
+  虚拟地址空间的最高区域用于放置内核进程所需的程序和数据，
+  而较低的区域则用于用户空间进程。
+
+- 虚拟地址空间的每个区域都有不同的作用：
+
+  - 程序代码和数据（program code and data）部分：
+
+    - 代码存放的位置总是从固定的地址开始，
+      数据区域保存了 C 程序中的全局变量。
+
+    - 代码和数据区域都直接由可执行文件初始化，
+      空间的大小是进程开始时确定的（固定大小）。
+
+  - 堆（heap）：堆的大小可以动态增大或缩小，由类似于 C 中的 ``malloc`` 和 ``free`` 进行。
+
+  - 共享库（shared libraries）：存放了共享库（比如 C 标准库和 ``math`` 库）的代码和数据。
+
+  - 栈（stack）：
+
+    - 编译器使用栈来实现函数调用。
+
+    - 可以在程序执行时动态增大或缩小。
+
+    - 基本上，每执行一个函数调用，栈都会增大。
+
+  - 内核虚拟内存（kernel virtual memory）：
+
+    - 操作系统的内核总是常驻在内存里面的。
+
+    - 最高区域的地址空间就是为内核保留的。
+
+    - 应用程序不能对内核地址空间进行读写，或者直接调用这个区域的函数。
+
+1.7.4 文件
+^^^^^^^^^^^^^
+
+- 一个文件就是一串比特。
+
+- 在 UNIX 类系统中，所有输入设备，比如磁盘、键盘、显示器甚至网络，都被统一建模成文件，这样就可以用一集 UNIX I/O 系统调用来处理所有的这些设备。
+
+- 这种将所有输入设备都看作文件的设备处理方式非常强大，
+  因为它为所有可能连接到系统的不同 I/O 设备都提供了统一的视图（uniform view）。
+
+
+1.8 通过网络和其他系统进行通讯
+-----------------------------------------
+
+对于一个单独的系统来说，
+网络可以看作是它的另一个 I/O 设备：
+它既从网络读入数据，
+也写入数据到网络。
+
+.. image:: image/1.14.png
+
+
+1.9 重要议题
+-------------------------
+
+1.9.1 并发和同步
+^^^^^^^^^^^^^^^^^^^^^^^
+
+- 并发（concurrency）：一个通用的概念，指系统带有的多个同时活动体（multiple、simultaneous activities）。
+
+- 并行（parallelism）：利用并发来优化系统的速度。
+
+并行可以在系统的多个不同层次上实现，
+以下介绍三种不同的并行，
+分别从高层次到低层次。
+
+线程级别的并发
+"""""""""""""""""""
+
+- 单处理器系统（uniprocessor system）：
+  系统在多个任务之间切换，
+  模拟出一种并发执行的假象。
+
+- 多处理器系统（multiprocessor system）：
+  一个系统带有多个处理器，
+  每个处理器有自己的执行流。
+
+以下是 i7 处理器的组织图：
+
+.. image:: image/1.17.png
+
+- 多处理器的两种主要技术：
+
+  - 多核（multi-core）：将多个 CPU （核）集合到单个芯片上。
+
+  - 超线程（hyperthreading）：允许一个 CPU 执行多个控制流，这种技术需要增加 CPU 某些部分的数量，比如使用多个 PC 和多个寄存器文件，不过它们也会共享 CPU 的某些部分，比如浮点数算数单元。
+
+  - 超线程可以让 CPU 更快地在多个控制流之间切换，让处理器选择更好的资源来执行（比如，选择现在可以计算的进程，而不是被阻塞的进程）。
+
+- 多处理器可以优化系统的性能：它减少了执行多任务时，模拟并发的必要。
+
+- 但是，多处理器的好处只会被那些有效地使用多线程的程序获得。
+
+指令级别的并行
+"""""""""""""""""""""""
+
+- 现代处理器可以一次执行多条指令
+
+- 通过流水线（pipeline）技术：一条令指令可以分成多个阶段执行，每个阶段可以和其他指令的其他阶段并行执行。
+
+单指令，多数据并行（single-instruction，multiple-data，SIMD 并行）
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+- 在最底层，
+  现代处理器通常带有特殊的硬件，
+  可以让单条指令引发多个操作并行执行，
+  这种模式被称为单指令多数句，
+  或者 SIMD 并行。
+
+- SIMD 指令主要用于提升处理图像、视频和音频的应用程序的速度。
+
+1.9.2 抽象在计算机系统中的重要性
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- 抽象是计算机科学中最重要的概念之一。
+
+- 指令集架构提供了关于处理器硬件的抽象，让程序员可以在不了解处理器底层的情况下，让处理器进行计算。
+
+- 在操作系统层面，文件抽象了 I/O ，虚拟内存抽象了程序的内存，进程抽象了运行中的程序，虚拟机器（virtual machine）甚至抽象了一台带有完整的电脑。
+
+.. image:: image/1.18.png
