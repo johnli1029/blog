@@ -124,10 +124,11 @@ fork 的用法
 
 ::
 
+
     $ ./8-data-duplicate.out 
     init global = 0 , local = 0
-    child running, global = 1 , local = 1
     parent running, global = 1 , local = 1
+    child running, global = 1 , local = 1
 
 可以看到，无论是子进程也好，父进程也好，
 它们对全局变量 ``global`` 和局部变量 ``local`` 的修改都只限于它们自己的内存空间中。

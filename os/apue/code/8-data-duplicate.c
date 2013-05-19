@@ -17,13 +17,13 @@ int main(void) {
         global++;
         local++;
 
-        printf("parent running, global = %d , local = %d\n", global, local);
+        printf("child running, global = %d , local = %d\n", global, local);
     }
     else if (child_pid > 0) {
         global++;
         local++;
 
-        printf("child running, global = %d , local = %d\n", global, local);
+        printf("parent running, global = %d , local = %d\n", global, local);
     }
     else {
         printf("Fork error\n");
