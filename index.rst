@@ -24,9 +24,9 @@ Right Track Wrong Train
 
 - `SICP 解题集 <http://sicp.rtfd.org/>`_
 
-- `Clojure API 文档中文版 <http://clojure-api-cn.rtfd.org/>`_
+- `Clojure API 文档中文版 <http://clojure-api-cn.rtfd.org/>`_ （多人协作项目）
 
-- `Real World Haskell 中文版 <http://rwh.rtfd.org/>`_
+- `Real World Haskell 中文版 <http://rwh.rtfd.org/>`_ （多人协作项目）
 
 - `Python Storm ORM 教程中文版 <https://strom-orm-tutorial.readthedocs.org>`_
 
