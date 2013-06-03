@@ -10,7 +10,7 @@ TODO: 补充介绍和所使用的算法。
 
 .. code-block:: python
 
-    def parset_int(s):
+    def parse_int(s):
 
       # handle negative number
       if s[0] == '-':
@@ -34,11 +34,11 @@ TODO: 补充介绍和所使用的算法。
     if __name__ == "__main__":
         
         # zero
-        assert parset_int(str(0)) == 0
+        assert parse_int(str(0)) == 0
 
         # non-zero and non-negative
-        assert parset_int(str(123)) == 123
+        assert parse_int(str(123)) == 123
 
         # negative
-        assert parset_int(str(-123)) == -123
+        assert parse_int(str(-123)) == -123
 
