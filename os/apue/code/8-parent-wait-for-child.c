@@ -9,11 +9,11 @@ int main(void) {
     pid_t pid = fork();
 
     if (pid == 0) {
-        wait(NULL);
-        printf("parent return\n");
+        printf("child return\n");
     } 
     else if (pid > 0) {
-        printf("child return\n");
+        wait(NULL);
+        printf("parent return\n");
     }
     else {
         printf("fork error\n");
