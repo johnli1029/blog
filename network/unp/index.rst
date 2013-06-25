@@ -6,3 +6,4 @@
 
    chp1
    chp2
+   chp3
