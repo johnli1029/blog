@@ -5,3 +5,4 @@ Reactor
 ----------
 
 .. image:: image/reactor.png
+   :scale: 70
