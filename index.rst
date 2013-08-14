@@ -20,7 +20,7 @@ Right Track Wrong Train
 
 - `Redis 设计与实现 <http://www.redisbook.com/>`_
 
-- `Redis 命令参考 <http://redis.rtfd.org/>`_
+- `Redis 命令参考 <http://www.redisdoc.com/>`_
 
 - `SICP 解题集 <http://sicp.rtfd.org/>`_
 
