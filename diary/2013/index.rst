@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   reliable_pubsub_in_redis
    redis-pubsub-glob-pattern-example
    how-redis-fix-invalid-aof-file
    tools-for-writing-redisbook
