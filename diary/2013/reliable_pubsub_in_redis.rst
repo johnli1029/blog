@@ -3,3 +3,6 @@
 
 .. image:: image/reliable_pubsub_in_redis.png
    :scale: 70
+
+| huangz
+| 2013.8.15
