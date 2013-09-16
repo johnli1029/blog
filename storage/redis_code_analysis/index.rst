@@ -21,3 +21,4 @@ Redis 源码分析
    keyspace-notification
    pubsub_command
    replication
+   sentinel
