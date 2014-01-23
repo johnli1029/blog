@@ -36,5 +36,7 @@ main(int argc, char *argv[])
 
     printf("The input ip is: %s\n", buf);
 
+    free(buf);
+
     return 0;
 }
