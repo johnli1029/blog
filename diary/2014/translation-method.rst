@@ -135,7 +135,8 @@
     | are commands that operate on multiple types of data.
 
     | We’ll first cover SORT,
-    | which can involve STRINGs, SETs or LISTs, and HASHes all at the same time.
+    | which can involve STRINGs, SETs or LISTs, and HASHes 
+    | all at the same time.
 
     | We’ll then cover basic transactions with MULTI and EXEC,
     | which can allow you to execute multiple commands together
