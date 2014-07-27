@@ -264,5 +264,8 @@ Redis 的结构非常简洁、优美、精巧和高效，
 也欢迎各位随时和我讨论 Redis 源码方面的问题，
 或者跟我分享各位阅读 Redis 源码方面的经验。
 
+另外我的 `Redis 源码注释 <https://github.com/huangz1990/redis-3.0-annotated>`_ 项目以及 `《Redis 设计与实现》 <http://redisbook.com/>`_ 一书对于理解 Redis 的源代码应该也会有所帮助，
+有兴趣的朋友可以自行了解该项目/书本。
+
 | 黄健宏（huangz）
 | 2014.7.28
