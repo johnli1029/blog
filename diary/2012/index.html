@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2012 年 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="huangz/blog" href="../../index.html" />
+    <link rel="next" title="Redis 2.6 脚本功能(scripting)简介" href="redis-scripting-short-guide.html" />
+    <link rel="prev" title="怎么样写出更好、也更简短的源码分析书" href="../2013/how-to-write-a-better-and-shorter-code-analysis-book.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="redis-scripting-short-guide.html" title="Redis 2.6 脚本功能(scripting)简介"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../2013/how-to-write-a-better-and-shorter-code-analysis-book.html" title="怎么样写出更好、也更简短的源码分析书"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">huangz/blog</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>2012 年<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="redis-scripting-short-guide.html">Redis 2.6 脚本功能(scripting)简介</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="redis-scripting-short-guide.html#id1">导读</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-scripting-short-guide.html#lpoprpush">LPOPRPUSH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-scripting-short-guide.html#id2">LPOPRPUSH 的简单实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-scripting-short-guide.html#multi-exec-watch-lpoprpush">使用 MULTI 、 EXEC 和 WATCH 实现安全的 LPOPRPUSH 函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-scripting-short-guide.html#redis-2-6">Redis 在 2.6 版本以前的问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-scripting-short-guide.html#eval">EVAL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-scripting-short-guide.html#id4">LPOPRPUSH 的脚本实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-scripting-short-guide.html#id5">更多</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="redis-command-reference-26.html">Redis 命令参考 2.6 版本发布</a></li>
+</ul>
+</div>
+</div>
+
+
+
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../2013/how-to-write-a-better-and-shorter-code-analysis-book.html"
+                        title="previous chapter">怎么样写出更好、也更简短的源码分析书</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="redis-scripting-short-guide.html"
+                        title="next chapter">Redis 2.6 脚本功能(scripting)简介</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/"><img src="http://ww1.sinaimg.cn/large/ae33b839jw1ed4zp7ejgyj204g014746.jpg"></a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3b1.
+    </div>
+  </body>
+</html>

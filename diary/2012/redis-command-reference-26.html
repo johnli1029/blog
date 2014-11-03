@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Redis 命令参考 2.6 版本发布 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="huangz/blog" href="../../index.html" />
+    <link rel="up" title="2012 年" href="index.html" />
+    <link rel="prev" title="Redis 2.6 脚本功能(scripting)简介" href="redis-scripting-short-guide.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="redis-scripting-short-guide.html" title="Redis 2.6 脚本功能(scripting)简介"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2012 年</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="redis-2-6">
+<h1>Redis 命令参考 2.6 版本发布<a class="headerlink" href="#redis-2-6" title="Permalink to this headline">¶</a></h1>
+<p>经过两周紧张的工作之后， <a class="reference external" href="http://redis.readthedocs.org">Redis 命令参考</a> 终于完成了 2.6 版本的更新。</p>
+<p>这次更新的内容大部分来自于官方文档对 Redis 2.6 版本的更新，包括：</p>
+<ul class="simple">
+<li>Redis 2.6 版本新增的所有命令，比如 <a class="reference external" href="http://redis.readthedocs.org/en/latest/script/eval.html">EVAL</a> 、 <a class="reference external" href="http://redis.readthedocs.org/en/latest/key/pttl.html">PTTL</a> 、 <a class="reference external" href="http://redis.readthedocs.org/en/latest/server/time.html">TIME</a> 等命令的相关文档全部翻译完毕。</li>
+<li>官方文档新添加的所有命令模式(pattern)，比如 INCR 命令的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/incr.html#id2">计数器模式</a> 和 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/incr.html#id3">限速器模式</a> ， EXPIRE 命令的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/key/expire.html#id2">导航会话模式</a> 等等，全部翻译完毕。</li>
+<li>Redis 2.6 版本对旧有命令的所有改进，比如为 <code class="docutils literal"><span class="pre">SHUTDOWN</span></code> 命令添加 <code class="docutils literal"><span class="pre">SAVE</span></code> 和 <code class="docutils literal"><span class="pre">NOSAVE</span></code> 修饰符，为 <code class="docutils literal"><span class="pre">INFO</span></code> 命令设置新输出格式， <code class="docutils literal"><span class="pre">CONFIG</span> <span class="pre">RESETSTAT</span></code> 命令的变动等，以上这些命令的文档也全部更新完毕。</li>
+</ul>
+<p>除此之外，命令参考项目本身也进行了不少修改，其中最重要的两个分别是：</p>
+<ul class="simple">
+<li>命令不再按类型分页，而是每个命令各自分为一页，加快载入速度。比如在之前的版本，访问 <cite>/string.html</cite> 会显示所有 Redis 字符串操作命令，而现在则是通过 <cite>/string/set.html</cite> 来访问 <cite>set</cite> 命令，通过 <cite>/string/get</cite> 来访问 <cite>get</cite> 命令。</li>
+<li>添加了 disqus 评论功能。</li>
+</ul>
+<p>以上就是命令参考 2.6 版本的主要更新，更详细的更新细节可以参考 <a class="reference external" href="http://redis.readthedocs.org/en/latest/change_log.html#redis-2-6">项目的更新日志</a> 。</p>
+<p>你也可以通过访问 <a class="reference external" href="http://redis.readthedocs.org">redis.readthedocs.org</a> ，查看新版文档。</p>
+<p>不知不觉，从 2011 年 4 月份开始进行命令参考的翻译工作，已经过去了整整一年时间，希望这个项目可以继续实践刚开始时的想法，给更多喜欢 Redis 的朋友们予以帮助。</p>
+<p>也希望你们喜欢这个新版本，谢谢！</p>
+<div class="line-block">
+<div class="line">huangz</div>
+<div class="line">2012.4.2</div>
+</div>
+</div>
+
+
+
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="redis-scripting-short-guide.html"
+                        title="previous chapter">Redis 2.6 脚本功能(scripting)简介</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/"><img src="http://ww1.sinaimg.cn/large/ae33b839jw1ed4zp7ejgyj204g014746.jpg"></a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3b1.
+    </div>
+  </body>
+</html>

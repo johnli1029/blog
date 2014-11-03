@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2013 年 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="huangz/blog" href="../../index.html" />
+    <link rel="next" title="Redis 常见误解" href="misconceptions-of-redis.html" />
+    <link rel="prev" title="写作与翻译" href="../2014/writing-and-translation.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="misconceptions-of-redis.html" title="Redis 常见误解"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../2014/writing-and-translation.html" title="写作与翻译"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">huangz/blog</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>2013 年<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="misconceptions-of-redis.html">Redis 常见误解</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="misconceptions-of-redis.html#id1">Redis 占用的内存比关系式数据库要多</a></li>
+<li class="toctree-l2"><a class="reference internal" href="misconceptions-of-redis.html#redis-memcached">Redis 和 Memcached 的功能一样</a></li>
+<li class="toctree-l2"><a class="reference internal" href="misconceptions-of-redis.html#id4">Redis 会丢失数据，所以它只能作为缓存使用，而不能作为数据库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="misconceptions-of-redis.html#id5">Redis 不能执行复杂的操作，比如反向搜索</a></li>
+<li class="toctree-l2"><a class="reference internal" href="misconceptions-of-redis.html#redis-json">Redis 不能保存和处理结构化数据，比如 JSON</a></li>
+<li class="toctree-l2"><a class="reference internal" href="misconceptions-of-redis.html#id6">Redis 是一个单机数据库</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reliable_pubsub_in_redis.html">[草稿]在 Redis 中构造可靠的发布与订阅系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="redis-pubsub-glob-pattern-example.html">Redis 发布与订阅模式匹配符示例</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="redis-pubsub-glob-pattern-example.html#id3"><code class="docutils literal"><span class="pre">*</span></code> 匹配符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-pubsub-glob-pattern-example.html#id4"><code class="docutils literal"><span class="pre">?</span></code> 匹配符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-pubsub-glob-pattern-example.html#id5"><code class="docutils literal"><span class="pre">[...]</span></code> 匹配符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-pubsub-glob-pattern-example.html#id7">任意组合多个匹配符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-pubsub-glob-pattern-example.html#id8">总结</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="how-redis-fix-invalid-aof-file.html">Redis 处理和修复不合法 AOF 文件的方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="how-redis-fix-invalid-aof-file.html#id1">前提知识</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-redis-fix-invalid-aof-file.html#id4">写入错误</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-redis-fix-invalid-aof-file.html#id5">停机故障</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-redis-fix-invalid-aof-file.html#id6">修复命令错误</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-redis-fix-invalid-aof-file.html#id7">修复事务错误</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-redis-fix-invalid-aof-file.html#id8">小结</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools-for-writing-redisbook.html">编写《Redis 设计与实现》时用到的工具</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools-for-writing-redisbook.html#sphinx">文档生成：Sphinx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools-for-writing-redisbook.html#git-github-bitbucket">源码的管理和托管：git 、 github 以及 bitbucket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools-for-writing-redisbook.html#graphviz">图片生成：Graphviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools-for-writing-redisbook.html#id12">其他工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools-for-writing-redisbook.html#sphinx-readthedocs">Sphinx 项目托管： ReadTheDocs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools-for-writing-redisbook.html#id13">结尾</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="another-usage-of-zunionstore-and-zinterstore.html">Redis 的 ZUNIONSTORE 命令和 ZINTERSTORE 命令的另一种用法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="another-usage-of-zunionstore-and-zinterstore.html#zunionstore-zinterstore">例子：使用 ZUNIONSTORE 和 ZINTERSTORE 计算爱好水果的并集和交集</a></li>
+<li class="toctree-l2"><a class="reference internal" href="another-usage-of-zunionstore-and-zinterstore.html#id1">实例：使用集合和 ZUNIONSTORE 实现签到功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="another-usage-of-zunionstore-and-zinterstore.html#id6">关于这个技巧的说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="another-usage-of-zunionstore-and-zinterstore.html#id10">底层实现</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="how-to-write-a-better-and-shorter-code-analysis-book.html">怎么样写出更好、也更简短的源码分析书</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="how-to-write-a-better-and-shorter-code-analysis-book.html#id2">关注程序本身的抽象和设计，而不是源码细节</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to-write-a-better-and-shorter-code-analysis-book.html#id3">分离书本和源码，让它们各司其职</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to-write-a-better-and-shorter-code-analysis-book.html#id4">文章中应该避免出现大量代码，更不要大量粘贴源码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to-write-a-better-and-shorter-code-analysis-book.html#id5">不要假设读者的水平</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to-write-a-better-and-shorter-code-analysis-book.html#id6">不要写（太多）文字</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to-write-a-better-and-shorter-code-analysis-book.html#id7">举例子</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how-to-write-a-better-and-shorter-code-analysis-book.html#id8">仔细分割章节，减低读者的负担，帮助他们保持自己的注意力</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../2014/writing-and-translation.html"
+                        title="previous chapter">写作与翻译</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="misconceptions-of-redis.html"
+                        title="next chapter">Redis 常见误解</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/"><img src="http://ww1.sinaimg.cn/large/ae33b839jw1ed4zp7ejgyj204g014746.jpg"></a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3b1.
+    </div>
+  </body>
+</html>
