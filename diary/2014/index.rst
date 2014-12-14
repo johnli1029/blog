@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   notes-about-translation-3
    thoughts-about-translation-2
    thoughts-about-translation-1
    how-to-read-redis-source-code
