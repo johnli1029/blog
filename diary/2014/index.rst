@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   postgresql-json-types
    notes-about-translation-3
    notes-about-translation-2
    notes-about-translation-1
