@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>翻译笔记之三：消除不恰当的括号 &mdash; huangz/blog</title>
+    <title>PostgreSQL 数据库中的 JSON 数据类型 &mdash; huangz/blog</title>
     
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="huangz/blog" href="../../index.html" />
     <link rel="up" title="2014 年" href="index.html" />
-    <link rel="next" title="翻译笔记之二：翻译的定义" href="notes-about-translation-2.html" />
-    <link rel="prev" title="PostgreSQL 数据库中的 JSON 数据类型" href="postgresql-json-types.html" />
+    <link rel="next" title="翻译笔记之三：消除不恰当的括号" href="notes-about-translation-3.html" />
+    <link rel="prev" title="2014 年" href="index.html" />
 <!--[if lte IE 6]>
 <link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->
@@ -45,10 +45,10 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="notes-about-translation-2.html" title="翻译笔记之二：翻译的定义"
+          <a href="notes-about-translation-3.html" title="翻译笔记之三：消除不恰当的括号"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="postgresql-json-types.html" title="PostgreSQL 数据库中的 JSON 数据类型"
+          <a href="index.html" title="2014 年"
              accesskey="P">previous</a> |</li>
         <li><a href="../../index.html">huangz/blog</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">2014 年</a> &raquo;</li> 
@@ -60,34 +60,38 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="id1">
-<h1>翻译笔记之三：消除不恰当的括号<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>有些作者比较喜欢使用括号来对内容进行补充说明，
-但是使用不恰当或者非必要的括号常常会令内容变得复杂，
-并对读者理解内容产生阻碍。</p>
-<p>为了解决这些问题，
-我在进行翻译的时候都会尽量地通过调整语句来消除括号，
-争取让译文的表述变得更自然一些。</p>
-<p>比如在《Redis in Action》第 147 页“AGGREGATING DATA LOCALLY”一节中：</p>
+  <div class="section" id="postgresql-json">
+<h1>PostgreSQL 数据库中的 JSON 数据类型<a class="headerlink" href="#postgresql-json" title="Permalink to this headline">¶</a></h1>
+<p>PostgreSQL 数据库在本月的 18 号发布了新的 9.4 版本，
+该版本的亮点之一就是增强了对 JSON 数据类型的支持，
+并添加了新的 JSONB 类型。</p>
+<p>在<a class="reference external" href="http://www.postgresql.org/about/news/1557/">新版本的发布说明中</a>，
+PostgreSQL 官方这样描述 JSONB 数据类型：</p>
 <blockquote>
-<div>If we perform the aggregates locally on a per-country basis for the entire day
-(being that there are around 300 countries),
-we can instead write 300 values to Redis.</div></blockquote>
-<p>这里的“(being that there are around 300 countries)”就是一个括号用得不好的例子 —— “there are around 300 countries”这个陈述应该出现在最前面，这样之后的条件“if we perform ... the entire day”和之后的结果“we can instead ... to Redis”就会来得更自然一些。</p>
-<p>为此，
-我在翻译时就将括号的内容提到了句子的前面，
-这样这个句子就有完整的因果关系了。</p>
-<p>以下为修改后的译文：</p>
-<blockquote>
-<div>因为只有大约 300 个国家，
-所以如果执行……，
-那么只需要对 Redis 写入大约 300 个值就可以了。</div></blockquote>
-<p>可以看到，
-句子的表述在修改之后变得更自然了，
-而原文要表达的意思也没有变化。</p>
+<div><p>PostgreSQL 新添加的 JSONB 数据类型使得用户可以同时拥有关系型数据库和非关系型数据库，
+而不必再在这两种数据库之间选择其中一种。</p>
+<p>JSONB 支持快速查找（fast lookup）和基于泛化反向索引（Generalized Inverted Indexes，GIN）的简单表达式搜索查询（simple expression search query）。</p>
+<p>除此之外，
+用户还可以使用新添加的多个辅助函数（support function）来提取和操作 JSON 数据，
+这些函数的性能和目前最流行的文档数据库不相上下，
+甚至有过之而无不及。</p>
+<p>JSONB 的出现使得表格数据和文档数据可以在整个数据库环境中融为一体，和谐共处。</p>
+</div></blockquote>
+<p>那么，JSONB 类型到底是何方神圣？
+它的作用是否又如 PostgreSQL 官方所说的那样强大呢？
+为了解答这个问题，也为了对 JSONB 进行全面的了解，
+huangz 决定对 <a class="reference external" href="http://www.postgresql.org/docs/9.4/interactive/datatype-json.html">PostgreSQL 9.4 版本手册（英文）</a> 中的 <a class="reference external" href="http://www.postgresql.org/docs/9.4/interactive/datatype-json.html">8.14. JSON Types</a> 一节和 <a class="reference external" href="http://www.postgresql.org/docs/9.4/interactive/functions-json.html">9.15. JSON Functions and Operators</a> 一节进行翻译，
+并与大家共享。</p>
+<p>接下来，
+就让我们随着文档，
+一起来探究 PostgreSQL 的 JSON 数据类型以及 JSONB 数据类型吧：</p>
+<ul class="simple">
+<li>阅读 8.14 节《JSON Types》译文： <a class="reference external" href="http://pgcn.huangz.me/part2/chp8/section14.html">http://pgcn.huangz.me/part2/chp8/section14.html</a></li>
+<li>阅读 9.15 节《JSON Functions and Operators》译文： <a class="reference external" href="http://pgcn.huangz.me/part2/chp9/section15.html">http://pgcn.huangz.me/part2/chp9/section15.html</a></li>
+</ul>
 <div class="line-block">
 <div class="line">huangz</div>
-<div class="line">2014.12.14</div>
+<div class="line">2014.12.27</div>
 </div>
 </div>
 
@@ -123,11 +127,11 @@ we can instead write 300 values to Redis.</div></blockquote>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="postgresql-json-types.html"
-                        title="previous chapter">PostgreSQL 数据库中的 JSON 数据类型</a></p>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2014 年</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="notes-about-translation-2.html"
-                        title="next chapter">翻译笔记之二：翻译的定义</a></p>
+  <p class="topless"><a href="notes-about-translation-3.html"
+                        title="next chapter">翻译笔记之三：消除不恰当的括号</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
