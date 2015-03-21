@@ -13,6 +13,7 @@ huangz/blog
 .. toctree::
    :maxdepth: 2
 
+   diary/2015/index
    diary/2014/index
    diary/2013/index
    diary/2012/index
