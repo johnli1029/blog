@@ -6,7 +6,9 @@
 按照老规矩，
 我们编写的第一个 Lua 程序要做的就是打印出 ``"Hello World"`` ：
 
-.. literalinclude:: code/chp1/hello.lua
+::
+
+    print("Hello World")
 
 如果你已经在电脑上安装了可独立运行的 Lua 解释器（通常被命名为 ``lua`` 或者 ``lua5.2`` ），
 那么只需要调用解释器并给出包含程序的文件名就可以运行这个程序了。
@@ -23,7 +25,20 @@
 这个函数会要求用户输入一个数字，
 并打印出这个数字的阶乘：
 
-.. literalinclude:: code/chp1/factorial.lua
+::
+
+    -- 定义一个阶乘函数
+    function fact (n)
+      if n == 0 then
+          return 1
+      else
+          return n * fact(n-1)
+      end
+    end
+
+    print("enter a number:")
+    a = io.read("*n")        -- 读入一个数字
+    print(fact(a))
 
 
 1.1 代码块
@@ -110,7 +125,15 @@ Lua 代码并不需要在多个连续的声明之间使用分隔符，
 举个例子，
 对于包含以下代码的 ``lib1.lua`` 文件：
 
-.. literalinclude:: code/chp1/lib1.lua
+::
+
+    function norm (x, y)
+      return (x^2 + y^2)^0.5
+    end
+
+    function twice (x)
+      return 2*x
+    end
 
 我们只需要在交互模式里面输入以下内容，
 就可以执行它：
@@ -223,6 +246,7 @@ Lua 也提供以 ``--[[`` 为开始，
 
 在执行这一赋值操作之后，
 Lua 会找个时间把这个全局变量曾经使用过的内存释放掉。
+
 
 ..
     1.4 可独立运行的解释器
