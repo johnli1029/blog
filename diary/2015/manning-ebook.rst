@@ -1,7 +1,7 @@
 Manning 出版社的买纸书送电子书策略
 ======================================
 
-因为翻译《Redis in Action》的缘故，
+因为\ `翻译《Redis in Action》 <http://redisinaction.com/>`_\ 的缘故，
 我在\ `网上 <http://www.amazon.cn/Redis-in-Action-Carlson-Josiah-L/dp/1617290858>`_\ 购买了一本该书的纸质版本。
 
 .. image:: https://farm8.staticflickr.com/7647/16955363492_56204b6cb4_o_d.jpg
