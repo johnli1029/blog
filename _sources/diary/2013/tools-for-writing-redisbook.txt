@@ -30,18 +30,18 @@ Sphinx 这个项目本身是作为 `Python 官方文档 <http://docs.python.org/
 - 代码和文件可以内嵌在 rst 文件中，也可以 `从其他文件载入 <http://sphinx-doc.org/markup/code.html?highlight=include#includes>`_ ，这保证了多个文件之间的模块化：比如你可以将一系列文档放在一个文件夹，而将文档中用到的代码放在另一个文件夹，这样不同文件之间的就不会互相干扰。
 
 - 文档本身可以非常简单地 `引用同一文档的其他章节、其他小节，或者文档的任何地方 <http://sphinx-doc.org/markup/inline.html#role-ref>`_ 。
-  
+
   更为强大的是， `一个 Sphinx 文档还可以引用另一个 Sphinx 文档的内容 <http://sphinx-doc.org/ext/intersphinx.html>`_ ：举个例子，在《设计与实现》中，我需要添加大量链向《\ `Redis 命令参考 <http://redis.readthedocs.org>`_\ 》的链接，比如 `EVAL <http://redis.readthedocs.org/en/latest/script/eval.html>`_ 。
-  
+
   如果每次都要为这些命令手动添加链接，那可就真是既无聊又痛苦 —— 而使用 Sphinx 的跨文档链接就可以轻松地解决这个问题：我只要按照 Sphinx 的格式在 rst 文件中写下一个（简短的）命令，Sphinx 就会自动帮我添加到链向《Redis 命令参考》的链接，非常简单。
 
 - Sphinx 还支持 `一系列插件 <http://sphinx-doc.org/extensions.html>`_ ，通过这些插件，可以增强 Sphinx 本身的功能。
 
   这些插件很多都是和 Python 有关的，但有一些在非 Python 的文档项目中都能用得上。
-  
+
   比如《设计与实现》就使用了其中的 `mathjax 插件 <http://sphinx-doc.org/ext/math.html#module-sphinx.ext.mathjax>`_ 来显示 LaTeX 格式的算法复杂度；文章接下来会介绍的 Graphviz 图片生成工具，也有 `相应的 Sphinx 插件 <http://sphinx-doc.org/ext/graphviz.html>`_ ；另外，前面提到的，对跨文档链接的支持，也是通过插件来完成的。
 
-- Sphinx `内置了多个蛮不错的外观样式 <http://sphinx-doc.org/theming.html>`_ ，更换不同的样式、或者自己 `修改样式 <http://sphinx-doc.org/templating.html>`_ 都非常简单。《设计与实现》所使用的样式就是通过修改内置的 pyramid 样式而来的，可以在 github 找到这个样式： `github.com/huangz1990/der <https://github.com/huangz1990/der>`_ 。
+- Sphinx `内置了多个蛮不错的外观样式 <http://sphinx-doc.org/theming.html>`_ ，更换不同的样式、或者自己 `修改样式 <http://sphinx-doc.org/templating.html>`_ 都非常简单。《设计与实现》所使用的样式就是通过修改内置的 pyramid 样式而来的，可以在 GitHub 找到这个样式： `github.com/huangz1990/der <https://github.com/huangz1990/der>`_ 。
 
 在编写《设计与实现》之前，
 我就已经用 Sphinx 做了多个文档，
@@ -58,48 +58,48 @@ Sphinx 这个项目本身是作为 `Python 官方文档 <http://docs.python.org/
 变成一个文档编写爱好者。
 
 
-源码的管理和托管：git 、 github 以及 bitbucket
+源码的管理和托管：Git 、 GitHub 以及 Bitbucket
 -------------------------------------------------------
 
 有了书本原稿之后，
-如何妥善地保管这些原稿就成了一个非常重要的问题的 —— 
+如何妥善地保管这些原稿就成了一个非常重要的问题的 ——
 幸运的是，
 这个问题已经基本上被 `git <http://git-scm.com/>`_ 和它的一系列托管商解决了。
 
 .. image:: image/git-logo.png
 
-《设计与实现》的原稿使用 git 来进行记录和追踪，
+《设计与实现》的原稿使用 Git 来进行记录和追踪，
 每次编写完一部分内容之后提交，
 然后推送到托管商上，
 这样就不必担心原稿因为电脑出问题或者误操作而丢失了（在电脑和 git 普及以前的世界，这样的事情并不少见）。
 
 至于源码托管商方面，
-《设计与实现》的源码目前托管在 github ，
+《设计与实现》的源码目前托管在 GitHub ，
 不过在发布之前，
-源码是作为私有项目放在 bitbucket 上的。
+源码是作为私有项目放在 Bitbucket 上的。
 
 .. image:: image/github-logo.png
 .. image:: image/bitbucket-logo.png
 
-`Github <https://github.com/>`_ 和 `bitbucket <https://bitbucket.org>`_ 两个网站都拥有良好的商业支持，
+`Github <https://github.com/>`_ 和 `Bitbucket <https://bitbucket.org>`_ 两个网站都拥有良好的商业支持，
 所以将书稿放托管在这两个网站上，
 安全性方面是可以保障的。
 这两个网站在项目托管方面的主要区别是：
 
-- github 的私有项目需要按月收费，而 bitbucket 则为至多 5 人的团队提供免费的私有项目。
+- GitHub 的私有项目需要按月收费，而 Bitbucket 则为至多 5 人的团队提供免费的私有项目。
 
-- 但是 github 的人气比 bitbucket 要高，项目放在 github 会受到更多关注。
+- 但是 GitHub 的人气比 Bitbucket 要高，项目放在 GitHub 会受到更多关注。
 
 如果想节约一些私有项目的托管费用，
 但又想项目获得更多关注，
 可以像《设计与实现》一样，
 在编写书本时，
-先将项目托管在 bitbucket ，
+先将项目托管在 Bitbucket ，
 然后等正式发布的时候，
-再挪到 github 上去。
+再挪到 GitHub 上去。
 
 另外，
-因为 bitbucket 的私有项目提供 5 人的成员名额，
+因为 Bitbucket 的私有项目提供 5 人的成员名额，
 所以不妨邀请一些朋友作为文档的技术复检员，
 让他们加入到项目中，
 请他们为你未发布的文档提供意见。
@@ -196,7 +196,7 @@ Sphinx 可以生成 HTML 格式的网页，
 .. image:: image/readthedocs-logo.png
 
 你只要在 ReadTheDocs 注册一个帐号，
-然后填写你的 Sphinx 项目的相关信息（比如项目在 github 上的地址），
+然后填写你的 Sphinx 项目的相关信息（比如项目在 GitHub 上的地址），
 ReadTheDocs 就会自动为你的文档生成一个特有的子域名，
 比如 `redisbook.readthedocs.org <https://redisbook.readthedocs.org>`_ ，
 然后任何人只要访问这个子域名，

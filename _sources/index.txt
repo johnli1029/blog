@@ -7,7 +7,7 @@ huangz/blog
 ============================
 
 这里是 `huangz <http://www.huangz.me>`_ 的博客，
-追踪更新请关注\ `这个 github 项目 <https://github.com/huangz1990/blog>`_\ ，
+追踪更新请关注\ `这个 GitHub 项目 <https://github.com/huangz1990/blog>`_\ ，
 目前不支持 RSS 订阅。
 
 .. toctree::
