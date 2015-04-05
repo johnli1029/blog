@@ -1,4 +1,4 @@
-《Programming in Lua, Third Edition》第 1 章《基本知识》翻译
+《Programming in Lua, Third Edition》第 1 章《基础知识》翻译
 ===============================================================
 
 .. highlight:: lua
