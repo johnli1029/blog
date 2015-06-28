@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="huangz/blog" href="../../index.html" />
     <link rel="up" title="2013 年" href="index.html" />
     <link rel="next" title="编写《Redis 设计与实现》时用到的工具" href="tools-for-writing-redisbook.html" />
@@ -243,7 +243,7 @@ Redis 会拒绝载入这个 AOF 文件，
 以下是一个不完整的 AOF 文件，
 程序本来打算将命令 <code class="docutils literal"><span class="pre">SET</span> <span class="pre">TOMORROW</span> <span class="pre">2013-4-27</span></code> 写入到 AOF 文件里，
 但没想到只写完 <code class="docutils literal"><span class="pre">*3\r\n$3\r\nSET\r\n</span></code> 就遇上了停机故障
-（开头的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/connection/select.html#select" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">SELECT</em></a> 命令是 AOF 程序自动加上的）：</p>
+（开头的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/connection/select.html#select" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">SELECT</span></a> 命令是 AOF 程序自动加上的）：</p>
 <div class="highlight-python"><div class="highlight"><pre>*2
 $6
 SELECT
@@ -301,7 +301,7 @@ $9
 2013-4-26
 </pre></div>
 </div>
-<p>可以看到，出错的原因 —— 那个不完整的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">SET</em></a> 命令已经被删除了。</p>
+<p>可以看到，出错的原因 —— 那个不完整的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">SET</span></a> 命令已经被删除了。</p>
 <p>现在再次使用 <code class="docutils literal"><span class="pre">redis-check-aof</span></code> 程序检查这个 AOF 文件的话，
 程序会显示这是一个合法的 AOF 文件：</p>
 <div class="highlight-python"><div class="highlight"><pre>$ redis-check-aof invalid.aof
@@ -406,7 +406,7 @@ AOF is not valid
 <p>使用 <code class="docutils literal"><span class="pre">od</span> <span class="pre">-c</span></code> 命令，
 可以正好看到，
 <code class="docutils literal"><span class="pre">62</span></code> 字节之后，
-就是出错的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">SET</em></a> 命令的协议内容：</p>
+就是出错的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">SET</span></a> 命令的协议内容：</p>
 <div class="highlight-python"><div class="highlight"><pre>$ od -c invalid.aof
 0000000   *   2  \r  \n   $   6  \r  \n   S   E   L   E   C   T  \r  \n
 0000020   $   1  \r  \n   0  \r  \n   *   3  \r  \n   $   3  \r  \n   S
@@ -432,7 +432,7 @@ $ od -c invalid.aof
 </pre></div>
 </div>
 <p>可以看到，
-不合法的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">SET</em></a> 命令已经被删掉了，
+不合法的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">SET</span></a> 命令已经被删掉了，
 修复后的文件只保留了合法的前 <code class="docutils literal"><span class="pre">62</span></code> 字节的内容。</p>
 </div>
 <div class="section" id="id7">
@@ -464,13 +464,13 @@ SET
 </pre></div>
 </div>
 <p>在 AOF 文件的最后，
-程序只写入了一个不完整的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">SET</em></a> 命令，
+程序只写入了一个不完整的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">SET</span></a> 命令，
 但是，
-就算我们将这个 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">SET</em></a> 命令删除，
+就算我们将这个 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">SET</span></a> 命令删除，
 这个 AOF 文件也仍然不合法：
-因为在 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">SET</em></a> 之前的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">MULTI</em></a> 命令，
+因为在 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">SET</span></a> 之前的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">MULTI</span></a> 命令，
 也同样是不合法的 ——
-这个 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">MULTI</em></a> 没有和它相对应的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/exec.html#exec" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">EXEC</em></a> 命令。</p>
+这个 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">MULTI</span></a> 没有和它相对应的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/exec.html#exec" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">EXEC</span></a> 命令。</p>
 <p>事实上，
 即使遇上这种情况，
 <code class="docutils literal"><span class="pre">redis-check-aof</span></code> 也有办法修复：</p>
@@ -519,27 +519,27 @@ $9
 </pre></div>
 </div>
 <p>可以看到，
-不止是 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">SET</em></a> 命令，
+不止是 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">SET</span></a> 命令，
 <code class="docutils literal"><span class="pre">redis-check-aof</span></code> 程序将整个事务，
-包括 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">MULTI</em></a> 和 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">SET</em></a> 在内的两个命令都删除了。</p>
+包括 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">MULTI</span></a> 和 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">SET</span></a> 在内的两个命令都删除了。</p>
 <p>这就是 <code class="docutils literal"><span class="pre">redis-check-aof</span></code> 处理事务的方式：
 当它在读入 AOF 文件时，
-如果遇到 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><em>MULTI</em></a> 命令，
-那么它就记录 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">MULTI</em></a> 命令开始时的偏移量：</p>
+如果遇到 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><span>MULTI</span></a> 命令，
+那么它就记录 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">MULTI</span></a> 命令开始时的偏移量：</p>
 <ol class="arabic simple">
 <li>如果在事务的内部，
 有任何一个命令出错了，
-那么程序将删除 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><em>MULTI</em></a> 命令，以及这个命令之后的所有文件内容。</li>
-<li>如果程序能够成功找到和 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">MULTI</em></a> 相匹配的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/exec.html#exec" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">EXEC</em></a> ，
-那么程序就将偏移量移动到 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/exec.html#exec" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">EXEC</em></a> 的末尾，
+那么程序将删除 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><span>MULTI</span></a> 命令，以及这个命令之后的所有文件内容。</li>
+<li>如果程序能够成功找到和 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">MULTI</span></a> 相匹配的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/exec.html#exec" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">EXEC</span></a> ，
+那么程序就将偏移量移动到 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/exec.html#exec" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">EXEC</span></a> 的末尾，
 也就是下个命令开始的地方，
 并继续进行读入分析，
 一直到整个 AOF 文件读入完毕为止。</li>
 </ol>
 <p>回过头来观察被修复之前的 <code class="docutils literal"><span class="pre">invalid_transaction.aof</span></code> 文件，
-<code class="docutils literal"><span class="pre">redis-check-aof</span></code> 将 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">MULTI</em></a> 命令，
+<code class="docutils literal"><span class="pre">redis-check-aof</span></code> 将 <a class="reference external" href="http://redis.readthedocs.org/en/latest/transaction/multi.html#multi" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">MULTI</span></a> 命令，
 以及命令之后的共 <code class="docutils literal"><span class="pre">28</span></code> 个字节都标记为非法数据，
-而不仅仅是标记 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><em class="xref std std-ref">SET</em></a> 那么简单：</p>
+而不仅仅是标记 <a class="reference external" href="http://redis.readthedocs.org/en/latest/string/set.html#set" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">SET</span></a> 那么简单：</p>
 <div class="highlight-python"><div class="highlight"><pre>$ redis-check-aof invalid_transaction.aof
 0x              5a: Reached EOF before reading EXEC for MULTI
 AOF analyzed: size=90, ok_up_to=62, diff=28
@@ -663,8 +663,8 @@ $ od -c invalid_transaction.aof
       <div class="clearer"></div>
     </div>
     <div class="footer">
-        &copy; Copyright 2014, huangz.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3b1.
+        &copy; Copyright 2015, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>
