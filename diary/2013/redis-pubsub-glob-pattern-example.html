@@ -242,7 +242,7 @@ Reading messages... (press Ctrl-C to quit)
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>因为 Redis 的 <a class="reference external" href="http://redis.readthedocs.org/en/latest/pub_sub/subscribe.html#subscribe" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">SUBSCRIBE 命令</span></a> 可以同时订阅多个频道，
+<p>因为 Redis 的 <span class="xref std std-ref">SUBSCRIBE 命令</span> 可以同时订阅多个频道，
 所以实际上使用 <code class="docutils literal"><span class="pre">-</span></code> 符号来指定范围并不是十分必要的。</p>
 <p>比如说，
 命令 <code class="docutils literal"><span class="pre">PSUBSCRIBE</span> <span class="pre">iPhone[4-6]</span></code> 和命令 <code class="docutils literal"><span class="pre">SUBSCRIBE</span> <span class="pre">iPhone4</span> <span class="pre">iPhone5</span> <span class="pre">iPhone6</span></code> 的效果是一样的，
@@ -320,7 +320,7 @@ Reading messages... (press Ctrl-C to quit)
 <div class="section" id="id8">
 <h2>总结<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>以上就是本文的全部内容了。</p>
-<p>本文对 Redis <a class="reference external" href="http://redis.readthedocs.org/en/latest/pub_sub/psubscribe.html#psubscribe" title="(in Redis 命令参考 v2.8)"><span class="xref std std-ref">PSUBSCRIBE 命令</span></a> 支持的各个匹配符进行了简单的介绍，
+<p>本文对 Redis <span class="xref std std-ref">PSUBSCRIBE 命令</span> 支持的各个匹配符进行了简单的介绍，
 希望各位可以从这些简单的例子中获得启发，
 创作出更多更强大的模式，
 并将它们应用到程序中去。</p>
