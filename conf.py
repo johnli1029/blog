@@ -240,6 +240,3 @@ texinfo_documents = [
 
 # How to display URL addresses: 'footnote', 'no', or 'inline'.
 #texinfo_show_urls = 'footnote'
-
-intersphinx_mapping = { 'redisref': ('http://redis.readthedocs.org/en/latest', None) }
-intersphinx_cache_limit = 1
