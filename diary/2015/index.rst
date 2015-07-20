@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   notes-about-translation-9
    notes-about-translation-8
    notes-about-translation-7
    notes-about-translation-6
