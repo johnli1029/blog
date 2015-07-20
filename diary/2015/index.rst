@@ -4,6 +4,8 @@
 .. toctree::
    :maxdepth: 2
 
+   notes-about-translation-8
+   notes-about-translation-7
    notes-about-translation-6
    notes-about-translation-5
    memories-of-redis-in-action-translation
