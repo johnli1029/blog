@@ -170,9 +170,9 @@ redis&gt; GEOADD Guangdong-cities 113.2278442 23.1255978 Guangzhou 113.106308 23
 <code class="docutils literal"><span class="pre">GEORADIUS</span></code> 使用用户给定的经纬度作为计算范围时的中心点，
 而 <code class="docutils literal"><span class="pre">GEORADIUSBYMEMBER</span></code> 则使用储存在位置集合里面的某个地点作为中心点。
 以下是这两个命令的基本格式：</p>
-<div class="highlight-python"><div class="highlight"><pre>GEORADIUS key longitude latitude radius m|km|ft|mi [WITHCOORD] [WITHDIST] [ASC|DESC] [COUNT count]
+<div class="highlight-python"><div class="highlight"><pre>GEORADIUS location-set longitude latitude radius m|km|ft|mi [WITHCOORD] [WITHDIST] [ASC|DESC] [COUNT count]
 
-GEORADIUSBYMEMBER key member radius m|km|ft|mi [WITHCOORD] [WITHDIST] [ASC|DESC] [COUNT count]
+GEORADIUSBYMEMBER location-set location radius m|km|ft|mi [WITHCOORD] [WITHDIST] [ASC|DESC] [COUNT count]
 </pre></div>
 </div>
 <p>这两个命令的各个参数的意义如下：</p>

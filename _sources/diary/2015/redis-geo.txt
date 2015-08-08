@@ -142,9 +142,9 @@ Redis 提供了 ``GEORADIUS`` 和 ``GEORADIUSBYMEMBER`` 两个命令来实现查
 
 ::
 
-    GEORADIUS key longitude latitude radius m|km|ft|mi [WITHCOORD] [WITHDIST] [ASC|DESC] [COUNT count]
+    GEORADIUS location-set longitude latitude radius m|km|ft|mi [WITHCOORD] [WITHDIST] [ASC|DESC] [COUNT count]
 
-    GEORADIUSBYMEMBER key member radius m|km|ft|mi [WITHCOORD] [WITHDIST] [ASC|DESC] [COUNT count]
+    GEORADIUSBYMEMBER location-set location radius m|km|ft|mi [WITHCOORD] [WITHDIST] [ASC|DESC] [COUNT count]
 
 这两个命令的各个参数的意义如下：
 
