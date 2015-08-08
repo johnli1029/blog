@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   redis-geo
    notes-about-translation-9
    notes-about-translation-8
    notes-about-translation-7

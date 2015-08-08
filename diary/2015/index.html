@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="huangz/blog" href="../../index.html" />
-    <link rel="next" title="翻译笔记之九：如何避免被机器翻译取代？" href="notes-about-translation-9.html" />
+    <link rel="next" title="Redis GEO 特性简介" href="redis-geo.html" />
     <link rel="prev" title="huangz/blog" href="../../index.html" />
 <!--[if lte IE 6]>
 <link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
@@ -44,7 +44,7 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="notes-about-translation-9.html" title="翻译笔记之九：如何避免被机器翻译取代？"
+          <a href="redis-geo.html" title="Redis GEO 特性简介"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../../index.html" title="huangz/blog"
@@ -62,6 +62,17 @@
 <h1>2015<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="redis-geo.html">Redis GEO 特性简介</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="redis-geo.html#id1">版本要求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-geo.html#id2">添加位置和获取位置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-geo.html#id3">计算两个位置之间的距离</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-geo.html#id4">获取指定范围内的元素</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-geo.html#id5">示例：查找附近的人</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-geo.html#id6">示例：摇一摇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-geo.html#id7">效率优化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-geo.html#id8">结语</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="notes-about-translation-9.html">翻译笔记之九：如何避免被机器翻译取代？</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notes-about-translation-8.html">翻译笔记之八：根据语境选择最合适的翻译</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notes-about-translation-7.html">翻译笔记之七：沿用旧译名而不是创建新译名</a></li>
@@ -132,8 +143,8 @@
   <p class="topless"><a href="../../index.html"
                         title="previous chapter">huangz/blog</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="notes-about-translation-9.html"
-                        title="next chapter">翻译笔记之九：如何避免被机器翻译取代？</a></p>
+  <p class="topless"><a href="redis-geo.html"
+                        title="next chapter">Redis GEO 特性简介</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">

@@ -1,0 +1,389 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Redis GEO 特性简介 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="huangz/blog" href="../../index.html" />
+    <link rel="up" title="2015" href="index.html" />
+    <link rel="next" title="翻译笔记之九：如何避免被机器翻译取代？" href="notes-about-translation-9.html" />
+    <link rel="prev" title="2015" href="index.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="notes-about-translation-9.html" title="翻译笔记之九：如何避免被机器翻译取代？"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="2015"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2015</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="redis-geo">
+<h1>Redis GEO 特性简介<a class="headerlink" href="#redis-geo" title="Permalink to this headline">¶</a></h1>
+<p>Redis 的 GEO 特性将在 Redis 3.2 版本释出，
+这个功能可以将用户给定的地理位置信息储存起来，
+并对这些信息进行操作。</p>
+<p>本文将对 Redis 的 GEO 特性进行介绍，
+说明这个特性相关命令的用户，
+并在最后说明如何使用这些命令去实现“查找附近的人”以及“摇一摇”这两个功能。</p>
+<div class="section" id="id1">
+<h2>版本要求<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>因为 Redis 目前的稳定版本为 Redis 3.0 ，
+而 GEO 特性是 Redis 3.2 版本的特性，
+所以如果你想要使用这个特性的话，
+那么就需要到 <a class="reference external" href="https://github.com/antirez/redis">Redis 的 GitHub 页面</a>去克隆 unstable 分支
+然后编译 unstable 版本的 Redis 源码，
+这样才能用到 Redis GEO 特性。</p>
+</div>
+<div class="section" id="id2">
+<h2>添加位置和获取位置<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>为了进行地理位置相关操作，
+我们首先需要将具体的地理位置记录起来，
+这一点可以通过执行 <code class="docutils literal"><span class="pre">GEOADD</span></code> 命令来完成，
+该命令的基本格式如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>GEOADD location-set longitude latitude name [longitude latitude name ...]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">GEOADD</span></code> 命令每次可以添加一个或多个经纬度地理位置。
+其中 <code class="docutils literal"><span class="pre">location-set</span></code> 为储存地理位置的集合，
+而 <code class="docutils literal"><span class="pre">longitude</span></code> 、 <code class="docutils literal"><span class="pre">latitude</span></code> 和 <code class="docutils literal"><span class="pre">name</span></code> 则分别为地理位置的经度、纬度、名字。</p>
+<p>举个例子，
+以下代码展示了如何通过 <code class="docutils literal"><span class="pre">GEOADD</span></code> 命令，
+将清远、广州、佛山、东莞、深圳等数个广东省的市添加到位置集合 <code class="docutils literal"><span class="pre">Guangdong-cities</span></code> 里面：</p>
+<div class="highlight-python"><div class="highlight"><pre>redis&gt; GEOADD Guangdong-cities 113.2099647 23.593675 Qingyuan
+1    -- 成功添加一个位置
+
+redis&gt; GEOADD Guangdong-cities 113.2278442 23.1255978 Guangzhou 113.106308 23.0088312 Foshan 113.7943267 22.9761989 Dongguan 114.0538788 22.5551603 Shenzhen
+4    -- 成功添加四个位置
+</pre></div>
+</div>
+<p>在将位置记录到位置集合之后，
+我们可以使用 <code class="docutils literal"><span class="pre">GEOPOS</span></code> 命令，
+输入位置的名字并取得位置的具体经纬度：</p>
+<div class="highlight-python"><div class="highlight"><pre>GEOPOS location-set name [name ...]
+</pre></div>
+</div>
+<p>比如说，
+如果我们想要获取清远、广州和佛山的经纬度，
+那么可以执行以下代码：</p>
+<div class="highlight-python"><div class="highlight"><pre>redis&gt; GEOPOS Guangdong-cities Qingyuan Guangzhou Foshan
+1) 1) &quot;113.20996731519699&quot;    -- 清远的经度
+   2) &quot;23.593675019671288&quot;    -- 清远的纬度
+2) 1) &quot;113.22784155607224&quot;    -- 广州的经度
+   2) &quot;23.125598202060807&quot;    -- 广州的纬度
+3) 1) &quot;113.10631066560745&quot;    -- 佛山的经度
+   2) &quot;23.008831202413539&quot;    -- 佛山的纬度
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>计算两个位置之间的距离<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>在拥有了地理数据之后，
+我们就可以基于这些数据进行各种各样的操作。
+针对地理位置信息的其中一个最简单的操作，
+就是计算两个位置之间的距离。</p>
+<p>在 Redis 里面，
+计算两个位置之间的距离可以通过 <code class="docutils literal"><span class="pre">GEODIST</span></code> 命令来实现：</p>
+<div class="highlight-python"><div class="highlight"><pre>GEODIST location-set location-x location-y [unit]
+</pre></div>
+</div>
+<p>在调用这个命令时，
+用户需要给定想要计算差距的地点 <code class="docutils literal"><span class="pre">location-x</span></code> 和 <code class="docutils literal"><span class="pre">location-y</span></code> ，
+以及储存这两个地点的地理位置集合。</p>
+<p>可选参数 <code class="docutils literal"><span class="pre">unit</span></code> 用于指定计算距离时的单位，
+它的值可以是以下单位的其中一个：</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">m</span></code> 表示单位为米。</li>
+<li><code class="docutils literal"><span class="pre">km</span></code> 表示单位为千米。</li>
+<li><code class="docutils literal"><span class="pre">mi</span></code> 表示单位为英里。</li>
+<li><code class="docutils literal"><span class="pre">ft</span></code> 表示单位为英尺。</li>
+</ul>
+<p>如果用户没有指定 <code class="docutils literal"><span class="pre">unit</span></code> 参数，
+那么 <code class="docutils literal"><span class="pre">GEODIST</span></code> 默认使用米为单位。</p>
+<p>作为例子，
+以下代码展示了如何计算清远和广州之间的距离：</p>
+<div class="highlight-python"><div class="highlight"><pre>redis&gt; GEODIST Guangdong-cities Qingyuan Guangzhou
+&quot;52094.433840356309&quot;    -- 两地相聚 52094 米
+</pre></div>
+</div>
+<p>上面的计算结果使用了米来表示清远和广州两地的距离，
+不过在表示比较长的距离时，
+我们更习惯采用公里（km）作为单位。
+通过显式地给定 <code class="docutils literal"><span class="pre">km</span></code> （千米）作为单位，
+我们可以让 <code class="docutils literal"><span class="pre">GEODIST</span></code> 显示两个地点之间相距的公里数：</p>
+<div class="highlight-python"><div class="highlight"><pre>redis&gt; GEODIST Guangdong-cities Qingyuan Guangzhou km
+&quot;52.094433840356309&quot;    -- 两地相聚 52 公里
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>获取指定范围内的元素<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>除了计算两地的距离之外，
+另一个常见的地理位置操作就是找出特定范围之内的其他存在的地点。
+比如找出地点 x 范围 100 米之内的所有地点，
+找出地点 y 范围 50 公里之内的所有地点等等。</p>
+<p>Redis 提供了 <code class="docutils literal"><span class="pre">GEORADIUS</span></code> 和 <code class="docutils literal"><span class="pre">GEORADIUSBYMEMBER</span></code> 两个命令来实现查找特定范围内地点的功能，
+它们的作用一样，
+只是指定中心点的方式不同：
+<code class="docutils literal"><span class="pre">GEORADIUS</span></code> 使用用户给定的经纬度作为计算范围时的中心点，
+而 <code class="docutils literal"><span class="pre">GEORADIUSBYMEMBER</span></code> 则使用储存在位置集合里面的某个地点作为中心点。
+以下是这两个命令的基本格式：</p>
+<div class="highlight-python"><div class="highlight"><pre>GEORADIUS key longitude latitude radius m|km|ft|mi [WITHCOORD] [WITHDIST] [ASC|DESC] [COUNT count]
+
+GEORADIUSBYMEMBER key member radius m|km|ft|mi [WITHCOORD] [WITHDIST] [ASC|DESC] [COUNT count]
+</pre></div>
+</div>
+<p>这两个命令的各个参数的意义如下：</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">m|km|ft|mi</span></code> 指定的是计算范围时的单位；</li>
+<li>如果给定了可选的 <code class="docutils literal"><span class="pre">WITHCOORD</span></code> ，
+那么命令在返回匹配的位置时会将位置的经纬度一并返回；</li>
+<li>如果给定了可选的 <code class="docutils literal"><span class="pre">WITHDIST</span></code> ，
+那么命令在返回匹配的位置时会将位置与中心点之间的距离一并返回；</li>
+<li>在默认情况下，
+<code class="docutils literal"><span class="pre">GEORADIUS</span></code> 和 <code class="docutils literal"><span class="pre">GEORADIUSBYMEMBER</span></code> 的结果是未排序的，
+<code class="docutils literal"><span class="pre">ASC</span></code> 可以让查找结果根据距离从近到远排序，
+而 <code class="docutils literal"><span class="pre">DESC</span></code> 则可以让查找结果根据从远到近排序；</li>
+<li><code class="docutils literal"><span class="pre">COUNT</span></code> 参数指定要返回的结果数量。</li>
+</ul>
+<p>作为示例，
+我们可以使用 <code class="docutils literal"><span class="pre">GEORADIUSBYMEMBER</span></code> 去找出位于广州 50 公里、 100 公里以及 150 公里以内的城市：</p>
+<div class="highlight-python"><div class="highlight"><pre>redis&gt; GEORADIUSBYMEMBER Guangdong-cities Guangzhou 50 km
+1) &quot;Foshan&quot;
+2) &quot;Guangzhou&quot;
+
+redis&gt; GEORADIUSBYMEMBER Guangdong-cities Guangzhou 100 km
+1) &quot;Foshan&quot;
+2) &quot;Guangzhou&quot;
+3) &quot;Dongguan&quot;
+4) &quot;Qingyuan&quot;
+
+redis&gt; GEORADIUSBYMEMBER Guangdong-cities Guangzhou 150 km
+1) &quot;Foshan&quot;
+2) &quot;Guangzhou&quot;
+3) &quot;Dongguan&quot;
+4) &quot;Qingyuan&quot;
+5) &quot;Shenzhen&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>示例：查找附近的人<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>好的，
+在了解了 Redis GEO 特性的基本信息之后，
+接下来我们该思考如何使用这些特性去解决实际的问题了。</p>
+<p>为了让用户可以方便地找到自己附近的其他用户，
+每个社交网站基本上都内置了“查找附近的人”这一功能，
+通过 Redis ，
+我们也可以实现同样的功能，
+以下是实现该功能的伪代码：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">pin</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">latitude</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    记录用户的地理位置。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">GEOADD</span><span class="p">(</span><span class="s">&#39;user-location-set&#39;</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">find_nearby</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    返回指定用户附近 n 公里的所有其他用户。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">GEORADIUSBYMEMBER</span><span class="p">(</span><span class="s">&#39;user-location-set&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;km&#39;</span><span class="p">,</span> <span class="n">unit_value</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>示例：摇一摇<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>为了增加乐趣性，
+我们可以对“查找附近的人”这一功能进行修改 ——
+程序不是返回指定范围内的所有人，
+而是随机地返回指定范围内的某个人，
+这也就是非常著名的“摇一摇”功能。
+以下是实现该功能的伪代码：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">RANDOM_RADIUS</span> <span class="o">=</span> <span class="mi">1</span>    <span class="c"># 随机查找的范围为 1 公里</span>
+
+<span class="k">def</span> <span class="nf">find_random</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+    <span class="c"># 获取范围内的所有其他用户</span>
+    <span class="n">get_all_near_users</span> <span class="o">=</span> <span class="n">find_nearby</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">RANDOM_RADIUS</span><span class="p">)</span>
+    <span class="c"># 将查找的结果从 Python 列表转换为 Python 集合</span>
+    <span class="n">user_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">get_all_near_users</span><span class="p">)</span>
+    <span class="c"># 然后调用 pop() 方法，从集合里面随机地移除并返回一个元素</span>
+    <span class="k">return</span> <span class="n">user_set</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>效率优化<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>现在的 <code class="docutils literal"><span class="pre">find_random()</span></code> 函数可以实现“摇一摇”功能，
+但它的效率并不高：
+因为程序每次执行这个函数的时候都需要重新执行 <code class="docutils literal"><span class="pre">find_nearby()</span></code> 函数以查找用户附近的位置，
+然而大部分用户的位置并不经常改变，
+并且 <code class="docutils literal"><span class="pre">GEORADIUSBYMEMBER</span></code> 命令的执行代价并不低，
+因此每次执行 <code class="docutils literal"><span class="pre">find_random()</span></code> 都重新执行 <code class="docutils literal"><span class="pre">find_nearby()</span></code> 是一种非常低效的做法。</p>
+<p>为了优化 <code class="docutils literal"><span class="pre">find_random()</span></code> 的效率，
+我们可以为 <code class="docutils literal"><span class="pre">find_random()</span></code> 的结果创建缓存：
+把每个执行“摇一摇”的用户的 <code class="docutils literal"><span class="pre">find_nearby()</span></code> 结果储存到一个 Redis 集合里面，
+并设置一个过期时间（比如 5 分钟），
+然后通过对集合使用 <code class="docutils literal"><span class="pre">SRANDMEMBER</span></code> 来随机地获取用户。
+这样用户在指定过期时间内执行的所有“摇一摇”操作都只会引起一次 <code class="docutils literal"><span class="pre">GEORADIUSBYMEMBER</span></code> ，
+这将极大地提高 <code class="docutils literal"><span class="pre">find_random()</span></code> 的执行效率。</p>
+<p>另外，
+如果用户密集地聚集在一起，
+那么通过使用 <code class="docutils literal"><span class="pre">GEORADIUSBYMEMBER</span></code> 命令提供的 <code class="docutils literal"><span class="pre">COUNT</span></code> 参数可以有效地减少指定范围内的用户数量，
+这可以提高 <code class="docutils literal"><span class="pre">find_nearby()</span></code> 的效率，
+从而提高 <code class="docutils literal"><span class="pre">find_random()</span></code> 的效率。</p>
+<p>因为篇幅关系，
+优化版的 <code class="docutils literal"><span class="pre">find_random()</span></code> 的具体实现这里就不给出了，
+有兴趣的读者可以自己尝试完成这个函数。</p>
+</div>
+<div class="section" id="id8">
+<h2>结语<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>好的，
+关于 Redis GEO 特性的简单介绍就到此结束，
+希望这篇文章对于大家了解 Redis 的 GEO 特性能够有所帮助，
+我也期待着大家能够和我分享其他 GEO 特性的用法。</p>
+<div class="line-block">
+<div class="line">黄健宏（huangz）</div>
+<div class="line">2015.8.8</div>
+</div>
+</div>
+</div>
+
+
+
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Redis GEO 特性简介</a><ul>
+<li><a class="reference internal" href="#id1">版本要求</a></li>
+<li><a class="reference internal" href="#id2">添加位置和获取位置</a></li>
+<li><a class="reference internal" href="#id3">计算两个位置之间的距离</a></li>
+<li><a class="reference internal" href="#id4">获取指定范围内的元素</a></li>
+<li><a class="reference internal" href="#id5">示例：查找附近的人</a></li>
+<li><a class="reference internal" href="#id6">示例：摇一摇</a></li>
+<li><a class="reference internal" href="#id7">效率优化</a></li>
+<li><a class="reference internal" href="#id8">结语</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2015</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="notes-about-translation-9.html"
+                        title="next chapter">翻译笔记之九：如何避免被机器翻译取代？</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/">小象学院（ChinaHadoop.cn）</a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>
