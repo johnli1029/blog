@@ -211,7 +211,7 @@ Redis 提供了 ``GEORADIUS`` 和 ``GEORADIUSBYMEMBER`` 两个命令来实现查
         """
         返回指定用户附近 n 公里的所有其他用户。
         """
-        return GEORADIUSBYMEMBER('user-location-set', user, unit='km', unit_value=n)
+        return GEORADIUSBYMEMBER('user-location-set', user, n, unit='km')
 
 
 示例：摇一摇
