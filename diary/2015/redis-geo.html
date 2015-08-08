@@ -229,7 +229,7 @@ redis&gt; GEORADIUSBYMEMBER Guangdong-cities Guangzhou 150 km
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    返回指定用户附近 n 公里的所有其他用户。</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">GEORADIUSBYMEMBER</span><span class="p">(</span><span class="s">&#39;user-location-set&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;km&#39;</span><span class="p">,</span> <span class="n">unit_value</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">GEORADIUSBYMEMBER</span><span class="p">(</span><span class="s">&#39;user-location-set&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;km&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
