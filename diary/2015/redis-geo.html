@@ -145,7 +145,7 @@ redis&gt; GEOADD Guangdong-cities 113.2278442 23.1255978 Guangzhou 113.106308 23
 <p>作为例子，
 以下代码展示了如何计算清远和广州之间的距离：</p>
 <div class="highlight-python"><div class="highlight"><pre>redis&gt; GEODIST Guangdong-cities Qingyuan Guangzhou
-&quot;52094.433840356309&quot;    -- 两地相聚 52094 米
+&quot;52094.433840356309&quot;    -- 两地相距 52094 米
 </pre></div>
 </div>
 <p>上面的计算结果使用了米来表示清远和广州两地的距离，
@@ -154,7 +154,7 @@ redis&gt; GEOADD Guangdong-cities 113.2278442 23.1255978 Guangzhou 113.106308 23
 通过显式地给定 <code class="docutils literal"><span class="pre">km</span></code> （千米）作为单位，
 我们可以让 <code class="docutils literal"><span class="pre">GEODIST</span></code> 显示两个地点之间相距的公里数：</p>
 <div class="highlight-python"><div class="highlight"><pre>redis&gt; GEODIST Guangdong-cities Qingyuan Guangzhou km
-&quot;52.094433840356309&quot;    -- 两地相聚 52 公里
+&quot;52.094433840356309&quot;    -- 两地相距 52 公里
 </pre></div>
 </div>
 </div>
@@ -278,7 +278,12 @@ redis&gt; GEORADIUSBYMEMBER Guangdong-cities Guangzhou 150 km
 有兴趣的读者可以自己尝试完成这个函数。</p>
 </div>
 <div class="section" id="id8">
-<h2>结语<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<h2>Redis GEO 命令<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>想要了解更多关于 <code class="docutils literal"><span class="pre">GEOADD</span></code> 、 <code class="docutils literal"><span class="pre">GEORADIUS</span></code> 等 Redis GEO 特性命令的相关信息，
+请访问《Redis命令参考》： <a class="reference external" href="http://redisdoc.com">RedisDoc.com</a></p>
+</div>
+<div class="section" id="id9">
+<h2>结语<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>好的，
 关于 Redis GEO 特性的简单介绍就到此结束，
 希望这篇文章对于大家了解 Redis 的 GEO 特性能够有所帮助，
@@ -331,7 +336,8 @@ redis&gt; GEORADIUSBYMEMBER Guangdong-cities Guangzhou 150 km
 <li><a class="reference internal" href="#id5">示例：查找附近的人</a></li>
 <li><a class="reference internal" href="#id6">示例：摇一摇</a></li>
 <li><a class="reference internal" href="#id7">效率优化</a></li>
-<li><a class="reference internal" href="#id8">结语</a></li>
+<li><a class="reference internal" href="#id8">Redis GEO 命令</a></li>
+<li><a class="reference internal" href="#id9">结语</a></li>
 </ul>
 </li>
 </ul>
