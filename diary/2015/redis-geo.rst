@@ -111,7 +111,7 @@ Redis 的 GEO 特性将在 Redis 3.2 版本释出，
 ::
 
     redis> GEODIST Guangdong-cities Qingyuan Guangzhou
-    "52094.433840356309"    -- 两地相聚 52094 米
+    "52094.433840356309"    -- 两地相距 52094 米
 
 上面的计算结果使用了米来表示清远和广州两地的距离，
 不过在表示比较长的距离时，
@@ -122,7 +122,7 @@ Redis 的 GEO 特性将在 Redis 3.2 版本释出，
 ::
 
     redis> GEODIST Guangdong-cities Qingyuan Guangzhou km
-    "52.094433840356309"    -- 两地相聚 52 公里
+    "52.094433840356309"    -- 两地相距 52 公里
 
 
 获取指定范围内的元素
@@ -264,6 +264,13 @@ Redis 提供了 ``GEORADIUS`` 和 ``GEORADIUSBYMEMBER`` 两个命令来实现查
 因为篇幅关系，
 优化版的 ``find_random()`` 的具体实现这里就不给出了，
 有兴趣的读者可以自己尝试完成这个函数。
+
+
+Redis GEO 命令
+-------------------
+
+想要了解更多关于 ``GEOADD`` 、 ``GEORADIUS`` 等 Redis GEO 特性命令的相关信息，
+请访问《Redis命令参考》： `RedisDoc.com <http://redisdoc.com>`_
 
 
 结语
