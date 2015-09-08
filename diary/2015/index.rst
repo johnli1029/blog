@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   clojure-general-collection-functions
    clojure-list-functions
    annotated-redis-geo-source
    redis-geo
