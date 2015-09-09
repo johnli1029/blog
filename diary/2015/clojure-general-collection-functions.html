@@ -1,0 +1,633 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Clojure 收集器通用操作函数简介 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="huangz/blog" href="../../index.html" />
+    <link rel="up" title="2015" href="index.html" />
+    <link rel="next" title="Clojure 列表常用函数简介" href="clojure-list-functions.html" />
+    <link rel="prev" title="2015" href="index.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="clojure-list-functions.html" title="Clojure 列表常用函数简介"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="2015"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2015</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="clojure">
+<h1>Clojure 收集器通用操作函数简介<a class="headerlink" href="#clojure" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>一般操作<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="count">
+<h3><code class="docutils literal"><span class="pre">count</span></code><a class="headerlink" href="#count" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nb">count </span><span class="nv">coll</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>返回收集器包含的元素数量。
+<code class="docutils literal"><span class="pre">(count</span> <span class="pre">nil)</span></code> 将返回 <code class="docutils literal"><span class="pre">0</span></code> 。
+这个函数也适用于字符串、数组、Java 收集器以及映射。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">count </span><span class="nv">nil</span><span class="p">)</span>
+<span class="mi">0</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">count </span><span class="p">[])</span>
+<span class="mi">0</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">count </span><span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="mi">3</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">count </span><span class="p">{</span><span class="ss">:one</span> <span class="mi">1</span> <span class="ss">:two</span> <span class="mi">2</span><span class="p">})</span>
+<span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="empty">
+<h3><code class="docutils literal"><span class="pre">empty</span></code><a class="headerlink" href="#empty" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nf">empty</span> <span class="nv">coll</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>返回一个与给定收集器类型相同的空收集器，
+当给定值不是收集器或者未被支持时，
+返回一个 <code class="docutils literal"><span class="pre">nil</span></code> 。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">empty</span> <span class="p">(</span><span class="nb">list </span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+<span class="p">()</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">empty</span> <span class="p">{</span><span class="ss">:a</span> <span class="mi">1</span> <span class="ss">:b</span> <span class="mi">2</span><span class="p">})</span>
+<span class="p">{}</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">empty</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="p">[]</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">empty</span> <span class="s">&quot;hello world&quot;</span><span class="p">)</span>
+<span class="nv">nil</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">empty</span> <span class="mi">123</span><span class="p">)</span>
+<span class="nv">nil</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">empty</span> <span class="mi">10086</span><span class="p">)</span>
+<span class="nv">nil</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="not-empty">
+<h3><code class="docutils literal"><span class="pre">not-empty</span></code><a class="headerlink" href="#not-empty" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nf">not-empty</span> <span class="nv">coll</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">not-empty</span></code> 函数在给定的收集器为空时返回 <code class="docutils literal"><span class="pre">nil</span></code> ，
+非空时返回收集器本身。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">not-empty</span> <span class="p">[])</span>
+<span class="nv">nil</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">not-empty</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="into">
+<h3><code class="docutils literal"><span class="pre">into</span></code><a class="headerlink" href="#into" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nb">into </span><span class="nv">target</span> <span class="nv">source</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">into </span><span class="nv">target</span> <span class="nv">x-source</span> <span class="nv">source</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>将给定的源收集器与目标收集器进行合并，
+然后返回合并后的收集器。
+新收集器的类型由目标收集器决定。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">into </span><span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span> <span class="p">[</span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">]</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">into </span><span class="p">(</span><span class="nf">sorted-map</span><span class="p">)</span> <span class="p">{</span><span class="ss">:b</span> <span class="mi">2</span> <span class="ss">:c</span> <span class="mi">3</span> <span class="ss">:a</span> <span class="mi">1</span><span class="p">})</span>
+<span class="p">{</span><span class="ss">:a</span> <span class="mi">1</span>, <span class="ss">:b</span> <span class="mi">2</span>, <span class="ss">:c</span> <span class="mi">3</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="conj">
+<h3><code class="docutils literal"><span class="pre">conj</span></code><a class="headerlink" href="#conj" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nb">conj </span><span class="nv">coll</span> <span class="nv">x</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nb">conj </span><span class="nv">coll</span> <span class="nv">x</span> <span class="o">&amp;</span> <span class="nv">xs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>返回将一个或多个新元素添加到给定收集器之后产生的新序列。
+根据收集器类型的不同，
+新元素可能会被添加到收集器的不同位置。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">conj </span><span class="p">(</span><span class="nb">list </span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">conj </span><span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">conj </span><span class="p">{</span><span class="ss">:redis</span> <span class="s">&quot;Redis.io&quot;</span> <span class="ss">:mongodb</span> <span class="s">&quot;MongoDB.com&quot;</span><span class="p">}</span> <span class="p">{</span><span class="ss">:mysql</span> <span class="s">&quot;MySQL.com&quot;</span><span class="p">})</span>
+<span class="p">{</span><span class="ss">:redis</span> <span class="s">&quot;Redis.io&quot;</span>, <span class="ss">:mongodb</span> <span class="s">&quot;MongoDB.com&quot;</span>, <span class="ss">:mysql</span> <span class="s">&quot;MySQL.com&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>内容测试<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="distinct">
+<h3><code class="docutils literal"><span class="pre">distinct?</span></code><a class="headerlink" href="#distinct" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nf">distinct?</span> <span class="nv">x</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nf">distinct?</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nf">distinct?</span> <span class="nv">x</span> <span class="nv">y</span> <span class="o">&amp;</span> <span class="nv">more</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果输入的元素各不相同，
+那么返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">distinct?</span> <span class="ss">:a</span><span class="p">)</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">distinct?</span> <span class="ss">:a</span> <span class="ss">:a</span> <span class="ss">:a</span><span class="p">)</span>
+<span class="nv">false</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">distinct?</span> <span class="ss">:a</span> <span class="ss">:b</span> <span class="ss">:c</span><span class="p">)</span>
+<span class="nv">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3><code class="docutils literal"><span class="pre">empty?</span></code><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nf">empty?</span> <span class="nv">coll</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果给定的收集器不包含任何元素，
+那么返回真；
+否则返回假。
+<code class="docutils literal"><span class="pre">(empty?</span> <span class="pre">coll)</span></code> 等价于 <code class="docutils literal"><span class="pre">(not</span> <span class="pre">(seq</span> <span class="pre">coll))</span></code> 。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">empty?</span> <span class="p">[])</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">empty?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nv">false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="every">
+<h3><code class="docutils literal"><span class="pre">every?</span></code><a class="headerlink" href="#every" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nb">every? </span><span class="nv">pred</span> <span class="nv">coll</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果收集器里面的所有元素对于给定的条件都返回真，
+那么这个函数返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">every? </span><span class="nv">even?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">])</span>
+<span class="nv">false</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">every? </span><span class="nv">even?</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">4</span> <span class="mi">6</span> <span class="mi">8</span><span class="p">])</span>
+<span class="nv">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="not-every">
+<h3><code class="docutils literal"><span class="pre">not-every?</span></code><a class="headerlink" href="#not-every" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nb">not-every? </span><span class="nv">pred</span> <span class="nv">coll</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果收集器里面有至少一个元素对于给定的条件返回假，
+那么这个函数返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">not-every? </span><span class="nv">even?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">])</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">not-every? </span><span class="nv">even?</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">4</span> <span class="mi">6</span> <span class="mi">8</span><span class="p">])</span>
+<span class="nv">false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="some">
+<h3><code class="docutils literal"><span class="pre">some</span></code><a class="headerlink" href="#some" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nb">some </span><span class="nv">pred</span> <span class="nv">coll</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果收集器里面有至少一个元素符合给定的条件，
+那么返回真；
+如果所有元素都不符合给定的条件，
+那么返回 <code class="docutils literal"><span class="pre">nil</span></code> 。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">some </span><span class="nv">even?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">some </span><span class="nv">even?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">3</span> <span class="mi">5</span> <span class="mi">7</span><span class="p">])</span>
+<span class="nv">nil</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="not-any">
+<h3><code class="docutils literal"><span class="pre">not-any?</span></code><a class="headerlink" href="#not-any" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nb">not-any? </span><span class="nv">pred</span> <span class="nv">coll</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果收集器里面的所有元素都不符合给定的条件，
+那么返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">not-any? </span><span class="nv">even?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">3</span> <span class="mi">5</span> <span class="mi">7</span><span class="p">])</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">not-any? </span><span class="nv">even?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">])</span>
+<span class="nv">false</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>能力测试<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sequential">
+<h3><code class="docutils literal"><span class="pre">sequential?</span></code><a class="headerlink" href="#sequential" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nf">sequential?</span> <span class="nv">coll</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果给定的收集器实现了 <code class="docutils literal"><span class="pre">Sequential</span></code> 协议，
+那么返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">sequential?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">sequential?</span> <span class="o">#</span><span class="p">{</span><span class="ss">:a</span> <span class="ss">:b</span> <span class="ss">:c</span><span class="p">})</span>
+<span class="nv">false</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">sequential?</span> <span class="s">&quot;hello world&quot;</span><span class="p">)</span>
+<span class="nv">false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="associative">
+<h3><code class="docutils literal"><span class="pre">associative?</span></code><a class="headerlink" href="#associative" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nf">associative?</span> <span class="nv">coll</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果给定的收集器实现了 <code class="docutils literal"><span class="pre">Associative</span></code> 协议，
+那么返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">associative?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">associative?</span> <span class="p">{</span><span class="ss">:number</span> <span class="mi">10086</span> <span class="ss">:msg</span> <span class="s">&quot;hello world&quot;</span><span class="p">})</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">associative?</span> <span class="o">#</span><span class="p">{</span><span class="ss">:a</span> <span class="ss">:b</span> <span class="ss">:c</span><span class="p">})</span>
+<span class="nv">false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sorted">
+<h3><code class="docutils literal"><span class="pre">sorted?</span></code><a class="headerlink" href="#sorted" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nf">sorted?</span> <span class="nv">coll</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果给定的收集器实现了 <code class="docutils literal"><span class="pre">Sorted</span></code> 协议，
+那么返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">sorted?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nv">false</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">sorted?</span> <span class="p">(</span><span class="nb">sorted-set </span><span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]))</span>
+<span class="nv">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="counted">
+<h3><code class="docutils literal"><span class="pre">counted?</span></code><a class="headerlink" href="#counted" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nf">counted?</span> <span class="nv">coll</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果给定的收集器实现了常数复杂度的长度获取功能，
+那么返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">counted?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">counted?</span> <span class="p">(</span><span class="nb">list </span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">counted?</span> <span class="s">&quot;hello world&quot;</span><span class="p">)</span>
+<span class="nv">false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reversible">
+<h3><code class="docutils literal"><span class="pre">reversible?</span></code><a class="headerlink" href="#reversible" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nf">reversible?</span> <span class="nv">coll</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果给定的收集器实现了 <code class="docutils literal"><span class="pre">Reversible</span></code> 协议，
+那么返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">reversible?</span> <span class="s">&quot;hello world&quot;</span><span class="p">)</span>
+<span class="nv">false</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">reversible?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">reversible?</span> <span class="p">(</span><span class="nb">list </span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nv">false</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>类型测试<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="coll">
+<h3><code class="docutils literal"><span class="pre">coll?</span></code><a class="headerlink" href="#coll" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nf">coll?</span> <span class="nv">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果给定的值实现了 <code class="docutils literal"><span class="pre">IPersistentCollection</span></code> 协议，
+那么返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">coll?</span> <span class="o">#</span><span class="p">{</span><span class="ss">:a</span> <span class="ss">:b</span> <span class="ss">:c</span><span class="p">})</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">coll?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">coll?</span> <span class="s">&quot;hello world&quot;</span><span class="p">)</span>
+<span class="nv">false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="list">
+<h3><code class="docutils literal"><span class="pre">list?</span></code><a class="headerlink" href="#list" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nf">list?</span> <span class="nv">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果给定的值实现了 <code class="docutils literal"><span class="pre">IPersistentList</span></code> 协议，
+那么返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">list?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nv">false</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">list?</span> <span class="p">(</span><span class="nb">list </span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">list?</span> <span class="nv">nil</span><span class="p">)</span>
+<span class="nv">false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="vector">
+<h3><code class="docutils literal"><span class="pre">vector?</span></code><a class="headerlink" href="#vector" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nb">vector? </span><span class="nv">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果给定的值实现了 <code class="docutils literal"><span class="pre">IPersistentVector</span></code> 协议，
+那么返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">vector? </span><span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">vector? </span><span class="p">{</span><span class="ss">:number</span> <span class="mi">10086</span> <span class="ss">:msg</span> <span class="s">&quot;hello world&quot;</span><span class="p">})</span>
+<span class="nv">false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set">
+<h3><code class="docutils literal"><span class="pre">set?</span></code><a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nf">set?</span> <span class="nv">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果给定的值实现了 <code class="docutils literal"><span class="pre">IPersistentSet</span></code> 协议，
+那么返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">set?</span> <span class="o">#</span><span class="p">{</span><span class="ss">:a</span> <span class="ss">:b</span> <span class="ss">:c</span><span class="p">})</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">set?</span> <span class="p">(</span><span class="nb">sorted-set </span><span class="p">[</span><span class="ss">:c</span> <span class="ss">:b</span> <span class="ss">:a</span><span class="p">]))</span>
+<span class="nv">true</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">set?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nv">false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="map">
+<h3><code class="docutils literal"><span class="pre">map?</span></code><a class="headerlink" href="#map" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nb">map? </span><span class="nv">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果给定的值实现了 <code class="docutils literal"><span class="pre">IPersistentMap</span></code> 协议，
+那么返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">map? </span><span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nv">false</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">map? </span><span class="p">{</span><span class="ss">:number</span> <span class="mi">10086</span> <span class="ss">:msg</span> <span class="s">&quot;hello&quot;</span><span class="p">})</span>
+<span class="nv">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="seq">
+<h3><code class="docutils literal"><span class="pre">seq?</span></code><a class="headerlink" href="#seq" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nb">seq? </span><span class="nv">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果给定的值实现了 <code class="docutils literal"><span class="pre">ISeq</span></code> 协议，
+那么返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">seq? </span><span class="mi">123</span><span class="p">)</span>
+<span class="nv">false</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">seq? </span><span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nv">false</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nb">seq? </span><span class="p">(</span><span class="nb">seq </span><span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]))</span>
+<span class="nv">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="record">
+<h3><code class="docutils literal"><span class="pre">record?</span></code><a class="headerlink" href="#record" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="p">(</span><span class="nf">record?</span> <span class="nv">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果给定值是一个记录（record），
+那么返回真；
+否则返回假。</p>
+<div class="highlight-clojure"><div class="highlight"><pre><span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">record?</span> <span class="s">&quot;hello&quot;</span><span class="p">)</span>
+<span class="nv">false</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="kd">defrecord </span><span class="nv">DummyRecord</span> <span class="p">[</span><span class="nv">value</span><span class="p">])</span>
+<span class="nv">user.DummyRecord</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="k">def </span><span class="nv">tmp</span> <span class="p">(</span><span class="nf">-&gt;DummyRecord</span> <span class="s">&quot;hello&quot;</span><span class="p">))</span>
+<span class="o">#</span><span class="ss">&#39;user/tmp</span>
+
+<span class="nv">user=&gt;</span> <span class="p">(</span><span class="nf">record?</span> <span class="nv">tmp</span><span class="p">)</span>
+<span class="nv">true</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Clojure 收集器通用操作函数简介</a><ul>
+<li><a class="reference internal" href="#id1">一般操作</a><ul>
+<li><a class="reference internal" href="#count"><code class="docutils literal"><span class="pre">count</span></code></a></li>
+<li><a class="reference internal" href="#empty"><code class="docutils literal"><span class="pre">empty</span></code></a></li>
+<li><a class="reference internal" href="#not-empty"><code class="docutils literal"><span class="pre">not-empty</span></code></a></li>
+<li><a class="reference internal" href="#into"><code class="docutils literal"><span class="pre">into</span></code></a></li>
+<li><a class="reference internal" href="#conj"><code class="docutils literal"><span class="pre">conj</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id2">内容测试</a><ul>
+<li><a class="reference internal" href="#distinct"><code class="docutils literal"><span class="pre">distinct?</span></code></a></li>
+<li><a class="reference internal" href="#id3"><code class="docutils literal"><span class="pre">empty?</span></code></a></li>
+<li><a class="reference internal" href="#every"><code class="docutils literal"><span class="pre">every?</span></code></a></li>
+<li><a class="reference internal" href="#not-every"><code class="docutils literal"><span class="pre">not-every?</span></code></a></li>
+<li><a class="reference internal" href="#some"><code class="docutils literal"><span class="pre">some</span></code></a></li>
+<li><a class="reference internal" href="#not-any"><code class="docutils literal"><span class="pre">not-any?</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">能力测试</a><ul>
+<li><a class="reference internal" href="#sequential"><code class="docutils literal"><span class="pre">sequential?</span></code></a></li>
+<li><a class="reference internal" href="#associative"><code class="docutils literal"><span class="pre">associative?</span></code></a></li>
+<li><a class="reference internal" href="#sorted"><code class="docutils literal"><span class="pre">sorted?</span></code></a></li>
+<li><a class="reference internal" href="#counted"><code class="docutils literal"><span class="pre">counted?</span></code></a></li>
+<li><a class="reference internal" href="#reversible"><code class="docutils literal"><span class="pre">reversible?</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">类型测试</a><ul>
+<li><a class="reference internal" href="#coll"><code class="docutils literal"><span class="pre">coll?</span></code></a></li>
+<li><a class="reference internal" href="#list"><code class="docutils literal"><span class="pre">list?</span></code></a></li>
+<li><a class="reference internal" href="#vector"><code class="docutils literal"><span class="pre">vector?</span></code></a></li>
+<li><a class="reference internal" href="#set"><code class="docutils literal"><span class="pre">set?</span></code></a></li>
+<li><a class="reference internal" href="#map"><code class="docutils literal"><span class="pre">map?</span></code></a></li>
+<li><a class="reference internal" href="#seq"><code class="docutils literal"><span class="pre">seq?</span></code></a></li>
+<li><a class="reference internal" href="#record"><code class="docutils literal"><span class="pre">record?</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2015</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="clojure-list-functions.html"
+                        title="next chapter">Clojure 列表常用函数简介</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/">小象学院（ChinaHadoop.cn）</a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>
