@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   comparison-of-redis-and-memcached.rst
    clojure-general-collection-functions
    clojure-list-functions
    annotated-redis-geo-source
