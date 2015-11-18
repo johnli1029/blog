@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>《Redis实战》中的 Redis 应用示例 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="huangz/blog" href="../../index.html" />
+    <link rel="up" title="2015" href="index.html" />
+    <link rel="next" title="《Go实战》第 1 章：入门知识" href="go-in-action-chapter-1.html" />
+    <link rel="prev" title="2015" href="index.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="go-in-action-chapter-1.html" title="《Go实战》第 1 章：入门知识"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="2015"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2015</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="redis-redis">
+<h1>《Redis实战》中的 Redis 应用示例<a class="headerlink" href="#redis-redis" title="Permalink to this headline">¶</a></h1>
+<img alt="../../_images/ria.png" class="align-right" src="../../_images/ria.png" />
+<p>《Redis实战》在书中介绍了很多 Redis 使用示例，
+其中包括缓存、分布式锁、队列、聊天室、微博客、用户关系图谱等一系列应用。</p>
+<p>为了方便大家学习和使用这些用例，
+我在本文中将《Redis实战》各章中的用例、这些用例所在的章节以及它们的源码都一一罗列了出来，
+希望大家会喜欢。</p>
+<p>想要了解《Redis实战》一书的更多信息，
+请访问书本的读者支持主页 <a class="reference external" href="http://redisinaction.com">redisinaction.com</a> 。</p>
+<div class="section" id="id1">
+<h2>第 1 章<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>类似 Reddit.com / HackerNews 的文章推荐网站，书本 1.3 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch01_listing_source.py#L128">实现源码</a> 。</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>第 2 章<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>登录 Cookies ，书本 2.1 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch02_listing_source.py#L12">实现源码</a> 。</li>
+<li>购物车，书本 2.2 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch02_listing_source.py#L66">实现源码</a> 。</li>
+<li>网页缓存，书本 2.3 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch02_listing_source.py#L101">实现源码</a> 。</li>
+<li>数据行缓存，书本 2.4 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch02_listing_source.py#L124">实现源码</a> 。</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h2>第 3 章<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>无</p>
+</div>
+<div class="section" id="id9">
+<h2>第 4 章<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>对日志文件进行聚合计算，书本 4.1.1 节第 2 小节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch04_listing_source.py#L29">实现源码</a> 。</li>
+<li>在主从服务器中实现同步写入，书本 4.2.4 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch04_listing_source.py#L88">实现源码</a> 。</li>
+<li>游戏物品拍卖行，书本 4.4.1 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch04_listing_source.py#L150">实现源码</a> 。</li>
+</ul>
+</div>
+<div class="section" id="id13">
+<h2>第 5 章<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>固定长度的先进先出日志队列，书本 5.1.1 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch05_listing_source.py#L24">实现源码</a> 。</li>
+<li>根据日志的出现次数排列日志的日志队列，书本 5.1.2 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch05_listing_source.py#L54">实现源码</a> 。</li>
+<li>使用有序集合实现计数器，书本 5.2 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch05_listing_source.py#L96">实现源码</a> 。</li>
+<li>记录统计数据，书本 5.2.2 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch05_listing_source.py#L213">实现源码</a> 。</li>
+<li>IP 所属地查询程序，书本 5.3 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch05_listing_source.py#L316">实现源码</a> 。</li>
+<li>服务器维护判断程序，书本 5.4.1 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch05_listing_source.py#L391">实现源码</a> 。</li>
+<li>配置信息储存程序，书本 5.4.2 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch05_listing_source.py#L413">实现源码</a> 。</li>
+<li>自动连接 Redis 服务器的连接器，书本 5.4.3 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch05_listing_source.py#L451">实现源码</a> 。</li>
+</ul>
+</div>
+<div class="section" id="id22">
+<h2>第 6 章<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>带有自动补全特性的联系人列表，书本 6.1 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch06_listing_source.py#L19">实现源码</a> 。</li>
+<li>分布式锁，书本 6.2 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch06_listing_source.py#L169">实现源码</a> 。</li>
+<li>带有超时限制特性的分布式锁，书本 6.2.5 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch06_listing_source.py#L251">实现源码</a> 。</li>
+<li>基本计数信号量，书本 6.3.1 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch06_listing_source.py#L277">实现源码</a> 。</li>
+<li>公平计数信号量，书本 6.3.2 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch06_listing_source.py#L309">实现源码</a> 。</li>
+<li>先进先出（FIFO）队列，书本 6.4.1 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch06_listing_source.py#L382">实现源码</a> 。</li>
+<li>任务优先级队列，书本 6.4.1 节第 2 小节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch06_listing_source.py#L382">实现源码</a> 。</li>
+<li>延迟任务队列，书本 6.4.2 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch06_listing_source.py#L457">实现源码</a> 。</li>
+<li>网络聊天室，书本 6.5.2 ，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch06_listing_source.py#L505">实现源码</a> 。</li>
+<li>使用 Redis 进行文件分发，书本 6.6.2 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch06_listing_source.py#L656">实现源码</a> 。</li>
+</ul>
+</div>
+<div class="section" id="id33">
+<h2>第 7 章<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>简单的反向搜索引擎，书本 7.1 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch07_listing_source.py">实现源码</a> 。</li>
+<li>简单的广告定向引擎，书本 7.3 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch07_listing_source.py#L358">实现源码</a> 。</li>
+<li>职位搜索引擎，书本 7.4 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch07_listing_source.py#L611">实现源码</a> 。</li>
+</ul>
+</div>
+<div class="section" id="id37">
+<h2>第 8 章<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>类似 Twitter 的微博客程序，书本第 8 章，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch08_listing_source.py">实现源码</a> 。</li>
+<li>储存用户信息，书本 8.1.1 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch08_listing_source.py#L105">实现源码</a> 。</li>
+<li>创建 Twitter 状态消息，书本 8.1.2 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch08_listing_source.py#L146">实现源码</a> 。</li>
+<li>创建时间线，书本 8.2 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch08_listing_source.py#L146">实现源码</a> 。</li>
+<li>用户关系图谱（关注和被关注），书本 8.3 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch08_listing_source.py#L196">实现源码</a> 。</li>
+<li>删除 Twitter 状态消息，书本 8.4 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch08_listing_source.py#L461">实现源码</a> 。</li>
+<li>实现社交网站的流 API ，书本 8.5 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch08_listing_source.py#L516">实现源码</a> 。</li>
+</ul>
+</div>
+<div class="section" id="id45">
+<h2>第 9 章<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>分片散列，书本 9.2.1 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch09_listing_source.py#L162">实现源码</a> 。</li>
+<li>分片集合，书本 9.2.2 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch09_listing_source.py#L226">实现源码</a> 。</li>
+<li>以二进制方式储存地理位置，书本 9.3 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch09_listing_source.py#L299">实现源码</a> 。</li>
+</ul>
+</div>
+<div class="section" id="id49">
+<h2>第 10 章<a class="headerlink" href="#id49" title="Permalink to this headline">¶</a></h2>
+<p>无</p>
+</div>
+<div class="section" id="id50">
+<h2>第 11 章<a class="headerlink" href="#id50" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>使用 Lua 脚本实现分布式锁，书本 11.2.2 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch11_listing_source.py#L166">实现源码</a> 。</li>
+<li>使用 Lua 脚本实现计数信号量，书本 11.2.3 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch11_listing_source.py#L257">实现源码</a> 。</li>
+<li>使用 Lua 脚本实现分片列表，书本 11.4.2 节，<a class="reference external" href="https://github.com/huangz1990/riacn-code/blob/master/ch11_listing_source.py#L453">实现源码</a> 。</li>
+</ul>
+<div class="line-block">
+<div class="line">黄健宏</div>
+<div class="line">2015.11.19</div>
+</div>
+</div>
+</div>
+
+
+
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">《Redis实战》中的 Redis 应用示例</a><ul>
+<li><a class="reference internal" href="#id1">第 1 章</a></li>
+<li><a class="reference internal" href="#id3">第 2 章</a></li>
+<li><a class="reference internal" href="#id8">第 3 章</a></li>
+<li><a class="reference internal" href="#id9">第 4 章</a></li>
+<li><a class="reference internal" href="#id13">第 5 章</a></li>
+<li><a class="reference internal" href="#id22">第 6 章</a></li>
+<li><a class="reference internal" href="#id33">第 7 章</a></li>
+<li><a class="reference internal" href="#id37">第 8 章</a></li>
+<li><a class="reference internal" href="#id45">第 9 章</a></li>
+<li><a class="reference internal" href="#id49">第 10 章</a></li>
+<li><a class="reference internal" href="#id50">第 11 章</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2015</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="go-in-action-chapter-1.html"
+                        title="next chapter">《Go实战》第 1 章：入门知识</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/">小象学院（ChinaHadoop.cn）</a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>
