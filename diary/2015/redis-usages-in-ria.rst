@@ -89,7 +89,7 @@
 第 7 章
 --------------
 
-- 简单的反向搜索引擎，书本 7.1 节，\ `实现源码 <https://github.com/huangz1990/riacn-code/blob/master/ch07_listing_source.py>`_ 。
+- 简单的反向搜索引擎，书本 7.1 节，\ `实现源码 <https://github.com/huangz1990/riacn-code/blob/master/ch07_listing_source.py#L12>`_ 。
 
 - 简单的广告定向引擎，书本 7.3 节，\ `实现源码 <https://github.com/huangz1990/riacn-code/blob/master/ch07_listing_source.py#L358>`_ 。
 
