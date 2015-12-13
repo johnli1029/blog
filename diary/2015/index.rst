@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   jikexueyuan-plagiarized-redisbook
    redis-usages-in-ria
    go-in-action-chapter-1
    comparison-of-redis-and-memcached.rst
