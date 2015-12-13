@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>极客学院大篇幅抄袭《Redis设计与实现》并以此进行牟利 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="huangz/blog" href="../../index.html" />
+    <link rel="up" title="2015" href="index.html" />
+    <link rel="next" title="《Redis实战》中的 Redis 应用示例" href="redis-usages-in-ria.html" />
+    <link rel="prev" title="2015" href="index.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="redis-usages-in-ria.html" title="《Redis实战》中的 Redis 应用示例"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="2015"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2015</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="redis">
+<h1>极客学院大篇幅抄袭《Redis设计与实现》并以此进行牟利<a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h1>
+<p>从今年 7 月份开始，
+极客学院（jikexueyuan.com）陆续上线了《Redis的集合类型与有序集合类型》、《Redis的列表数据类型》、《Redis的字符串类型与散列类型》、《Redis的常用命令与高级特性（一）》、《Redis高级特性（二）》、《发布订阅与Sentinel》、《Redis集群》等多个课程视频，
+在这些视频里面大篇幅地抄袭《Redis设计与实现》一书的文字、图片、示例等内容，
+并通过这些视频收取 VIP 费用进行牟利。</p>
+<p>现正告极客学院：
+《Redis设计与实现》是本人（黄健宏）的原创作品，
+通过协议授权机械工业出版社华章公司进行出版(ISBN号码：9787111464747），
+受到《中华人民共和国著作权法》保护。
+你方的行为已经严重侵犯《Redis设计与实现》一书的版权，
+请立即停止侵权行为，
+删除相关侵权视频。
+我方已对此事进行了取证，
+保留通过法律手段追究此事的权利。</p>
+<div class="line-block">
+<div class="line">黄健宏</div>
+<div class="line">2015.12.13</div>
+</div>
+<div class="section" id="id1">
+<h2>部分抄袭证据<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>课程主页<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<img alt="../../_images/course-homepage.png" src="../../_images/course-homepage.png" />
+</div>
+<div class="section" id="id3">
+<h3>抄袭课程一<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>以下是极客学院的《发布订阅与与Sentinel》课程的部分截图，
+截图内容均抄袭自《Redis设计与实现》的《发布与订阅》一章。</p>
+<img alt="../../_images/pubsub1.png" src="../../_images/pubsub1.png" />
+<img alt="../../_images/pubsub2.png" src="../../_images/pubsub2.png" />
+<img alt="../../_images/pubsub3.png" src="../../_images/pubsub3.png" />
+<img alt="../../_images/pubsub4.png" src="../../_images/pubsub4.png" />
+<img alt="../../_images/pubsub5.png" src="../../_images/pubsub5.png" />
+<img alt="../../_images/pubsub6.png" src="../../_images/pubsub6.png" />
+<img alt="../../_images/pubsub7.png" src="../../_images/pubsub7.png" />
+<img alt="../../_images/pubsub8.png" src="../../_images/pubsub8.png" />
+</div>
+<div class="section" id="id4">
+<h3>抄袭课程二<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>以下是极客学院的《Redis的集合类型与有序集合类型》课程的部分截图，
+截图内容均抄袭自《Redis设计与实现》的《集合》一章。</p>
+<img alt="../../_images/set1.png" src="../../_images/set1.png" />
+<img alt="../../_images/set2.png" src="../../_images/set2.png" />
+<img alt="../../_images/set3.png" src="../../_images/set3.png" />
+</div>
+<div class="section" id="id5">
+<h3>抄袭课程三<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>以下是极客学院的《Redis的列表数据类型》课程的部分截图，
+截图内容均抄袭自《Redis设计与实现》的《列表》一章。</p>
+<img alt="../../_images/list1.png" src="../../_images/list1.png" />
+<img alt="../../_images/list2.png" src="../../_images/list2.png" />
+<img alt="../../_images/list3.png" src="../../_images/list3.png" />
+<img alt="../../_images/list4.png" src="../../_images/list4.png" />
+<img alt="../../_images/list5.png" src="../../_images/list5.png" />
+</div>
+<div class="section" id="id6">
+<h3>抄袭课程四<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>以下是极客学院的《Redis的字符串类型与散列类型》课程的部分截图，
+截图内容均抄袭自《Redis设计与实现》的《数据库》、《字符串》、《对象处理机制》等章节。</p>
+<img alt="../../_images/string1.png" src="../../_images/string1.png" />
+<img alt="../../_images/string2.png" src="../../_images/string2.png" />
+<img alt="../../_images/string3.png" src="../../_images/string3.png" />
+<img alt="../../_images/string4.png" src="../../_images/string4.png" />
+<img alt="../../_images/string5.png" src="../../_images/string5.png" />
+</div>
+<div class="section" id="vip">
+<h3>通过这些视频收取 VIP 费用进行牟利<a class="headerlink" href="#vip" title="Permalink to this headline">¶</a></h3>
+<img alt="../../_images/pay1.png" src="../../_images/pay1.png" />
+<img alt="../../_images/pay2.png" src="../../_images/pay2.png" />
+</div>
+</div>
+</div>
+
+
+
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">极客学院大篇幅抄袭《Redis设计与实现》并以此进行牟利</a><ul>
+<li><a class="reference internal" href="#id1">部分抄袭证据</a><ul>
+<li><a class="reference internal" href="#id2">课程主页</a></li>
+<li><a class="reference internal" href="#id3">抄袭课程一</a></li>
+<li><a class="reference internal" href="#id4">抄袭课程二</a></li>
+<li><a class="reference internal" href="#id5">抄袭课程三</a></li>
+<li><a class="reference internal" href="#id6">抄袭课程四</a></li>
+<li><a class="reference internal" href="#vip">通过这些视频收取 VIP 费用进行牟利</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2015</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="redis-usages-in-ria.html"
+                        title="next chapter">《Redis实战》中的 Redis 应用示例</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/">小象学院（ChinaHadoop.cn）</a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.3.
+    </div>
+  </body>
+</html>
