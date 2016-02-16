@@ -137,6 +137,169 @@ func main() {
 </div>
 </div>
 </div>
+<div class="section" id="id5">
+<h2>1.2 节<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="slice">
+<h3>Slice<a class="headerlink" href="#slice" title="Permalink to this headline">¶</a></h3>
+<p>Slice，大小可以动态变化的序列。</p>
+<p>Slice 的索引从 <code class="docutils literal"><span class="pre">0</span></code> 开始，
+使用 <code class="docutils literal"><span class="pre">s[i]</span></code> 可以取出 Slice 中索引为 <code class="docutils literal"><span class="pre">i</span></code> 的元素；
+使用 <code class="docutils literal"><span class="pre">s[m:n]</span></code> 可以取出索引从 <code class="docutils literal"><span class="pre">m</span></code> 直到 <code class="docutils literal"><span class="pre">n-1</span></code> 的元素（半开区间）；
+使用 <code class="docutils literal"><span class="pre">s[begin:]</span></code> 可以取出索引从 <code class="docutils literal"><span class="pre">begin</span></code> 开始，
+直到 Slice 结尾的所有元素，
+相当于执行 <code class="docutils literal"><span class="pre">s[begin:len(s)]</span></code> 。</p>
+</div>
+<div class="section" id="id6">
+<h3>一个打印所有输入参数的程序<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>以下是一个能够打印出用户输入的所有参数的程序：</p>
+<div class="highlight-go"><div class="highlight"><pre><span class="c1">// Echo1 prints its command-line arguments.</span>
+
+<span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">s</span><span class="p">,</span> <span class="nx">sep</span> <span class="kt">string</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">s</span> <span class="o">+=</span> <span class="nx">sep</span> <span class="o">+</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+        <span class="nx">sep</span> <span class="p">=</span> <span class="s">&quot; &quot;</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>程序开始时的 <code class="docutils literal"><span class="pre">//</span></code> 是程序的行注释。</p>
+<p><code class="docutils literal"><span class="pre">import</span></code> 语句使用括号包围了被引入的两个包 <code class="docutils literal"><span class="pre">&quot;fmt&quot;</span></code> 和 <code class="docutils literal"><span class="pre">&quot;os&quot;</span></code> ，
+使用括号包围多个包名的做法在需要引入多个包时非常方便。</p>
+<p><code class="docutils literal"><span class="pre">os</span></code> 包提供了一些与操作系统执行操作所需的函数和值。</p>
+<p><code class="docutils literal"><span class="pre">var</span> <span class="pre">s,</span> <span class="pre">sep</span> <span class="pre">string</span></code> 这个语句定义了两个变量 <code class="docutils literal"><span class="pre">s</span></code> 和 <code class="docutils literal"><span class="pre">sep</span></code> ，
+它们的类型为字符串类型 <code class="docutils literal"><span class="pre">string</span></code> 。
+如果用户在定义变量的时候没有为变量设置初始值，
+那么 Go 将把这些变量的值设置为该类型对应的“零值”（zero value），
+比如字符串的零值就是空字符串 <code class="docutils literal"><span class="pre">&quot;&quot;</span></code> 。</p>
+<p><code class="docutils literal"><span class="pre">i</span> <span class="pre">:=</span> <span class="pre">1;</span></code> 语句定义了一个临时变量 <code class="docutils literal"><span class="pre">i</span></code> ，
+它的值为 <code class="docutils literal"><span class="pre">1</span></code> ，
+类型为整数。
+<code class="docutils literal"><span class="pre">:=</span></code> 是 Go 语言用于声明临时变量的语法，
+它可以根据变量的初始值，
+自动为变量设置相应的类型。</p>
+<p>执行示例：</p>
+<div class="highlight-go"><div class="highlight"><pre>$ go build echo1.go
+
+$ ./echo1 hello world in args
+hello world in args
+</pre></div>
+</div>
+<p>为了提高效率，
+我们可以使用 <code class="docutils literal"><span class="pre">strings</span></code> 包中的 <code class="docutils literal"><span class="pre">Join</span></code> 函数来完成字符串的拼接工作，
+就像这样：</p>
+<div class="highlight-go"><div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">strings</span><span class="p">.</span><span class="nx">Join</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="s">&quot; &quot;</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="for">
+<h3><code class="docutils literal"><span class="pre">for</span></code> 语句<a class="headerlink" href="#for" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">for</span></code> 语句是 Go 中唯一的循环语句，
+它有三种形态：</p>
+<ol class="arabic">
+<li><p class="first">普通的 <code class="docutils literal"><span class="pre">for</span></code> ，
+这种 <code class="docutils literal"><span class="pre">for</span></code> 带有完整的初始化部分、条件部分和递进部分，
+就像这样：</p>
+<div class="highlight-go"><div class="highlight"><pre><span class="k">for</span> <span class="nx">init</span><span class="p">;</span> <span class="nx">condition</span><span class="p">;</span> <span class="nx">step</span> <span class="p">{</span>
+    <span class="c1">// statements</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">while</span></code> 形式的 <code class="docutils literal"><span class="pre">for</span></code> ，
+这种 <code class="docutils literal"><span class="pre">for</span></code> 只有条件部分，
+初始部分通常出现在 <code class="docutils literal"><span class="pre">for</span></code> 之前，
+而递进部分则出现在 <code class="docutils literal"><span class="pre">for</span></code> 内部：</p>
+<div class="highlight-go"><div class="highlight"><pre><span class="k">for</span> <span class="nx">condition</span> <span class="p">{</span>
+    <span class="c1">// statements</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">无限循环形式的 <code class="docutils literal"><span class="pre">for</span></code> ，
+这种 <code class="docutils literal"><span class="pre">for</span></code> 通常会在内部设置一个跳出条件：</p>
+<div class="highlight-go"><div class="highlight"><pre><span class="k">for</span> <span class="p">{</span>
+    <span class="c1">// statements</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>除此之外，
+<code class="docutils literal"><span class="pre">for</span></code> 还可以对字符串或者 slice 这样的数据类型进行范围遍历（iterates over a range of values）。</p>
+<p>以下这个程序会使用 <code class="docutils literal"><span class="pre">range</span></code> 产生一组序列，
+序列中的每个值都由一个索引以及索引对应的元素组成，
+通过 <code class="docutils literal"><span class="pre">for</span></code> 语句可以分别取出它的索引和元素：</p>
+<div class="highlight-go"><div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">arg</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>执行示例：</p>
+<div class="highlight-go"><div class="highlight"><pre>$ ./test_for_range hello world in args
+0
+hello
+1
+world
+2
+in
+3
+args
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>空白标识符<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>当我们想要使用 <code class="docutils literal"><span class="pre">for</span></code> 和 <code class="docutils literal"><span class="pre">range</span></code> 对序列进行遍历，
+但是又不需要元素的索引时，
+可以把索引的变量设置为下划线 <code class="docutils literal"><span class="pre">_</span></code> ，
+这样即使这个变量不被使用，
+编译器也不会报错：</p>
+<div class="highlight-go"><div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">arg</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>具有这样特殊作用的值 <code class="docutils literal"><span class="pre">_</span></code> 被称为空白标识符（blank identifier）。</p>
+<p>执行示例：</p>
+<div class="highlight-go"><div class="highlight"><pre>$ ./test_blank_identifier hello world in args
+hello
+world
+in
+args
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -177,6 +340,13 @@ func main() {
 <li><a class="reference internal" href="#id2">源码</a></li>
 <li><a class="reference internal" href="#id3">编译和执行</a></li>
 <li><a class="reference internal" href="#id4">代码格式化</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">1.2 节</a><ul>
+<li><a class="reference internal" href="#slice">Slice</a></li>
+<li><a class="reference internal" href="#id6">一个打印所有输入参数的程序</a></li>
+<li><a class="reference internal" href="#for"><code class="docutils literal"><span class="pre">for</span></code> 语句</a></li>
+<li><a class="reference internal" href="#id7">空白标识符</a></li>
 </ul>
 </li>
 </ul>
