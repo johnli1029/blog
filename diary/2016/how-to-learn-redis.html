@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Redis 学习路线 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="huangz/blog" href="../../index.html" />
+    <link rel="up" title="2016" href="index.html" />
+    <link rel="next" title="《算法导论》2.1 节《插入排序》：笔记、代码实现与练习解答" href="introduction-to-algorithms/section-2-1.html" />
+    <link rel="prev" title="2016" href="index.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="introduction-to-algorithms/section-2-1.html" title="《算法导论》2.1 节《插入排序》：笔记、代码实现与练习解答"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="2016"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2016</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="redis">
+<h1>Redis 学习路线<a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h1>
+<p>学习和使用 Redis 一般可以分为以下四个阶段：</p>
+<ol class="arabic simple">
+<li>初学者入门</li>
+<li>进阶实战</li>
+<li>理解原理</li>
+<li>贡献和开发</li>
+</ol>
+<p>本文接下来将在四个小节里面分别对这四个阶段进行介绍。</p>
+<div class="section" id="id1">
+<h2>初学者入门<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>如果你只是对 Redis 感兴趣，
+又或者听别人说过一些关于 Redis 的介绍，
+但是却并没有实际使用过 Redis ，
+那么你就处于 Redis 初学者这一阶段。</p>
+<p>Redis 初学者可以考虑使用<a class="reference external" href="https://book.douban.com/subject/26419240/">《Redis入门指南（第2版）》</a>作为教程，
+并辅以<a class="reference external" href="http://redisdoc.com/">《Redis命令参考》文档</a>作为参考。</p>
+<p>《Redis入门指南》是 ioredis 、 medis 等项目的作者 <a class="reference external" href="https://github.com/luin">luin</a> 的作品，
+该书深入浅出地介绍了 Redis 的主要特性、基本命令以及使用方法，
+整本书的篇幅不多，
+行文简单，
+很容易就能够看完。
+初学者可以通过阅读这本书知道 Redis 是什么以及它能做什么。</p>
+<p>因为篇幅所限，
+《Redis入门指南》并没有对 Redis 的各个命令展开进行介绍，
+因此如果读者想要进一步了解某个命令的详细用法和相关信息，
+那么可以通过《Redis命令参考》进行查询。</p>
+<p>在阅读了《Redis入门指南》和《Redis命令参考》之后，
+初学者应该对 Redis 的功能、作用以及使用方法有了基本的了解，
+并能够使用 Redis 去解决一些简单的问题。
+在此之后，
+初学者就可以向下一阶段进发，
+考虑如何将 Redis 应用到实际的工作当中。</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>扩展阅读</p>
+<p>除了《Redis入门指南》和《Redis命令参考》之外，
+以下列出的一些资料也值得 Redis 初学者去观看和阅读：</p>
+<ul class="last simple">
+<li>《Redis课程》系列视频： <a class="reference external" href="http://my.tv.sohu.com/pl/9102138/index.shtml">http://my.tv.sohu.com/pl/9102138/index.shtml</a></li>
+<li>Redis 官方网站上的入门介绍文章（英文，可能需要翻墙访问）： <a class="reference external" href="http://redis.io/topics/data-types-intro">http://redis.io/topics/data-types-intro</a></li>
+<li>《What is Redis?》系列文章（英文，可能需要翻墙访问）： <a class="reference external" href="https://matt.sh/what-is-redis">https://matt.sh/what-is-redis</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>进阶实战<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>学习 Redis 的第二个阶段是进阶实战阶段，
+处于这一阶段的 Redis 学习者应该对 Redis 有了基本的理解，
+熟悉 Redis 各个命令以及各项特性的基本用法，
+但还是不太清楚应该如何使用 Redis 去解决自己在工作上遇到的问题。</p>
+<p>为此，
+处于这一阶段的 Redis 学习者可以通过阅读<a class="reference external" href="http://redisinaction.com/">《Redis实战》</a>一书以及其他 Redis 用户分享的心得来提高自己使用 Redis 的能力。</p>
+<p>《Redis实战》一书是 Redis Group 讨论组中的热门发言者 <a class="reference external" href="https://github.com/josiahcarlson">Josiah Carlson</a> 所作，
+该书通过实际的例子，
+展示了使用 Redis 构建多种不同的应用程序的方法。
+处于进阶阶段的 Redis 学习者可以通过阅读该书来学习如何使用 Redis 去构建实际的应用，
+然后举一反三，
+把书中介绍的程序和方法应用到自己遇到的问题上。</p>
+<p>除了《Redis实战》之外，
+国内外的很多公司（比如twitter、新浪微博等）都在网上公布了他们使用 Redis 的方法、心得和经验，
+Redis 学习者可以通过这些分享中了解到更多使用 Redis 的例子，
+以及这些公司在使用 Redis 过程中遇到的问题、困难和陷阱，
+从而学会如何在实际中更好地使用和管理 Redis 。</p>
+<p>实践使用 Redis 的另一个难点是如何在大规模的数据环境中使用 Redis ，
+要解决这个问题就需要对 Redis 进行扩展：
+目前扩展 Redis 常见的技术包括 Redis 自带的<a class="reference external" href="http://redis.io/topics/replication">复制（replication）</a> 、<a class="reference external" href="http://redis.io/topics/sentinel">Sentinel</a>  和 <a class="reference external" href="http://redis.io/topics/cluster-tutorial">Cluster</a> 功能，
+以及 <a class="reference external" href="https://github.com/twitter/twemproxy">twemproxy</a> 和 <a class="reference external" href="https://github.com/CodisLabs/codis">codis</a> 等项目，
+Redis 用户可以通过这些技术的相关文档来学习如何使用这些技术。</p>
+</div>
+<div class="section" id="id5">
+<h2>理解原理<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>在弄懂了如何在实际中使用 Redis 之后，
+我们要考虑的就是如何解决 Redis 在使用过程中引发的问题；
+如何优化 Redis 的性能；
+如何对 Redis 进行二次开发，
+使得它可以符合自己的某些要求；
+又或者准备去开发一个自家公司特有的类 Redis 数据库。</p>
+<p>为了达到这些目的，
+我们必须对 Redis 的运作原理和内部结构有所了解。
+要做到这一点，
+我们必须深入地研读 Redis 的源码：<a class="reference external" href="https://github.com/antirez/redis">https://github.com/antirez/redis</a> 。</p>
+<p>除了 Redis 源码之外，
+一个比较好的学习 Redis 内部原理的资料就是<a class="reference external" href="http://redisbook.com/">《Redis设计与实现》</a>一书，
+并且该书也附带了一个<a class="reference external" href="https://github.com/huangz1990/redis-3.0-annotated">带有注释的 Redis 源码项目</a>。
+通过同时阅读书本和带注释的源代码，
+读者能够快速地了解到 Redis 的内部构造，
+以及各项主要功能的实现原理。</p>
+</div>
+<div class="section" id="id8">
+<h2>贡献和开发<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>在了解了 Redis 的原理之后，
+我们可以考虑向 Redis 项目贡献代码，
+又或者开发自己的类 Redis 数据库。</p>
+<p>除了以上两点之外，
+我们还可以考虑通过 Redis 最新的可载入模块系统（loadable module system），
+以编写模块的方式来为 Redis 添加新功能： <a class="reference external" href="http://antirez.com/news/106">http://antirez.com/news/106</a> 。</p>
+</div>
+<div class="section" id="id9">
+<h2>结语<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<p>好的，
+关于 Redis 学习资料的介绍就到此结束，
+希望这些资料会对正在学习和使用 Redis 的朋友们带来帮助。</p>
+<p>利益申明：本文作者是《Redis命令参考》和《Redis实战》的译者，《Redis设计与实现》的作者。</p>
+<div class="line-block">
+<div class="line">黄健宏（huangz）</div>
+<div class="line">2016.5.24</div>
+</div>
+</div>
+</div>
+
+
+
+            <div class="section" id="copyright_info">
+
+    <h2>
+        版权声明
+        <a class="headerlink" href="#copyright_info" title="永久链接至标题">¶</a>
+    </h2>
+
+    <p>本博客中的所有文章均为作者原创，受著作权法律保护，任何人不得在未经授权的情况下转载本博客的文章或将其用于商业活动，违者必究。</p>
+
+</div>
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Redis 学习路线</a><ul>
+<li><a class="reference internal" href="#id1">初学者入门</a></li>
+<li><a class="reference internal" href="#id3">进阶实战</a></li>
+<li><a class="reference internal" href="#id5">理解原理</a></li>
+<li><a class="reference internal" href="#id8">贡献和开发</a></li>
+<li><a class="reference internal" href="#id9">结语</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2016</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="introduction-to-algorithms/section-2-1.html"
+                        title="next chapter">《算法导论》2.1 节《插入排序》：笔记、代码实现与练习解答</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/">小象学院（ChinaHadoop.cn）</a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.3.
+    </div>
+  </body>
+</html>
