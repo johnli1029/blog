@@ -6,7 +6,6 @@
 
    jikexueyuan-plagiarized-redisbook
    redis-usages-in-ria
-   go-in-action-chapter-1
    comparison-of-redis-and-memcached.rst
    clojure-general-collection-functions
    clojure-list-functions
@@ -21,5 +20,4 @@
    writing-reference
    notes-about-translation-4
    manning-ebook
-   pil3-chp1
    overrated-gatsby
