@@ -7,8 +7,6 @@
    jikexueyuan-plagiarized-redisbook
    redis-usages-in-ria
    comparison-of-redis-and-memcached.rst
-   clojure-general-collection-functions
-   clojure-list-functions
    annotated-redis-geo-source
    redis-geo
    notes-about-translation-9
