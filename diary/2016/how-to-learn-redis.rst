@@ -46,6 +46,8 @@ Redis 初学者可以考虑使用\ `《Redis入门指南（第2版）》 <https:
     除了《Redis入门指南》和《Redis命令参考》之外，
     以下列出的一些资料也值得 Redis 初学者去观看和阅读：
 
+    - 《Redis从入门到精通》课程： http://www.chinahadoop.cn/course/115
+
     - 《Redis课程》系列视频： http://my.tv.sohu.com/pl/9102138/index.shtml
 
     - Redis 官方网站上的入门介绍文章（英文，可能需要翻墙访问）： http://redis.io/topics/data-types-intro
@@ -129,7 +131,7 @@ Redis 用户可以通过这些技术的相关文档来学习如何使用这些�
 关于 Redis 学习资料的介绍就到此结束，
 希望这些资料会对正在学习和使用 Redis 的朋友们带来帮助。
 
-利益申明：本文作者是《Redis命令参考》和《Redis实战》的译者，《Redis设计与实现》的作者。
+利益申明：本文作者是《Redis命令参考》和《Redis实战》的译者，《Redis设计与实现》的作者，《Redis从入门到精通》的讲师。
 
 | 黄健宏（huangz）
 | 2016.5.24
