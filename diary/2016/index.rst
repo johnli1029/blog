@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   redis-py-geo-support
    notes-about-translation-10
    overwatch-pc-configure
    how-to-learn-redis
