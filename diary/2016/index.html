@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="huangz/blog" href="../../index.html" />
-    <link rel="next" title="使用 redis-py 储存地理位置数据" href="redis-py-geo-support.html" />
+    <link rel="next" title="使用 Redis 统计在线用户人数" href="redis-count-online-users.html" />
     <link rel="prev" title="huangz/blog" href="../../index.html" />
 <!--[if lte IE 6]>
 <link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
@@ -43,7 +43,7 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="redis-py-geo-support.html" title="使用 redis-py 储存地理位置数据"
+          <a href="redis-count-online-users.html" title="使用 Redis 统计在线用户人数"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../../index.html" title="huangz/blog"
@@ -61,6 +61,14 @@
 <h1>2016<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="redis-count-online-users.html">使用 Redis 统计在线用户人数</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="redis-count-online-users.html#id1">方案 1 ：使用有序集合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-count-online-users.html#id2">方案 2 ：使用集合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-count-online-users.html#hyperloglog">方案 3 ：使用 HyperLogLog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-count-online-users.html#bitmap">方案 4 ：使用位图（bitmap）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-count-online-users.html#id3">总结</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="redis-py-geo-support.html">使用 redis-py 储存地理位置数据</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="redis-py-geo-support.html#id1">下载并安装新版 redis-py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="redis-py-geo-support.html#id2">添加地理位置</a></li>
@@ -136,8 +144,8 @@
   <p class="topless"><a href="../../index.html"
                         title="previous chapter">huangz/blog</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="redis-py-geo-support.html"
-                        title="next chapter">使用 redis-py 储存地理位置数据</a></p>
+  <p class="topless"><a href="redis-count-online-users.html"
+                        title="next chapter">使用 Redis 统计在线用户人数</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
