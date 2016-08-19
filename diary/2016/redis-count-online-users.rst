@@ -18,21 +18,21 @@
 -----------------------
 
 每当一个用户上线时，
-我们就执行 ``ZADD`` 命令，
+我们就执行 `ZADD <http://redisdoc.com/sorted_set/zadd.html>`_ 命令，
 将这个用户以及它的在线时间添加到指定的有序集合中：
 
 ::
 
     ZADD "online_users" <user_id> <current_timestamp>
 
-通过使用 ``ZSCORE`` 命令检查指定的用户 ID 在有序集合中是否有相关联的分值，
+通过使用 `ZSCORE <http://redisdoc.com/sorted_set/zscore.html>`_ 命令检查指定的用户 ID 在有序集合中是否有相关联的分值，
 我们可以知道该用户是否在线：
 
 ::
 
     ZSCORE "online_users" <user_id> 
 
-而通过执行 ``ZCARD`` 命令，
+而通过执行 `ZCARD <http://redisdoc.com/sorted_set/zcard.html>`_ 命令，
 我们可以知道总共有多用户在线：
 
 ::
@@ -47,7 +47,7 @@
 也可以根据有序集合的分值（也即是用户的登录时间）进行聚合操作。
 
 首先，
-通过 ``ZINTERSTORE`` 和 ``ZUNIONSTORE`` 命令，
+通过 `ZINTERSTORE <http://redisdoc.com/sorted_set/zinterstore.html>`_ 和 `ZUNIONSTORE <http://redisdoc.com/sorted_set/zunionstore.html>`_ 命令，
 我们可以对多个记录了在线用户的有序集合进行聚合计算：
 
 ::
@@ -59,9 +59,9 @@
     ZUNIONSTORE 7_days_total_online_users 7 "day_1_online_users" ... "day_7_online_users"
 
 此外，
-通过 ``ZCOUNT`` 命令，
+通过 `ZCOUNT <http://redisdoc.com/sorted_set/zcount.html>`_ 命令，
 我们可以统计出在指定的时间段之内有多少用户在线，
-而 ``ZRANGEBYSCORE`` 命令则可以让我们获取到这些用户的名单：
+而 `ZRANGEBYSCORE <http://redisdoc.com/sorted_set/zrangebyscore.html>`_ 命令则可以让我们获取到这些用户的名单：
 
 ::
 
@@ -89,21 +89,21 @@
 
 在这种情况下，
 每当一个用户上线时，
-我们就执行以下 ``SADD`` 命令，
+我们就执行以下 `SADD <http://redisdoc.com/set/sadd.html>`_ 命令，
 将它添加到在线用户名单当中：
 
 ::
 
     SADD "online_users" <user_id>
 
-通过使用 ``SISMEMBER`` 命令，
+通过使用 `SISMEMBER <http://redisdoc.com/set/sismember.html>`_ 命令，
 我们可以检查一个指定的用户当前是否在线：
 
 ::
 
     SISMEMBER "online_users" <user_id>
 
-而统计在线人数的工作则可以通过执行 ``SCARD`` 命令来完成：
+而统计在线人数的工作则可以通过执行 `SCARD <http://redisdoc.com/set/scard.html>`_ 命令来完成：
 
 ::
 
@@ -113,7 +113,7 @@
 我们可以像有序集合方案一样，
 对不同时间段或者日期的在线用户名单进行聚合计算。
 比如说，
-通过 ``SINTER`` 或者 ``SINTERSTORE`` 命令，
+通过 `SINTER <http://redisdoc.com/set/sinter.html>`_ 或者 `SINTERSTORE <http://redisdoc.com/set/sinterstore.html>`_ 命令，
 我们可以计算出一周都有在线的用户：
 
 ::
@@ -121,14 +121,14 @@
     SINTER "day_1_online_users" "day_2_online_users" ... "day_7_online_users"
 
 此外，
-通过 ``SUNION`` 命令或者 ``SUNIONSTORE`` 命令，
+通过 `SUNION <http://redisdoc.com/set/sunion.html>`_ 命令或者 `SUNIONSTORE <http://redisdoc.com/set/sunionstore.html>`_ 命令，
 我们可以计算出一周内在线用户的总数量：
 
 ::
 
     SUNION "day_1_online_users" "day_2_online_users" ... "day_7_online_users"
 
-而通过执行 ``SDIFF`` 命令，
+而通过执行 `SDIFF <http://redisdoc.com/set/sdiff.html>`_ 命令或者 `SDIFFSTORE <http://redisdoc.com/set/sdiffstore.html>`_ 命令，
 我们可以知道哪些用户今天上线了，
 但是昨天没有上线：
 
@@ -177,19 +177,19 @@ HyperLogLog 是一个概率算法，
 这一方案无疑是最佳之选。
 
 在这一方案下，
-我们使用 ``PFADD`` 命令去记录在线的用户：
+我们使用 `PFADD <http://redisdoc.com/hyperloglog/pfadd.html>`_ 命令去记录在线的用户：
 
 ::
 
     PFADD "online_users" <user_id>
 
-使用 ``PFCOUNT`` 命令获取在线人数：
+使用 `PFCOUNT <http://redisdoc.com/hyperloglog/pfcount.html>`_ 命令获取在线人数：
 
 ::
 
     PFCOUNT "online_users"
 
-因为 HyperLogLog 也提供了计算交集的 ``PFMERGE`` 命令，
+因为 HyperLogLog 也提供了计算交集的 `PFMERGE <http://redisdoc.com/hyperloglog/pfmerge.html>`_ 命令，
 所以我们也可以用这个命令计算出多个给定时间段或日期之内，
 上线的总人数：
 
@@ -222,7 +222,7 @@ Redis 的位图就是一个由二进制位组成的数组，
 我们可以使用位图去记录每个用户是否在线。
 
 当一个用户上线时，
-我们就使用 ``SETBIT`` 命令，
+我们就使用 `SETBIT <http://redisdoc.com/string/setbit.html>`_ 命令，
 将这个用户对应的二进制位设置为 1 ：
 
 ::
@@ -230,14 +230,14 @@ Redis 的位图就是一个由二进制位组成的数组，
     # 此处的 user_id 必须为数字，因为它会被用作索引
     SETBIT "online_users" <user_id> 1
 
-通过使用 ``GETBIT`` 命令去检查一个二进制位的值是否为 1 ，
+通过使用 `GETBIT <http://redisdoc.com/string/getbit.html>`_ 命令去检查一个二进制位的值是否为 1 ，
 我们可以知道指定的用户是否在线：
 
 ::
 
     GETBIT "online_users" <user_id>
 
-而通过 ``BITCOUNT`` 命令，
+而通过 `BITCOUNT <http://redisdoc.com/string/bitcount.html>`_ 命令，
 我们可以统计出位图中有多少个二进制位被设置成了 1 ，
 也即是有多少个用户在线：
 
@@ -247,7 +247,7 @@ Redis 的位图就是一个由二进制位组成的数组，
 
 跟集合一样，
 用户也能够对多个位图进行聚合计算 ——
-通过 ``BITOP`` 命令，
+通过 `BITOP <http://redisdoc.com/string/bitop.html>`_ 命令，
 用户可以对一个或多个位图执行逻辑并、逻辑或、逻辑异或或者逻辑非操作：
 
 ::
