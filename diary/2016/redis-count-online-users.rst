@@ -258,8 +258,8 @@ Redis 的位图就是一个由二进制位组成的数组，
     # 计算出 7 在的在线用户总人数
     BITOP "OR" "7_days_total_online_users" "day_1_online_users" "day_2_online_users" ... "day_7_online_users"
 
-    # 计算出今天在线昨天却没在线的用户
-    BITOP "XOR" "today_but_not_yesterday" "today_online_users" "yesterday_online_users"
+    # 计算出两天当中只有其中一天在线的用户
+    BITOP "XOR" "only_one_day_online" "day_1_online_users" "day_2_online_users"
 
 HyperLogLog 方案记录一个用户是否在线需要花费 1 个二进制位，
 对于用户数为 100 万的网站来说，
