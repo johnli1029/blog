@@ -261,8 +261,8 @@ BITOP &quot;AND&quot; &quot;7_days_both_online_users&quot; &quot;day_1_online_us
 # 计算出 7 在的在线用户总人数
 BITOP &quot;OR&quot; &quot;7_days_total_online_users&quot; &quot;day_1_online_users&quot; &quot;day_2_online_users&quot; ... &quot;day_7_online_users&quot;
 
-# 计算出今天在线昨天却没在线的用户
-BITOP &quot;XOR&quot; &quot;today_but_not_yesterday&quot; &quot;today_online_users&quot; &quot;yesterday_online_users&quot;
+# 计算出两天当中只有其中一天在线的用户
+BITOP &quot;XOR&quot; &quot;only_one_day_online&quot; &quot;day_1_online_users&quot; &quot;day_2_online_users&quot;
 </pre></div>
 </div>
 <p>HyperLogLog 方案记录一个用户是否在线需要花费 1 个二进制位，
