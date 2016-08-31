@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   visiting-feilai-lake-park
    redis-count-online-users
    redis-py-geo-support
    notes-about-translation-10
