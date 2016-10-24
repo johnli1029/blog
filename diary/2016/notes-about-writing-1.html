@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>写作笔记之一：写作手法的重要性 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="huangz/blog" href="../../index.html" />
+    <link rel="up" title="2016" href="index.html" />
+    <link rel="next" title="清远飞来湖湿地公园游记" href="visiting-feilai-lake-park.html" />
+    <link rel="prev" title="2016" href="index.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="visiting-feilai-lake-park.html" title="清远飞来湖湿地公园游记"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="2016"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2016</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>写作笔记之一：写作手法的重要性<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>对于大多数人来说，
+写作首先考虑的是内容的质量，
+但除了质量之外，
+还有一点也非常重要，
+那就是写作手法的选择。</p>
+<p>正确的写作手法能够帮助读者将自己想要描述的内容更好地传递给读者，
+而不正确或者不好的写作手法则会阻碍这个信息传播的过程。
+更值得注意的是，
+就像同样的面粉可以通过培烘、蒸、煮、汤滚、油炸等不同的烹饪方式来获得不同的食物一样，
+随着写作手法的不同，
+即使作者想要描述的内容是完全一样的，
+最终产生的结果也会大为不同。</p>
+<p>举个例子，
+在我刚开始写<a class="reference external" href="http://redisguide.com/">《Redis使用教程》</a>的时候，
+有一个问题就特别地困扰我：
+因为 Redis 给用户提供了多种数据结构，
+并且每种数据结构都提供了功能强大的命令集，
+所以即使是同一个程序，
+在 Redis 里面通常也会有多种写法：</p>
+<ul class="simple">
+<li>比如说，
+在 Redis 里面，
+你既可以使用 <code class="docutils literal"><span class="pre">LPOP</span></code> 命令和 <code class="docutils literal"><span class="pre">RPUSH</span></code> 命令实现一个先进先出队列，
+也可以使用 <code class="docutils literal"><span class="pre">RPOP</span></code> 命令和 <code class="docutils literal"><span class="pre">LPUSH</span></code> 命令实现一个功能完全相同的先进先出队列；</li>
+<li>又比如说，
+你即可以使用 Redis 的集合结构去计算网站的唯一用户 IP 数量，
+也可以使用位图去做相同的事情，
+甚至使用 HyperLogLog 也可以实现类似的效果；</li>
+</ul>
+<p>诸如此类。</p>
+<p>因为解决同一个问题的方法有很多种，
+所以这就给作为作者的我带来了一个问题，
+对于一个问题 P ，
+如果它在 Redis 里面有多种解决方案，
+比如 A、A+、A++ 等等，
+那么我是否应该在书里面都介绍这些解决方案呢？
+关于这个问题，
+我们可以从两个角度来看：</p>
+<ul class="simple">
+<li>从好的角度来说，
+通过展示同一个问题的不同解法，
+可以给读者更好地展示 Redis 的强大和实用性，
+帮助他们更好地了解 Redis 。</li>
+<li>但是从坏的角度来说，
+一直研究同一个问题可能会让读者感到厌烦，
+并且从现实来看，
+介绍同一个问题的多个解法需要占用大量的篇幅，
+这可能会挤压其他内容的篇幅，
+导致另外一些有用的内容无法容纳在书本里面。</li>
+</ul>
+<p>这个问题初看上去似乎是一个鱼和熊掌的问题，
+但值得庆幸的是，
+我还是想到了一种办法去解决它：</p>
+<ul class="simple">
+<li>我重新审视了书中的所有同类解决方案，
+移除了一些不太重要的解决方案，
+只保留同类解决方案中最有代表性也最有学习价值的方案。
+比如说，
+只保留最优解法 A 和次优解法 A+ ，
+而不再保留第三位解法 A++ 以及之后的其他解法。</li>
+<li>然后，
+我仍然会在书本的正文中介绍问题 P 及其最优解法 A ，
+但是却不会再在正文中介绍问题的次优解法 A+ 。
+与此相反，
+我将解法 A+ 的内容移花接木到了每章末尾的《编程练习》栏目里面 ——
+在这个栏目中，
+我不再直接给出解法 A+ 的实现，
+而是仅仅描述出解法 A+ 的核心概念，
+然后要求用户根据自己对问题 P 、解法 A 以及解法 A+ 概念的理解，
+写出解法 A+ 的实现，
+并且每章的最末尾也会给出《编程练习》的参考答案，
+方便读者进行对照和参考。</li>
+</ul>
+<p>这种做法有几个好处：</p>
+<ol class="arabic simple">
+<li>我可以在书本中介绍问题的次优解 A+ ，
+帮助读者扩展他们对于 Redis 的了解，
+而不必将这些内容完全割舍掉。</li>
+<li>在原来的计划中，
+书本的正文总是先介绍问题 P ，
+然后介绍最优解法 A ，
+然后介绍次优解法 A+ ，
+然后再介绍其他解法 A++ 甚至 A+++ ，
+这种做法会导致正文内容冗长，
+并给读者带来不好的体验。
+通过在正文中介绍问题 P 及其最优解法 A ，
+然后再在《编程练习》中介绍次优解法 A+ 的做法有效地避免了原来的阅读疲劳问题，
+并且还可以在介绍解法 A+ 的同时，
+引导读者去复习问题 P 和解法 A 。</li>
+<li>在进行修改之前，
+书本原来的计划是只有正文而没有编程练习的，
+但是通过增加《编程练习》这个栏目，
+我丰富了书本和读者之间的互动，
+使得读者不再仅仅是被动地接受知识，
+而是在获得了一定知识之后，
+通过《编程练习》进行举一反三和思维发散，
+在帮助读者更好地掌握正文内容的基础上，
+将这些知识真正地应用到实践中，
+并以代码的方式将这些知识实际地编写出来。
+我相信当一个读者完成编程练习并自行将书中描述的解法实现出来的时候，
+他一定会非常有成就感，
+这也是我所希望的。</li>
+</ol>
+<p>虽然引入《编程练习》部分有那么多好处，
+但说到底，
+我所做的只不过是将原本放在书本正文中的解法 A+ 的描述进行了一下转换，
+将它变成了一个编程练习而已 ——
+在书中介绍解法 A+ 这一目的并没有发生变化，
+只是现在对解法 A+ 的介绍变得更为生动有趣并且更容易为读者所接受了，
+而这就是正确地选择写作手法带来的好处。</p>
+<p>好的，
+那今天关于写作手法的介绍到此就结束了。
+本文是《写作笔记》系列的第一篇文章，
+跟之前的《翻译笔记》类似，
+我将在这个系列的文章中向大家介绍我在写作时思考的一些问题、遇到的困难以及最终解决的方法，
+希望这些文章会给各位带来一点启发，
+也请大家在接下来的日子里面多多关注《写作笔记》这个系列的文章，
+非常感谢大家！</p>
+<div class="line-block">
+<div class="line">黄健宏</div>
+<div class="line">2016.10.24</div>
+</div>
+</div>
+
+
+
+            <div class="section" id="copyright_info">
+
+    <h2>
+        版权声明
+        <a class="headerlink" href="#copyright_info" title="永久链接至标题">¶</a>
+    </h2>
+
+    <p>本博客中的所有文章均为作者原创，受著作权法律保护，任何人不得在未经授权的情况下转载本博客的文章或将其用于商业活动，违者必究。</p>
+
+</div>
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2016</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="visiting-feilai-lake-park.html"
+                        title="next chapter">清远飞来湖湿地公园游记</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/">小象学院（ChinaHadoop.cn）</a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.3.
+    </div>
+  </body>
+</html>
