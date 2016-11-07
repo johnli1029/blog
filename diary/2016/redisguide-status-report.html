@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>《Redis使用教程》进度报告 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="huangz/blog" href="../../index.html" />
+    <link rel="up" title="2016" href="index.html" />
+    <link rel="next" title="《Redis实战》一周年回顾" href="riacn-one-year-anniversary.html" />
+    <link rel="prev" title="未公开新书相关信息" href="undisclosed-new-book.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="riacn-one-year-anniversary.html" title="《Redis实战》一周年回顾"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="undisclosed-new-book.html" title="未公开新书相关信息"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2016</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="redis">
+<h1>《Redis使用教程》进度报告<a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h1>
+<p>好的，在上一篇博文里面回顾完了《Redis实战》之后，接下来我想谈谈我现在正在写的 Redis 新书 —— 《Redis使用教程》。</p>
+<p>《Redis使用教程》的想法最初诞生于我刚开始学习 Redis 的时候，那时 Redis 的学习资源非常缺乏，除了 Redis 官方网站提供的文档之外，只有一本《Redis Cookbook》，但是这本所谓的“Cookbook”只是寥寥地介绍了几个简单的 Redis 应用，看起来一点也不过瘾，所以我当时看完《Redis Cookbook》之后，就产生了自己写一本 Redis 教程的想法。</p>
+<p>不过后来我的兴趣从 Redis 的应用转到了 Redis 的源码，并因此把时间投入到了写《Redis设计与实现》里面。
+在完成了《Redis设计与实现》之后又接到了《Redis实战》的翻译委托，因此《Redis使用教程》的写作计划就又再延迟了，然后在前后经历了两三年之后，我终于实际地开始写我一直计划的这本 Redis 教程书了。</p>
+<p>虽然有些人可能没有察觉，但是在这几年间，Redis 实际上已经发生了很大的变化：</p>
+<ul class="simple">
+<li>在我刚开始接触 Redis 的时候，Redis 还只有字符串、散列、有序集合这几种通用结构，
+但现在已经增加了 HyperLogLog 、 bitmap 、GEO 等专用结构，
+甚至还可以通过模块系统来进行功能扩展；</li>
+<li>与此同时，
+Redis 也从一个只有单机功能的简单数据库 —— 有些人甚至把 Redis 戏称为玩具数据库 —— 变成了一个拥有复制、Sentinel和集群功能的“庞然大物”，
+因此想要完整地描述和介绍这个数据库的难度比前几年已经大了很多，
+并且也需要更多的篇幅。</li>
+</ul>
+<p>我以前在看 C++、JAVA、MySQL 等技术的书籍时，
+常常会感叹为什么这些书会写得这么厚，
+在开始写《Redis使用教程》之后才发觉，
+并不是作者故意想把书写厚，
+而是因为这些软件的确是非常复杂、包含很多功能，
+所以介绍它们的书也因此变厚了。</p>
+<p>以《Redis使用教程》为例子，
+它的第一部分就介绍了 Redis 的 8 种数据结构，
+其中包含对上百个命令的描述，
+并展示了如何使用这些命令去实现不同的应用，
+而单单这些应用的数量就达到了四五十个。
+无论是对于哪一种数据库，
+要描写这么多内容都不是一件容易的事情。</p>
+<p>我在 2015 年 6 月开始写《Redis使用教程》，
+迄今已经过去一年多了，
+在今年的 6 月份我完成了这本书的草稿，
+并且乐观地认为在今年之内可以完成整本书的写作工作，
+但是实际做起来才发现，
+这本书还有很多内容需要写，
+还有很多细节需要修改和改善，
+所以在今年完成已经不可能了，
+这里也对期待着本书在今年发布的朋友们说声抱歉。</p>
+<p>目前来说，
+我已经完成了《Redis使用教程》第一部分的修正工作，
+接下来就要开始进行第二部分的修正工作了，
+在此之后还有第三部分的修正工作等着我：</p>
+<ul class="simple">
+<li>第二部分的功能比较简单，
+除了《Lua脚本》一章目前想来需要重写之外，
+其他章节应该都会比较容易搞定，
+所以这一部分的修正工作应该会比较快地完成。</li>
+<li>至于第三部分，
+因为涉及到复制、Sentinel和集群，
+而我对于这三个部分也有很多新想法，
+并且我也打算将 Redis 最近的一些新功能添加到这个部分里面，
+所以这些章节应该会进行大量的修改和重写，
+因此这个部分的修正工作应该会花比较大的时间，
+而这个部分也是本书接下来的工作重点。</li>
+</ul>
+<p>跟以往一样，
+我接下来也会继续在微博和twitter上发布《Redis使用教程》的最新进度，
+并在书本的网站 <a class="reference external" href="http://RedisGuide.com/">http://RedisGuide.com/</a> 上面提供更多书本的相关信息，
+希望关心这本书的朋友可以继续支持这本书，
+并耐心地等待这本书完成的那一天。</p>
+<div class="line-block">
+<div class="line">黄健宏</div>
+<div class="line">2016.11.7</div>
+</div>
+</div>
+
+
+
+            <div class="section" id="copyright_info">
+
+    <h2>
+        版权声明
+        <a class="headerlink" href="#copyright_info" title="永久链接至标题">¶</a>
+    </h2>
+
+    <p>本博客中的所有文章均为作者原创，受著作权法律保护，任何人不得在未经授权的情况下转载本博客的文章或将其用于商业活动，违者必究。</p>
+
+</div>
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="undisclosed-new-book.html"
+                        title="previous chapter">未公开新书相关信息</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="riacn-one-year-anniversary.html"
+                        title="next chapter">《Redis实战》一周年回顾</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/">小象学院（ChinaHadoop.cn）</a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.3.
+    </div>
+  </body>
+</html>
