@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   overwatch-mei-against-other-heros
    undisclosed-new-book
    redisguide-status-report
    riacn-one-year-anniversary
