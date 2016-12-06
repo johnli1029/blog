@@ -131,7 +131,7 @@ Redis 4.0 新添加了 <code class="docutils literal"><span class="pre">UNLINK</
 这个命令是 <code class="docutils literal"><span class="pre">DEL</span></code> 命令的异步版本，
 它可以将删除指定键的操作放在后台线程里面执行，
 从而尽可能地避免服务器阻塞：</p>
-<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; UNLINK fruits
+<div class="highlight-python"><div class="highlight"><pre>redis&gt; UNLINK fruits
 (integer) 1
 </pre></div>
 </div>
@@ -140,10 +140,10 @@ Redis 4.0 新添加了 <code class="docutils literal"><span class="pre">UNLINK</
 <p>此外，
 Redis 4.0 中的 <code class="docutils literal"><span class="pre">FLUSHDB</span></code> 和 <code class="docutils literal"><span class="pre">FLUSHALL</span></code> 这两个命令都新添加了 <code class="docutils literal"><span class="pre">ASYNC</span></code> 选项，
 带有这个选项的数据库删除操作将在后台线程进行：</p>
-<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; FLUSHDB ASYNC
+<div class="highlight-python"><div class="highlight"><pre>redis&gt; FLUSHDB ASYNC
 OK
 
-127.0.0.1:6379&gt; FLUSHALL ASYNC
+redis&gt; FLUSHALL ASYNC
 OK
 </pre></div>
 </div>
@@ -157,23 +157,23 @@ OK
 我们可以将原来的数据库 0 变成数据库 1 ，
 而原来的数据库 1 则变成数据库 0 。</p>
 <p>以下是一个使用 <code class="docutils literal"><span class="pre">SWAPDB</span></code> 的例子：</p>
-<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; SET your_name &quot;huangz&quot;  -- 在数据库 0 中设置一个键
+<div class="highlight-python"><div class="highlight"><pre>redis&gt; SET your_name &quot;huangz&quot;  -- 在数据库 0 中设置一个键
 OK
 
-127.0.0.1:6379&gt; GET your_name
+redis&gt; GET your_name
 &quot;huangz&quot;
 
-127.0.0.1:6379&gt; SWAPDB 0 1  -- 互换数据库 0 和数据库 1
+redis&gt; SWAPDB 0 1  -- 互换数据库 0 和数据库 1
 OK
 
-127.0.0.1:6379&gt; GET your_name  -- 现在的数据库 0 已经没有之前设置的键了
+redis&gt; GET your_name  -- 现在的数据库 0 已经没有之前设置的键了
 (nil)
 
-127.0.0.1:6379&gt; SELECT 1  -- 切换到数据库 1
+redis&gt; SELECT 1  -- 切换到数据库 1
 OK
 
-127.0.0.1:6379[1]&gt; GET your_name  -- 之前在数据库 0 设置的键现在可以在数据库 1 找到
-&quot;huangz&quot;                          -- 证明两个数据库已经互换
+redis[1]&gt; GET your_name  -- 之前在数据库 0 设置的键现在可以在数据库 1 找到
+&quot;huangz&quot;                 -- 证明两个数据库已经互换
 </pre></div>
 </div>
 </div>
@@ -212,7 +212,7 @@ aof-use-rdb-preamble no
 <p>新添加了一个 <code class="docutils literal"><span class="pre">MEMORY</span></code> 命令，
 这个命令可以用于视察内存使用情况，
 并进行相应的内存管理操作：</p>
-<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; MEMORY HELP
+<div class="highlight-python"><div class="highlight"><pre>redis&gt; MEMORY HELP
 1) &quot;MEMORY USAGE &lt;key&gt; [SAMPLES &lt;count&gt;] - Estimate memory usage of key&quot;
 2) &quot;MEMORY STATS                         - Show memory usage details&quot;
 3) &quot;MEMORY PURGE                         - Ask the allocator to release memory&quot;
@@ -221,21 +221,21 @@ aof-use-rdb-preamble no
 </div>
 <p>其中，
 使用 <code class="docutils literal"><span class="pre">MEMORY</span> <span class="pre">USAGE</span></code> 子命令可以估算储存给定键所需的内存：</p>
-<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; SET msg &quot;hello world&quot;
+<div class="highlight-python"><div class="highlight"><pre>redis&gt; SET msg &quot;hello world&quot;
 OK
 
-127.0.0.1:6379&gt; SADD fruits apple banana cherry
+redis&gt; SADD fruits apple banana cherry
 (integer) 3
 
-127.0.0.1:6379&gt; MEMORY USAGE msg
+redis&gt; MEMORY USAGE msg
 (integer) 62
 
-127.0.0.1:6379&gt; MEMORY USAGE fruits
+redis&gt; MEMORY USAGE fruits
 (integer) 375
 </pre></div>
 </div>
 <p>使用 <code class="docutils literal"><span class="pre">MEMORY</span> <span class="pre">STATS</span></code> 子命令可以查看 Redis 当前的内存使用情况：</p>
-<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; MEMORY STATS
+<div class="highlight-python"><div class="highlight"><pre>redis&gt; MEMORY STATS
 1) &quot;peak.allocated&quot;
 2) (integer) 1014480
 3) &quot;total.allocated&quot;
@@ -272,12 +272,12 @@ OK
 </pre></div>
 </div>
 <p>使用 <code class="docutils literal"><span class="pre">MEMORY</span> <span class="pre">PURGE</span></code> 子命令可以要求分配器释放更多内存：</p>
-<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; MEMORY PURGE
+<div class="highlight-python"><div class="highlight"><pre>redis&gt; MEMORY PURGE
 OK
 </pre></div>
 </div>
 <p>使用 <code class="docutils literal"><span class="pre">MEMORY</span> <span class="pre">MALLOC-STATS</span></code> 子命令可以展示分配器内部状态：</p>
-<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; MEMORY MALLOC-STATS
+<div class="highlight-python"><div class="highlight"><pre>redis&gt; MEMORY MALLOC-STATS
 Stats not supported for the current allocator
 </pre></div>
 </div>
