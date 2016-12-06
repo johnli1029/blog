@@ -94,7 +94,7 @@ Redis 4.0 新添加了 ``UNLINK`` 命令，
 
 ::
 
-    127.0.0.1:6379> UNLINK fruits
+    redis> UNLINK fruits
     (integer) 1
 
 因为一些历史原因，
@@ -106,10 +106,10 @@ Redis 4.0 中的 ``FLUSHDB`` 和 ``FLUSHALL`` 这两个命令都新添加了 ``A
 
 ::
 
-    127.0.0.1:6379> FLUSHDB ASYNC
+    redis> FLUSHDB ASYNC
     OK
 
-    127.0.0.1:6379> FLUSHALL ASYNC
+    redis> FLUSHALL ASYNC
     OK
 
 
@@ -128,23 +128,23 @@ Redis 4.0 对数据库命令的另外一个修改是新增了 ``SWAPDB`` 命令�
 
 ::
 
-    127.0.0.1:6379> SET your_name "huangz"  -- 在数据库 0 中设置一个键
+    redis> SET your_name "huangz"  -- 在数据库 0 中设置一个键
     OK
 
-    127.0.0.1:6379> GET your_name
+    redis> GET your_name
     "huangz"
 
-    127.0.0.1:6379> SWAPDB 0 1  -- 互换数据库 0 和数据库 1
+    redis> SWAPDB 0 1  -- 互换数据库 0 和数据库 1
     OK
 
-    127.0.0.1:6379> GET your_name  -- 现在的数据库 0 已经没有之前设置的键了
+    redis> GET your_name  -- 现在的数据库 0 已经没有之前设置的键了
     (nil)
 
-    127.0.0.1:6379> SELECT 1  -- 切换到数据库 1 
+    redis> SELECT 1  -- 切换到数据库 1 
     OK
 
-    127.0.0.1:6379[1]> GET your_name  -- 之前在数据库 0 设置的键现在可以在数据库 1 找到
-    "huangz"                          -- 证明两个数据库已经互换
+    redis[1]> GET your_name  -- 之前在数据库 0 设置的键现在可以在数据库 1 找到
+    "huangz"                 -- 证明两个数据库已经互换
 
 
 
@@ -192,7 +192,7 @@ AOF 重写产生的文件将同时包含 RDB 格式的内容和 AOF 格式的内
 
 ::
 
-    127.0.0.1:6379> MEMORY HELP
+    redis> MEMORY HELP
     1) "MEMORY USAGE <key> [SAMPLES <count>] - Estimate memory usage of key"
     2) "MEMORY STATS                         - Show memory usage details"
     3) "MEMORY PURGE                         - Ask the allocator to release memory"
@@ -203,23 +203,23 @@ AOF 重写产生的文件将同时包含 RDB 格式的内容和 AOF 格式的内
 
 ::
 
-    127.0.0.1:6379> SET msg "hello world"
+    redis> SET msg "hello world"
     OK
 
-    127.0.0.1:6379> SADD fruits apple banana cherry
+    redis> SADD fruits apple banana cherry
     (integer) 3
 
-    127.0.0.1:6379> MEMORY USAGE msg
+    redis> MEMORY USAGE msg
     (integer) 62
 
-    127.0.0.1:6379> MEMORY USAGE fruits
+    redis> MEMORY USAGE fruits
     (integer) 375
 
 使用 ``MEMORY STATS`` 子命令可以查看 Redis 当前的内存使用情况：
 
 ::
 
-    127.0.0.1:6379> MEMORY STATS
+    redis> MEMORY STATS
     1) "peak.allocated"
     2) (integer) 1014480
     3) "total.allocated"
@@ -258,14 +258,14 @@ AOF 重写产生的文件将同时包含 RDB 格式的内容和 AOF 格式的内
 
 ::
 
-    127.0.0.1:6379> MEMORY PURGE
+    redis> MEMORY PURGE
     OK
 
 使用 ``MEMORY MALLOC-STATS`` 子命令可以展示分配器内部状态：
 
 ::
 
-    127.0.0.1:6379> MEMORY MALLOC-STATS
+    redis> MEMORY MALLOC-STATS
     Stats not supported for the current allocator
 
 
