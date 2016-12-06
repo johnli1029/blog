@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   redis-4-outline
    notes-about-translation-11
    overwatch-mei-against-offense-heros
    undisclosed-new-book
