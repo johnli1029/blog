@@ -1,0 +1,445 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Redis 4.0 新功能简介 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="huangz/blog" href="../../index.html" />
+    <link rel="up" title="2016" href="index.html" />
+    <link rel="next" title="翻译笔记之十一：简化非必要技术名词" href="notes-about-translation-11.html" />
+    <link rel="prev" title="2016" href="index.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="notes-about-translation-11.html" title="翻译笔记之十一：简化非必要技术名词"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="2016"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2016</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="redis-4-0">
+<h1>Redis 4.0 新功能简介<a class="headerlink" href="#redis-4-0" title="Permalink to this headline">¶</a></h1>
+<p>Redis 的作者 antirez 在三天之前通过博客文章《<a class="reference external" href="http://antirez.com/news/110">The first release candidate of Redis 4.0 is out</a>》发布了 Redis 4.0 的第一个 RC 版本，
+在博文中他说，
+因为这个新版本的 Redis 出现了多项改变，
+所以他决定从原来的 3.x 版本直接跳到 4.0 版本，
+以此来强调这次更新的变化之大。</p>
+<p>本文将对 Redis 4.0 的各项主要新功能做一个简单的介绍，
+方便大家第一时间了解到这次更新的主要内容。</p>
+<div class="section" id="id1">
+<h2>模块系统<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Redis 4.0 发生的最大变化就是加入了模块系统，
+这个系统可以让用户通过自己编写的代码来扩展和实现 Redis 本身并不具备的功能，
+具体使用方法可以参考 antirez 的博文《Redis Loadable Module System》：
+<a class="reference external" href="http://antirez.com/news/106">http://antirez.com/news/106</a></p>
+<p>因为模块系统是通过高层次 API 实现的，
+它与 Redis 内核本身完全分离、互不干扰，
+所以用户可以在有需要的情况下才启用这个功能，
+以下是 <code class="docutils literal"><span class="pre">redis.conf</span></code> 中记载的模块载入方法：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">################################## MODULES #####################################</span>
+
+<span class="c"># Load modules at startup. If the server is not able to load modules</span>
+<span class="c"># it will abort. It is possible to use multiple loadmodule directives.</span>
+<span class="c">#</span>
+<span class="c"># loadmodule /path/to/my_module.so</span>
+<span class="c"># loadmodule /path/to/other_module.so</span>
+</pre></div>
+</div>
+<p>目前已经有人使用这个功能开发了各种各样的模块，
+比如 Redis Labs 开发的一些模块就可以在 <a class="reference external" href="http://redismodules.com">http://redismodules.com</a> 看到，
+此外 antirez 自己也使用这个功能开发了一个神经网络模块：
+<a class="reference external" href="https://github.com/antirez/neural-redis">https://github.com/antirez/neural-redis</a></p>
+<p>模块功能使得用户可以将 Redis 用作基础设施，
+并在上面构建更多功能，
+这给 Redis 带来了无数新的可能性。</p>
+</div>
+<div class="section" id="psync-2-0">
+<h2>PSYNC 2.0<a class="headerlink" href="#psync-2-0" title="Permalink to this headline">¶</a></h2>
+<p>新版本的 <code class="docutils literal"><span class="pre">PSYNC</span></code> 命令解决了旧版本的 Redis 在复制时的一些不够优化的地方：</p>
+<ul class="simple">
+<li>在旧版本 Redis 中，
+如果一个从服务器在 FAILOVER 之后成为了新的主节点，
+那么其他从节点在复制这个新主的时候就必须进行全量复制。
+在 Redis 4.0 中，
+新主和从服务器在处理这种情况时，
+将在条件允许的情况下使用部分复制。</li>
+<li>在旧版本 Redis 中，
+一个从服务器如果重启了，
+那么它就必须与主服务器重新进行全量复制，
+在 Redis 4.0 重，
+只要条件允许，
+主从在处理这种情况时将使用部分复制。</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>缓存驱逐策略优化<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>新添加了 Last Frequently Used 缓存驱逐策略，
+具体信息见 antirez 的博文《Random notes on improving the Redis LRU algorithm》： <a class="reference external" href="http://antirez.com/news/109">http://antirez.com/news/109</a></p>
+<p>另外 Redis 4.0 还对已有的缓存驱逐策略进行了优化，
+使得它们能够更健壮、高效、快速和精确。</p>
+</div>
+<div class="section" id="del-flushdb-flushall">
+<h2>非阻塞 DEL 、 FLUSHDB 和 FLUSHALL<a class="headerlink" href="#del-flushdb-flushall" title="Permalink to this headline">¶</a></h2>
+<p>在 Redis 4.0 之前，
+用户在使用 <code class="docutils literal"><span class="pre">DEL</span></code> 命令删除体积较大的键，
+又或者在使用 <code class="docutils literal"><span class="pre">FLUSHDB</span></code> 和 <code class="docutils literal"><span class="pre">FLUSHALL</span></code> 删除包含大量键的数据库时，
+都可能会造成服务器阻塞。</p>
+<p>为了解决以上问题，
+Redis 4.0 新添加了 <code class="docutils literal"><span class="pre">UNLINK</span></code> 命令，
+这个命令是 <code class="docutils literal"><span class="pre">DEL</span></code> 命令的异步版本，
+它可以将删除指定键的操作放在后台线程里面执行，
+从而尽可能地避免服务器阻塞：</p>
+<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; UNLINK fruits
+(integer) 1
+</pre></div>
+</div>
+<p>因为一些历史原因，
+执行同步删除操作的 <code class="docutils literal"><span class="pre">DEL</span></code> 命令将会继续保留。</p>
+<p>此外，
+Redis 4.0 中的 <code class="docutils literal"><span class="pre">FLUSHDB</span></code> 和 <code class="docutils literal"><span class="pre">FLUSHALL</span></code> 这两个命令都新添加了 <code class="docutils literal"><span class="pre">ASYNC</span></code> 选项，
+带有这个选项的数据库删除操作将在后台线程进行：</p>
+<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; FLUSHDB ASYNC
+OK
+
+127.0.0.1:6379&gt; FLUSHALL ASYNC
+OK
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>交换数据库<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>Redis 4.0 对数据库命令的另外一个修改是新增了 <code class="docutils literal"><span class="pre">SWAPDB</span></code> 命令，
+这个命令可以对指定的两个数据库进行互换：
+比如说，
+通过执行命令 <code class="docutils literal"><span class="pre">SWAPDB</span> <span class="pre">0</span> <span class="pre">1</span></code> ，
+我们可以将原来的数据库 0 变成数据库 1 ，
+而原来的数据库 1 则变成数据库 0 。</p>
+<p>以下是一个使用 <code class="docutils literal"><span class="pre">SWAPDB</span></code> 的例子：</p>
+<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; SET your_name &quot;huangz&quot;  -- 在数据库 0 中设置一个键
+OK
+
+127.0.0.1:6379&gt; GET your_name
+&quot;huangz&quot;
+
+127.0.0.1:6379&gt; SWAPDB 0 1  -- 互换数据库 0 和数据库 1
+OK
+
+127.0.0.1:6379&gt; GET your_name  -- 现在的数据库 0 已经没有之前设置的键了
+(nil)
+
+127.0.0.1:6379&gt; SELECT 1  -- 切换到数据库 1
+OK
+
+127.0.0.1:6379[1]&gt; GET your_name  -- 之前在数据库 0 设置的键现在可以在数据库 1 找到
+&quot;huangz&quot;                          -- 证明两个数据库已经互换
+</pre></div>
+</div>
+</div>
+<div class="section" id="rdb-aof">
+<h2>混合 RDB-AOF 持久化格式<a class="headerlink" href="#rdb-aof" title="Permalink to this headline">¶</a></h2>
+<p>Redis 4.0 新增了 RDB-AOF 混合持久化格式，
+这是一个可选的功能，
+在开启了这个功能之后，
+AOF 重写产生的文件将同时包含 RDB 格式的内容和 AOF 格式的内容，
+其中 RDB 格式的内容用于记录已有的数据，
+而 AOF 格式的内存则用于记录最近发生了变化的数据，
+这样 Redis 就可以同时兼有 RDB 持久化和 AOF 持久化的优点 ——
+既能够快速地生成重写文件，
+也能够在出现问题时，
+快速地载入数据。</p>
+<p>这个功能可以通过 <code class="docutils literal"><span class="pre">aof-use-rdb-preamble</span></code> 选项进行开启，
+<code class="docutils literal"><span class="pre">redis.conf</span></code> 文件中记录了这个选项的使用方法：</p>
+<div class="highlight-python"><div class="highlight"><pre># When rewriting the AOF file, Redis is able to use an RDB preamble in the
+# AOF file for faster rewrites and recoveries. When this option is turned
+# on the rewritten AOF file is composed of two different stanzas:
+#
+#   [RDB file][AOF tail]
+#
+# When loading Redis recognizes that the AOF file starts with the &quot;REDIS&quot;
+# string and loads the prefixed RDB file, and continues loading the AOF
+# tail.
+#
+# This is currently turned off by default in order to avoid the surprise
+# of a format change, but will at some point be used as the default.
+aof-use-rdb-preamble no
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>内存命令<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>新添加了一个 <code class="docutils literal"><span class="pre">MEMORY</span></code> 命令，
+这个命令可以用于视察内存使用情况，
+并进行相应的内存管理操作：</p>
+<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; MEMORY HELP
+1) &quot;MEMORY USAGE &lt;key&gt; [SAMPLES &lt;count&gt;] - Estimate memory usage of key&quot;
+2) &quot;MEMORY STATS                         - Show memory usage details&quot;
+3) &quot;MEMORY PURGE                         - Ask the allocator to release memory&quot;
+4) &quot;MEMORY MALLOC-STATS                  - Show allocator internal stats&quot;
+</pre></div>
+</div>
+<p>其中，
+使用 <code class="docutils literal"><span class="pre">MEMORY</span> <span class="pre">USAGE</span></code> 子命令可以估算储存给定键所需的内存：</p>
+<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; SET msg &quot;hello world&quot;
+OK
+
+127.0.0.1:6379&gt; SADD fruits apple banana cherry
+(integer) 3
+
+127.0.0.1:6379&gt; MEMORY USAGE msg
+(integer) 62
+
+127.0.0.1:6379&gt; MEMORY USAGE fruits
+(integer) 375
+</pre></div>
+</div>
+<p>使用 <code class="docutils literal"><span class="pre">MEMORY</span> <span class="pre">STATS</span></code> 子命令可以查看 Redis 当前的内存使用情况：</p>
+<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; MEMORY STATS
+1) &quot;peak.allocated&quot;
+2) (integer) 1014480
+3) &quot;total.allocated&quot;
+4) (integer) 1014512
+5) &quot;startup.allocated&quot;
+6) (integer) 963040
+7) &quot;replication.backlog&quot;
+8) (integer) 0
+9) &quot;clients.slaves&quot;
+10) (integer) 0
+11) &quot;clients.normal&quot;
+12) (integer) 49614
+13) &quot;aof.buffer&quot;
+14) (integer) 0
+15) &quot;db.0&quot;
+16) 1) &quot;overhead.hashtable.main&quot;
+    2) (integer) 264
+    3) &quot;overhead.hashtable.expires&quot;
+    4) (integer) 32
+17) &quot;overhead.total&quot;
+18) (integer) 1012950
+19) &quot;keys.count&quot;
+20) (integer) 5
+21) &quot;keys.bytes-per-key&quot;
+22) (integer) 10294
+23) &quot;dataset.bytes&quot;
+24) (integer) 1562
+25) &quot;dataset.percentage&quot;
+26) &quot;3.0346596240997314&quot;
+27) &quot;peak.percentage&quot;
+28) &quot;100.00315093994141&quot;
+29) &quot;fragmentation&quot;
+30) &quot;2.1193723678588867&quot;
+</pre></div>
+</div>
+<p>使用 <code class="docutils literal"><span class="pre">MEMORY</span> <span class="pre">PURGE</span></code> 子命令可以要求分配器释放更多内存：</p>
+<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; MEMORY PURGE
+OK
+</pre></div>
+</div>
+<p>使用 <code class="docutils literal"><span class="pre">MEMORY</span> <span class="pre">MALLOC-STATS</span></code> 子命令可以展示分配器内部状态：</p>
+<div class="highlight-python"><div class="highlight"><pre>127.0.0.1:6379&gt; MEMORY MALLOC-STATS
+Stats not supported for the current allocator
+</pre></div>
+</div>
+</div>
+<div class="section" id="nat-docker">
+<h2>兼容 NAT 和 Docker<a class="headerlink" href="#nat-docker" title="Permalink to this headline">¶</a></h2>
+<p>Redis 4.0 将兼容 NAT 和 Docker ，
+具体的使用方法在 <code class="docutils literal"><span class="pre">redis.conf</span></code> 中有记载：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">########################## CLUSTER DOCKER/NAT support  ########################</span>
+
+<span class="c"># In certain deployments, Redis Cluster nodes address discovery fails, because</span>
+<span class="c"># addresses are NAT-ted or because ports are forwarded (the typical case is</span>
+<span class="c"># Docker and other containers).</span>
+<span class="c">#</span>
+<span class="c"># In order to make Redis Cluster working in such environments, a static</span>
+<span class="c"># configuration where each node known its public address is needed. The</span>
+<span class="c"># following two options are used for this scope, and are:</span>
+<span class="c">#</span>
+<span class="c"># * cluster-announce-ip</span>
+<span class="c"># * cluster-announce-port</span>
+<span class="c"># * cluster-announce-bus-port</span>
+<span class="c">#</span>
+<span class="c"># Each instruct the node about its address, client port, and cluster message</span>
+<span class="c"># bus port. The information is then published in the header of the bus packets</span>
+<span class="c"># so that other nodes will be able to correctly map the address of the node</span>
+<span class="c"># publishing the information.</span>
+<span class="c">#</span>
+<span class="c"># If the above options are not used, the normal Redis Cluster auto-detection</span>
+<span class="c"># will be used instead.</span>
+<span class="c">#</span>
+<span class="c"># Note that when remapped, the bus port may not be at the fixed offset of</span>
+<span class="c"># clients port + 10000, so you can specify any port and bus-port depending</span>
+<span class="c"># on how they get remapped. If the bus-port is not set, a fixed offset of</span>
+<span class="c"># 10000 will be used as usually.</span>
+<span class="c">#</span>
+<span class="c"># Example:</span>
+<span class="c">#</span>
+<span class="c"># cluster-announce-ip 10.1.1.5</span>
+<span class="c"># cluster-announce-port 6379</span>
+<span class="c"># cluster-announce-bus-port 6380</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>结语<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>关于 Redis 4.0 的主要更新就介绍到这里，
+想要详细了解 Redis 4.0 各项修改的读者可以参考 Release Note ：
+<a class="reference external" href="https://raw.githubusercontent.com/antirez/redis/4.0/00-RELEASENOTES">https://raw.githubusercontent.com/antirez/redis/4.0/00-RELEASENOTES</a></p>
+<p>想要试用新版本的读者，
+只要直接获取 <a class="reference external" href="https://github.com/antirez/redis">https://github.com/antirez/redis</a> 的 unstable 分支即可。</p>
+<div class="line-block">
+<div class="line">黄健宏</div>
+<div class="line">2016.12.6</div>
+</div>
+</div>
+</div>
+
+
+
+            <div class="section" id="copyright_info">
+
+    <h2>
+        版权声明
+        <a class="headerlink" href="#copyright_info" title="永久链接至标题">¶</a>
+    </h2>
+
+    <p>本博客中的所有文章均为作者原创，受著作权法律保护，任何人不得在未经授权的情况下转载本博客的文章或将其用于商业活动，违者必究。</p>
+
+</div>
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Redis 4.0 新功能简介</a><ul>
+<li><a class="reference internal" href="#id1">模块系统</a></li>
+<li><a class="reference internal" href="#psync-2-0">PSYNC 2.0</a></li>
+<li><a class="reference internal" href="#id2">缓存驱逐策略优化</a></li>
+<li><a class="reference internal" href="#del-flushdb-flushall">非阻塞 DEL 、 FLUSHDB 和 FLUSHALL</a></li>
+<li><a class="reference internal" href="#id3">交换数据库</a></li>
+<li><a class="reference internal" href="#rdb-aof">混合 RDB-AOF 持久化格式</a></li>
+<li><a class="reference internal" href="#id4">内存命令</a></li>
+<li><a class="reference internal" href="#nat-docker">兼容 NAT 和 Docker</a></li>
+<li><a class="reference internal" href="#id5">结语</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2016</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="notes-about-translation-11.html"
+                        title="next chapter">翻译笔记之十一：简化非必要技术名词</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/">小象学院（ChinaHadoop.cn）</a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.3.
+    </div>
+  </body>
+</html>
