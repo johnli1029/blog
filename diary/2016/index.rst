@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   notes-about-writing-2
    tools
    redis-4-outline
    notes-about-translation-11
