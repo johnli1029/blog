@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="huangz/blog" href="../index.html" />
-    <link rel="next" title="技术群讨论指导原则" href="group-guideline.html" />
+    <link rel="next" title="Go 标准库文档翻译：encoding/xml 包" href="go-stdlib-encoding-xml.html" />
     <link rel="prev" title="huangz/blog" href="../index.html" />
 <!--[if lte IE 6]>
 <link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
@@ -43,7 +43,7 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="group-guideline.html" title="技术群讨论指导原则"
+          <a href="go-stdlib-encoding-xml.html" title="Go 标准库文档翻译：encoding/xml 包"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../index.html" title="huangz/blog"
@@ -61,6 +61,36 @@
 <h1>2017<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="go-stdlib-encoding-xml.html">Go 标准库文档翻译：encoding/xml 包</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#id1">常量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#id2">变量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#escape">Escape 函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#escapetext">EscapeText 函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#marshal">Marshal 函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#marshalindent">MarshalIndent 函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#unmarshal">Unmarshal 函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#attr">Attr 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#chardata">CharData 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#comment">Comment 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#decoder">Decoder 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#directive">Directive 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#encoder">Encoder 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#endelement">EndElement 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#marshaler">Marshaler 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#marshalerattr">MarshalerAttr 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#name">Name 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#procinst">ProcInst 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#startelement">StartElement 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#syntaxerror">SyntaxError 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#tagpatherror">TagPathError 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#token">Token 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#unmarshalerror">UnmarshalError 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#unmarshaler">Unmarshaler 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#unmarshalerattr">UnmarshalerAttr 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#unsupportedtypeerror">UnsupportedTypeError 类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="go-stdlib-encoding-xml.html#license">License</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="group-guideline.html">技术群讨论指导原则</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="group-guideline.html#id2">主题</a></li>
 <li class="toctree-l2"><a class="reference internal" href="group-guideline.html#id3">提问</a></li>
@@ -136,8 +166,8 @@
   <p class="topless"><a href="../index.html"
                         title="previous chapter">huangz/blog</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="group-guideline.html"
-                        title="next chapter">技术群讨论指导原则</a></p>
+  <p class="topless"><a href="go-stdlib-encoding-xml.html"
+                        title="next chapter">Go 标准库文档翻译：encoding/xml 包</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
