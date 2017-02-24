@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   go-stdlib-encoding-xml
    group-guideline
    how-i-became-a-writer-and-translator
    redis-reshard-performance-issue
