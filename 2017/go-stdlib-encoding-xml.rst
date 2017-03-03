@@ -8,6 +8,13 @@ Go 标准库文档翻译：encoding/xml 包
 https://golang.org/pkg/encoding/xml/
 
 
+概述
+---------
+
+xml 包实现了一个简单的 XML 1.0 语法分析器，
+这个分析器能够理解 XML 命名空间。
+
+
 常量
 ---------
 
