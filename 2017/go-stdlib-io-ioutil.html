@@ -65,7 +65,11 @@
 原文地址为：
 <a class="reference external" href="https://golang.org/pkg/io/ioutil/">https://golang.org/pkg/io/ioutil/</a></p>
 <div class="section" id="id1">
-<h2>变量<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>概述<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>ioutil 包实现了一些 I/O 实用函数。</p>
+</div>
+<div class="section" id="id2">
+<h2>变量<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>Discard 是一个 io.Writer ，
 它的所有成功执行的 Write 操作都不会产生任何实际的效果：</p>
 <div class="highlight-go"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">Discard</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Writer</span> <span class="p">=</span> <span class="nx">devNull</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -310,7 +314,8 @@ TempFile 也不会创建出相同的文件。</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Go 标准库文档翻译：io/ioutil 包</a><ul>
-<li><a class="reference internal" href="#id1">变量</a></li>
+<li><a class="reference internal" href="#id1">概述</a></li>
+<li><a class="reference internal" href="#id2">变量</a></li>
 <li><a class="reference internal" href="#nopcloser">NopCloser 函数</a></li>
 <li><a class="reference internal" href="#readall">ReadAll 函数</a></li>
 <li><a class="reference internal" href="#readdir">ReadDir 函数</a></li>

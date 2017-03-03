@@ -26,7 +26,7 @@
     <link rel="top" title="huangz/blog" href="../index.html" />
     <link rel="up" title="2017" href="index.html" />
     <link rel="next" title="Go 标准库文档翻译：io/ioutil 包" href="go-stdlib-io-ioutil.html" />
-    <link rel="prev" title="2017" href="index.html" />
+    <link rel="prev" title="Go 标准库文档翻译：hash 包" href="go-stdlib-hash.html" />
 <!--[if lte IE 6]>
 <link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->
@@ -47,7 +47,7 @@
           <a href="go-stdlib-io-ioutil.html" title="Go 标准库文档翻译：io/ioutil 包"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="2017"
+          <a href="go-stdlib-hash.html" title="Go 标准库文档翻译：hash 包"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">huangz/blog</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">2017</a> &raquo;</li> 
@@ -65,7 +65,14 @@
 原文地址为：
 <a class="reference external" href="https://golang.org/pkg/path/">https://golang.org/pkg/path/</a></p>
 <div class="section" id="id1">
-<h2>变量<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>概述<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>path 包实现了一系列实用函数，
+这些函数可以对实用斜杠进行分隔的路径进行处理。</p>
+<p>如果你要对操作系统路径进行处理，
+请使用 path/filepath 包。</p>
+</div>
+<div class="section" id="id2">
+<h2>变量<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>ErrBadPattern 用于指示一个 glob 模式出现了格式错误。</p>
 </div>
 <div class="section" id="base">
@@ -382,7 +389,8 @@ path = dir + file 。</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Go 标准库文档翻译： path 包</a><ul>
-<li><a class="reference internal" href="#id1">变量</a></li>
+<li><a class="reference internal" href="#id1">概述</a></li>
+<li><a class="reference internal" href="#id2">变量</a></li>
 <li><a class="reference internal" href="#base">Base 函数</a></li>
 <li><a class="reference internal" href="#clean">Clean 函数</a></li>
 <li><a class="reference internal" href="#dir">Dir 函数</a></li>
@@ -397,8 +405,8 @@ path = dir + file 。</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">2017</a></p>
+  <p class="topless"><a href="go-stdlib-hash.html"
+                        title="previous chapter">Go 标准库文档翻译：hash 包</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="go-stdlib-io-ioutil.html"
                         title="next chapter">Go 标准库文档翻译：io/ioutil 包</a></p>

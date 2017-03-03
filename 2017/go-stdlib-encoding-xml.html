@@ -65,7 +65,12 @@
 原文地址为：
 <a class="reference external" href="https://golang.org/pkg/encoding/xml/">https://golang.org/pkg/encoding/xml/</a></p>
 <div class="section" id="id1">
-<h2>常量<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>概述<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>xml 包实现了一个简单的 XML 1.0 语法分析器，
+这个分析器能够理解 XML 命名空间。</p>
+</div>
+<div class="section" id="id2">
+<h2>常量<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-go"><div class="highlight"><pre><span class="kd">const</span> <span class="p">(</span>
     <span class="c1">// 一个普通的 XML 首部，可以用于封装的输出结果。</span>
     <span class="c1">// 这个首部不会自动被添加到这个包产生的任何输出中，</span>
@@ -75,8 +80,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>变量<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>变量<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>HTMLAutoClose 用于说明 HTML 元素是否会自动关闭标签：</p>
 <div class="highlight-go"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">HTMLAutoClose</span> <span class="p">=</span> <span class="nx">htmlAutoClose</span>
 </pre></div>
@@ -308,8 +313,8 @@ Unmarshal 使用大小写敏感的比较操作来对比 XML 元素的名字和�
 <p>Unmarshal 通过记录元素的名字来将一个 XML 元素映射为 Name 。</p>
 <p>Unmarshal 通过为指针设置为一个新分配的值，
 并把元素映射至该值来将一个 XML 元素映射至指针。</p>
-<div class="section" id="id3">
-<h3>示例<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>示例<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>这个示例展示了如何将一个 XML 片段解封至一个具有多个预设字段的值里面。
 需要注意的是，
 Phone 字段并未被修改，
@@ -960,14 +965,15 @@ UnmarshalXMLAttr 只能用于字段标签中带有 &#8220;attr&#8221; 选项的�
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Go 标准库文档翻译：encoding/xml 包</a><ul>
-<li><a class="reference internal" href="#id1">常量</a></li>
-<li><a class="reference internal" href="#id2">变量</a></li>
+<li><a class="reference internal" href="#id1">概述</a></li>
+<li><a class="reference internal" href="#id2">常量</a></li>
+<li><a class="reference internal" href="#id3">变量</a></li>
 <li><a class="reference internal" href="#escape">Escape 函数</a></li>
 <li><a class="reference internal" href="#escapetext">EscapeText 函数</a></li>
 <li><a class="reference internal" href="#marshal">Marshal 函数</a></li>
 <li><a class="reference internal" href="#marshalindent">MarshalIndent 函数</a></li>
 <li><a class="reference internal" href="#unmarshal">Unmarshal 函数</a><ul>
-<li><a class="reference internal" href="#id3">示例</a></li>
+<li><a class="reference internal" href="#id4">示例</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#attr">Attr 类型</a></li>
