@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   go-stdlib-hash
    go-stdlib-path
    go-stdlib-io-ioutil
    go-stdlib-encoding-xml
