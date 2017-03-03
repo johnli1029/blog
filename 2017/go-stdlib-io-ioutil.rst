@@ -9,6 +9,12 @@ Go 标准库文档翻译：io/ioutil 包
 https://golang.org/pkg/io/ioutil/
 
 
+概述
+--------
+
+ioutil 包实现了一些 I/O 实用函数。
+
+
 变量
 ---------
 
