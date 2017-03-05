@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   crime-and-punishment
    go-stdlib-hash
    go-stdlib-path
    go-stdlib-io-ioutil
