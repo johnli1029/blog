@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   notes-about-translation-12
    go-stdlib-container-list
    crime-and-punishment
    go-stdlib-hash
