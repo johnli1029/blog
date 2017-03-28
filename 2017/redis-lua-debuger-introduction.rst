@@ -119,35 +119,32 @@ redis-cli 就会进入特殊的调试模式，
 
     lua debugger> help
     Redis Lua debugger help:
-    [h]elp               Show this help.
-    [s]tep               Run current line and stop again.
-    [n]ext               Alias for step.
-    [c]continue          Run till next breakpoint.
-    [l]list              List source code around current line.
-    [l]list [line]       List source code around [line].
-                         line = 0 means: current position.
-    [l]list [line] [ctx] In this form [ctx] specifies how many lines
-                         to show before/after [line].
-    [w]hole              List all source code. Alias for 'list 1 1000000'.
-    [p]rint              Show all the local variables.
-    [p]rint <var>        Show the value of the specified variable.
-                         Can also show global vars KEYS and ARGV.
-    [b]reak              Show all breakpoints.
-    [b]reak <line>       Add a breakpoint to the specified line.
-    [b]reak -<line>      Remove breakpoint from the specified line.
-    [b]reak 0            Remove all breakpoints.
-    [t]race              Show a backtrace.
-    [e]eval <code>       Execute some Lua code (in a different callframe).
-    [r]edis <cmd>        Execute a Redis command.
-    [m]axlen [len]       Trim logged Redis replies and Lua var dumps to len.
-                         Specifying zero as <len> means unlimited.
-    [a]abort             Stop the execution of the script. In sync
-                         mode dataset changes will be retained.
+    [h]elp               打印这个帮助
+    [s]tep               运行当前行然后再次停止
+    [n]ext               step 的别名，作用相同
+    [c]continue          运行直到遇到下个断点为止
+    [l]list              列出当前行附近的代码
+    [l]list [line]       列出指定行 line 附近的代码
+                         line = 0 代表列出当前行附近的代码
+    [l]list [line] [ctx] 列出位于行 line 附近的 ctx 行代码
+    [w]hole              列出整个脚本源码，相当于执行 'list 1 1000000'
+    [p]rint              打印出所有局部变量
+    [p]rint <var>        打印出指定的局部变量，也可以用于打印全局变量 KEYS 以及 ARGV 
+    [b]reak              列出所有断点
+    [b]reak <line>       将断点添加至指定行
+    [b]reak -<line>      移除指定行的断点
+    [b]reak 0            移除所有断点
+    [t]race              打印回溯链条（Show a backtrace）
+    [e]eval <code>       在不同的调用幁中执行指定的 Lua 代码
+    [r]edis <cmd>        执行给定的 Redis 命令
+    [m]axlen [len]       将 Redis 的回复以及 Lua 变量转储（dump）截断至指定的长度。
+                         将参数 len 的值设置为 0 表示不对长度进行限制。
+    [a]abort             停止执行脚本。
+                         在同步模式下，对数据库的修改将被保留。
 
-    Debugger functions you can call from Lua scripts:
-    redis.debug()        Produce logs in the debugger console.
-    redis.breakpoint()   Stop execution as if there was a breakpoint in the
-                         next line of code.
+    以下是两个可以在 Lua 脚本中进行调用的调试函数：
+    redis.debug()        在调试终端中输出日志。
+    redis.breakpoint()   暂停脚本的执行，就像遇到了一个断点一样。
 
 需要注意的是，
 在默认情况下，
