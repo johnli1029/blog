@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="huangz/blog" href="../index.html" />
-    <link rel="next" title="翻译笔记之十二：无标准译法词汇的处理办法" href="notes-about-translation-12.html" />
+    <link rel="next" title="Redis Lua 脚本调试器用法说明" href="redis-lua-debuger-introduction.html" />
     <link rel="prev" title="huangz/blog" href="../index.html" />
 <!--[if lte IE 6]>
 <link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
@@ -43,7 +43,7 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="notes-about-translation-12.html" title="翻译笔记之十二：无标准译法词汇的处理办法"
+          <a href="redis-lua-debuger-introduction.html" title="Redis Lua 脚本调试器用法说明"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../index.html" title="huangz/blog"
@@ -61,6 +61,19 @@
 <h1>2017<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="redis-lua-debuger-introduction.html">Redis Lua 脚本调试器用法说明</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="redis-lua-debuger-introduction.html#id1">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-lua-debuger-introduction.html#id2">使用教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-lua-debuger-introduction.html#id3">调试会话的终止</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-lua-debuger-introduction.html#id4">调试命令的缩写</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-lua-debuger-introduction.html#id5">断点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-lua-debuger-introduction.html#id6">动态断点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-lua-debuger-introduction.html#id7">同步模式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-lua-debuger-introduction.html#id8">在脚本中进行日志记录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-lua-debuger-introduction.html#print-eval">使用 print 和 eval 视察程序状态</a></li>
+<li class="toctree-l2"><a class="reference internal" href="redis-lua-debuger-introduction.html#id9">调试客户端</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="notes-about-translation-12.html">翻译笔记之十二：无标准译法词汇的处理办法</a></li>
 <li class="toctree-l1"><a class="reference internal" href="go-stdlib-container-list.html">Go 标准库文档翻译：container/list 包</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="go-stdlib-container-list.html#id1">概述</a></li>
@@ -211,8 +224,8 @@
   <p class="topless"><a href="../index.html"
                         title="previous chapter">huangz/blog</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="notes-about-translation-12.html"
-                        title="next chapter">翻译笔记之十二：无标准译法词汇的处理办法</a></p>
+  <p class="topless"><a href="redis-lua-debuger-introduction.html"
+                        title="next chapter">Redis Lua 脚本调试器用法说明</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
