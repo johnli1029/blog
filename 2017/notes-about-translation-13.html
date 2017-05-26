@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>翻译笔记之十三：慎选原著 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="huangz/blog" href="../index.html" />
+    <link rel="up" title="2017" href="index.html" />
+    <link rel="next" title="Redis Lua 脚本调试器用法说明" href="redis-lua-debuger-introduction.html" />
+    <link rel="prev" title="2017" href="index.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="redis-lua-debuger-introduction.html" title="Redis Lua 脚本调试器用法说明"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="2017"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2017</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>翻译笔记之十三：慎选原著<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>在前面的翻译笔记中，
+我们一直考虑的是如何通过各种翻译技术和手段来提高译文的质量。
+但是想要得到好的译文，
+除了译者的翻译技术要好之外，
+原著的质量本身也是非常重要的。</p>
+<p>人们常说“巧妇难为无米之炊”，
+其实从很多方面来说，
+翻译都跟烹饪也是非常相似：</p>
+<ul class="simple">
+<li>无论一位厨师的烹饪技术再高超，
+他也不太可能把一些过期变质的食物制作成美味佳肴；
+但如果等待处理的都是一些新鲜出土的食材，
+那么整个烹饪过程将能够事半功倍地进行，
+并且制作出美味佳肴的机会也会大大地提高。</li>
+<li>与此类似，
+对于一本逻辑清晰、用词遣句得当、经过了严格技术检验的原著来说，
+译者在进行翻译时将会更加得心应手，
+产出好译作的可能性也会大大提高；
+但如果译者面对的是一本逻辑混乱、充满错别字句、频频出现技术错误的原著，
+那么除非译者愿意花费大量时间，
+在翻译书本的过程上对整本书进行重写和修改，
+否则光靠译者本身的力量，
+他是无法把一本劣质的原著翻译成一本优秀的译作的。</li>
+</ul>
+<p>根据个人经验，
+国外的几间计算机图书出版社出版的著作的可读性大概可以按以下顺序从高到低进行排列：</p>
+<ul class="simple">
+<li>The Pragmatic Programmer 和 O’Reilly 出版的书一般来说都是最容易读的，
+特别是前者出版的书籍，
+不仅易读，
+而且对篇幅也有很严格的限制，
+通常很快就可以读完，
+堪称计算机图书方面的楷模。</li>
+<li>Apress 出版社的著作可读性也不错的，
+只是行文会有些啰嗦，
+像我这种急性子读来可能会觉得有些烦躁。</li>
+<li>Pearson 的书本很多都是教材，
+作者大多为学校的教授，
+所以专业的词汇会出现得比较多，
+对于词汇量不大的读者来说是一个不小的挑战。</li>
+<li>Manning 出版的著作可读性浮动比较大，
+有些书非常好读，
+跟 O&#8217;Reilly 处于同一个水平，
+但有些书则非常难度，
+我个人读过的其中一本最难读的书就出自 Manning 。</li>
+<li>Packt 出版的书，
+可读性似乎都比较差，
+这可能跟他们的图书作者很多都不是使用英语作为母语有关。</li>
+</ul>
+<p>以上只是我个人的浅见，
+但是说到底，
+一本书的质量到底还是由书本本身决定的：
+即使是同一个出版社出版的两本书，
+它们的可读性也可能会有巨大的差别，
+所以译者还是需要根据书本做具体的判断。</p>
+<p>为了妥当起见，
+译者在考虑是否翻译一本书的时候，
+应该尽可能地阅读待翻译的书本，
+多了解书本在技术和文字方面的质量，
+然后再作决定。</p>
+<p>另外需要注意的是，
+因为有些书本在刚开头的时候会写得比较好，
+而越到后面质量就越是下降，
+所以读者在判断书本质量的时候，
+不要只看书本的前面，
+也要抽取一些中间和后面的章节进行阅读。
+如果条件允许的话，
+把整本书快速地阅读并了解一遍，
+这是最好的。</p>
+<div class="line-block">
+<div class="line">黄健宏</div>
+<div class="line">2017.5.26</div>
+</div>
+</div>
+
+
+
+            <div class="section" id="copyright_info">
+
+    <h2>
+        版权声明
+        <a class="headerlink" href="#copyright_info" title="永久链接至标题">¶</a>
+    </h2>
+
+    <p>本博客中的所有文章均为作者原创，受著作权法律保护，任何人不得在未经授权的情况下转载本博客的文章或将其用于商业活动，违者必究。</p>
+
+</div>
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2017</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="redis-lua-debuger-introduction.html"
+                        title="next chapter">Redis Lua 脚本调试器用法说明</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/">小象学院（ChinaHadoop.cn）</a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2017, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.3.
+    </div>
+  </body>
+</html>
