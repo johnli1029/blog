@@ -23,6 +23,8 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="top" title="huangz/blog" href="../../index.html" />
     <link rel="up" title="2012 年" href="index.html" />
     <link rel="next" title="Redis 命令参考 2.6 版本发布" href="redis-command-reference-26.html" />
@@ -70,38 +72,38 @@
 <p>Redis 的 <code class="docutils literal"><span class="pre">RPOPLPUSH</span></code> 命令有一个特点：它是 Redis 列表结构的众多命令里，唯一一个左右不对称的命令 —— 在 Redis 里，只有 <code class="docutils literal"><span class="pre">RPOPLPUSH</span></code> ，却没有 <code class="docutils literal"><span class="pre">LPOPRPUSH</span></code> ，而其他列表结构的命令，比如 <code class="docutils literal"><span class="pre">LPUSH</span></code> 和 <code class="docutils literal"><span class="pre">RPUSH</span></code> 、 <code class="docutils literal"><span class="pre">LPUSHX</span></code> 和 <code class="docutils literal"><span class="pre">RPUSHX</span></code> ，全都是左右对称的。</p>
 <p>如果仅仅将 Redis 的列表结构用作单向列表，只在列表的其中一边对元素进行处理的话，那么有没有 <code class="docutils literal"><span class="pre">LPOPRPUSH</span></code> 是无所谓的：因为你总可以将新元素添加到列表的最左边，然后用 <code class="docutils literal"><span class="pre">RPOPLPUSH</span></code> 来对列表进行处理 —— 常见的消息队列和事件处理在 Redis 中通常都是这样实现的。</p>
 <p>但是，缺少 <code class="docutils literal"><span class="pre">LPOPRPUSH</span></code> 在一些情况下也会造成不便，其中一个例子就是，没有 <code class="docutils literal"><span class="pre">LPOPRPUSH</span></code> ，你就没办法用很自然的方法实现循环列表，这种列表既可以向后旋转(<code class="docutils literal"><span class="pre">LPOPRPUSH</span> <span class="pre">list</span> <span class="pre">list</span></code> ，并返回当前列表的尾节点)，也可以向前旋转(<code class="docutils literal"><span class="pre">RPOPLPUSH</span> <span class="pre">list</span> <span class="pre">list</span></code> ，并返回列表的头节点)，以下是一个虚构的 <code class="docutils literal"><span class="pre">LPOPRPUSH</span></code> 例子：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; LRANGE seq 0 -1
-1) &quot;1&quot;
-2) &quot;2&quot;
-3) &quot;3&quot;
-4) &quot;4&quot;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">LRANGE</span> <span class="n">seq</span> <span class="mi">0</span> <span class="o">-</span><span class="mi">1</span>
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;1&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;2&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;3&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;4&quot;</span>
 
-redis&gt; LPOPRPUSH seq seq
-&quot;1&quot;
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">LPOPRPUSH</span> <span class="n">seq</span> <span class="n">seq</span>
+<span class="s2">&quot;1&quot;</span>
 
-redis&gt; LRANGE seq 0 -1
-1) &quot;2&quot;
-2) &quot;3&quot;
-3) &quot;4&quot;
-4) &quot;1&quot;
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">LRANGE</span> <span class="n">seq</span> <span class="mi">0</span> <span class="o">-</span><span class="mi">1</span>
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;2&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;3&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;4&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;1&quot;</span>
 
-redis&gt; LPOPRPUSH seq seq
-&quot;2&quot;
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">LPOPRPUSH</span> <span class="n">seq</span> <span class="n">seq</span>
+<span class="s2">&quot;2&quot;</span>
 
-redis&gt; LRANGE seq 0 -1
-1) &quot;3&quot;
-2) &quot;4&quot;
-3) &quot;1&quot;
-4) &quot;2&quot;
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">LRANGE</span> <span class="n">seq</span> <span class="mi">0</span> <span class="o">-</span><span class="mi">1</span>
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;3&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;4&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;1&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;2&quot;</span>
 
-redis&gt; LPOPRPUSH seq seq
-&quot;3&quot;
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">LPOPRPUSH</span> <span class="n">seq</span> <span class="n">seq</span>
+<span class="s2">&quot;3&quot;</span>
 
-redis&gt; LRANGE seq 0 -1
-1) &quot;4&quot;
-2) &quot;1&quot;
-3) &quot;2&quot;
-4) &quot;3&quot;
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">LRANGE</span> <span class="n">seq</span> <span class="mi">0</span> <span class="o">-</span><span class="mi">1</span>
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;4&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;1&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;2&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;3&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -116,18 +118,18 @@ redis&gt; LRANGE seq 0 -1
 </ol>
 <p>并且 <code class="docutils literal"><span class="pre">LPOPRPUSH</span></code> 的 <code class="docutils literal"><span class="pre">source</span></code> 和 <code class="docutils literal"><span class="pre">destination</span></code> 参数的值可以是同一个列表，从而制造一种(向后)旋转操作。</p>
 <p>一个最简单的 <code class="docutils literal"><span class="pre">LPOPRPUSH</span></code> 实现可能是这样的：</p>
-<div class="highlight-lua"><div class="highlight"><pre><span class="c1">-- unsafe_lpoprpush.lua</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="c1">-- unsafe_lpoprpush.lua</span>
 
-<span class="kd">local</span> <span class="n">redis</span> <span class="o">=</span> <span class="nb">require</span> <span class="s1">&#39;</span><span class="s">redis&#39;</span>
-<span class="kd">local</span> <span class="n">client</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">6379</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">redis</span> <span class="o">=</span> <span class="nb">require</span> <span class="s1">&#39;redis&#39;</span>
+<span class="kd">local</span> <span class="n">client</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">6379</span><span class="p">)</span>
 
-<span class="k">function</span> <span class="nf">lpoprpush</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+<span class="kr">function</span> <span class="nf">lpoprpush</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
     <span class="kd">local</span> <span class="n">item</span> <span class="o">=</span> <span class="n">client</span><span class="p">:</span><span class="n">lpop</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">item</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="k">then</span>
+    <span class="kr">if</span> <span class="n">item</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="kr">then</span>
         <span class="n">client</span><span class="p">:</span><span class="n">rpush</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">item</span>
-    <span class="k">end</span>
-<span class="k">end</span>
+        <span class="kr">return</span> <span class="n">item</span>
+    <span class="kr">end</span>
+<span class="kr">end</span>
 </pre></div>
 </div>
 </div>
@@ -137,30 +139,30 @@ redis&gt; LRANGE seq 0 -1
 <p>举个例子，假如客户端在执行 <code class="docutils literal"><span class="pre">client:lpop(source)</span></code> 之后失败，那么被弹出的 <code class="docutils literal"><span class="pre">item</span></code> 元素就会白白丢失，无法被 <code class="docutils literal"><span class="pre">RPUSH</span></code> 命令推入到 <code class="docutils literal"><span class="pre">destination</span></code> 列表。</p>
 <p>为了将 <code class="docutils literal"><span class="pre">LPOPRPUSH</span></code> 函数修改成一个原子性操作，我们不仅需要 <code class="docutils literal"><span class="pre">MULTI</span></code> 和 <code class="docutils literal"><span class="pre">EXEC</span></code> ，而且因为 <code class="docutils literal"><span class="pre">LPOPRPUSH</span></code> 是一个 CAS (check-and-set, 检查并修改)类型的操作，我们还需要用上 <code class="docutils literal"><span class="pre">WATCH</span></code> 来监视 <code class="docutils literal"><span class="pre">source</span></code> 和 <code class="docutils literal"><span class="pre">destination</span></code> 列表。</p>
 <p>以下是新的 <code class="docutils literal"><span class="pre">LPOPRPUSH</span></code> 实现，它保证了 <code class="docutils literal"><span class="pre">LPOP</span></code> 和 <code class="docutils literal"><span class="pre">RPUSH</span></code> 两个操作的原子性，可以在任何情况下正确地执行工作：</p>
-<div class="highlight-lua"><div class="highlight"><pre><span class="c1">-- safe_lpoprpush.lua</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="c1">-- safe_lpoprpush.lua</span>
 
-<span class="kd">local</span> <span class="n">redis</span> <span class="o">=</span> <span class="nb">require</span> <span class="s1">&#39;</span><span class="s">redis&#39;</span>
-<span class="kd">local</span> <span class="n">client</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">6379</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">redis</span> <span class="o">=</span> <span class="nb">require</span> <span class="s1">&#39;redis&#39;</span>
+<span class="kd">local</span> <span class="n">client</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">6379</span><span class="p">)</span>
 
-<span class="k">function</span> <span class="nf">lpoprpush</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">source</span> <span class="o">==</span> <span class="n">destination</span> <span class="k">then</span>
+<span class="kr">function</span> <span class="nf">lpoprpush</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="n">source</span> <span class="o">==</span> <span class="n">destination</span> <span class="kr">then</span>
         <span class="kd">local</span> <span class="n">watch</span> <span class="o">=</span> <span class="n">source</span>
-    <span class="k">else</span>
+    <span class="kr">else</span>
         <span class="kd">local</span> <span class="n">watch</span> <span class="o">=</span> <span class="p">{</span><span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">}</span>
-    <span class="k">end</span>
+    <span class="kr">end</span>
 
     <span class="kd">local</span> <span class="n">item</span> <span class="o">=</span> <span class="kc">nil</span>
     <span class="kd">local</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{</span> <span class="n">watch</span> <span class="o">=</span> <span class="n">watch</span><span class="p">,</span> <span class="n">cas</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="n">retry</span> <span class="o">=</span> <span class="mi">2</span> <span class="p">}</span>
-    <span class="n">client</span><span class="p">:</span><span class="n">transaction</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">client</span><span class="p">:</span><span class="n">transaction</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
         <span class="n">item</span> <span class="o">=</span> <span class="n">t</span><span class="p">:</span><span class="n">lpop</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">item</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="k">then</span>
+        <span class="kr">if</span> <span class="n">item</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="kr">then</span>
             <span class="n">t</span><span class="p">:</span><span class="n">multi</span><span class="p">()</span>
             <span class="n">t</span><span class="p">:</span><span class="n">rpush</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
-        <span class="k">end</span>
-    <span class="k">end</span><span class="p">)</span>
+        <span class="kr">end</span>
+    <span class="kr">end</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">item</span>
-<span class="k">end</span>
+    <span class="kr">return</span> <span class="n">item</span>
+<span class="kr">end</span>
 </pre></div>
 </div>
 </div>
@@ -191,70 +193,70 @@ redis&gt; LRANGE seq 0 -1
 <code class="docutils literal"><span class="pre">arg</span> <span class="pre">[arg</span> <span class="pre">...]</span></code> ：附加参数，当在 Lua 中执行 Redis 命令时，用作命令的参数，可以在 Lua 脚本中通过全局数组 <code class="docutils literal"><span class="pre">ARGV</span></code> 来访问这些附加参数(数组下标以 <code class="docutils literal"><span class="pre">1</span></code> 为起始值)</p>
 <p><code class="docutils literal"><span class="pre">script</span></code> 参数和 <code class="docutils literal"><span class="pre">numkeys</span></code> 参数是必须的，通过给定一个脚本，并且将 <code class="docutils literal"><span class="pre">numkeys</span></code> 设为 <code class="docutils literal"><span class="pre">0</span></code> ，我们就可以用 <code class="docutils literal"><span class="pre">EVAL</span></code> 命令来执行简单的 Lua 求值了：</p>
 <p>先用 <code class="docutils literal"><span class="pre">EVAL</span></code> 来个传统问候吧：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; EVAL &quot;return &#39;hello world&#39;&quot; 0
-&quot;hello world&quot;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">EVAL</span> <span class="s2">&quot;return &#39;hello world&#39;&quot;</span> <span class="mi">0</span>
+<span class="s2">&quot;hello world&quot;</span>
 </pre></div>
 </div>
 <p>然后做做初等数学计算：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; EVAL &quot;return 1 + 1&quot; 0
-(integer) 2
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">EVAL</span> <span class="s2">&quot;return 1 + 1&quot;</span> <span class="mi">0</span>
+<span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">2</span>
 
-redis&gt; EVAL &quot;return 10/2&quot; 0
-(integer) 5
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">EVAL</span> <span class="s2">&quot;return 10/2&quot;</span> <span class="mi">0</span>
+<span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">5</span>
 </pre></div>
 </div>
 <p>又或者，来点儿条件判断式：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; EVAL &quot;if 1 == 1 then return &#39;good&#39; else return &#39;bad&#39; end&quot; 0
-&quot;good&quot;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">EVAL</span> <span class="s2">&quot;if 1 == 1 then return &#39;good&#39; else return &#39;bad&#39; end&quot;</span> <span class="mi">0</span>
+<span class="s2">&quot;good&quot;</span>
 </pre></div>
 </div>
 <p>当然， <code class="docutils literal"><span class="pre">EVAL</span></code> 的真正威力不仅仅是写写 Lua 表达式那么简单，更关键的是，你可以使用 <code class="docutils literal"><span class="pre">redis.call</span></code> 函数，在 Lua 环境中执行 Redis 命令。</p>
 <p>以下是两个 <code class="docutils literal"><span class="pre">SET</span></code> 和 <code class="docutils literal"><span class="pre">GET</span></code> 的例子：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; EVAL &quot;return redis.call(&#39;set&#39;, KEYS[1], ARGV[1])&quot; 1 message &quot;hello, moto&quot;
-OK
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">EVAL</span> <span class="s2">&quot;return redis.call(&#39;set&#39;, KEYS[1], ARGV[1])&quot;</span> <span class="mi">1</span> <span class="n">message</span> <span class="s2">&quot;hello, moto&quot;</span>
+<span class="n">OK</span>
 
-redis&gt; EVAL &quot;return redis.call(&#39;get&#39;, KEYS[1])&quot; 1 message
-&quot;hello, moto&quot;
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">EVAL</span> <span class="s2">&quot;return redis.call(&#39;get&#39;, KEYS[1])&quot;</span> <span class="mi">1</span> <span class="n">message</span>
+<span class="s2">&quot;hello, moto&quot;</span>
 </pre></div>
 </div>
 <p>这两个脚本和以下的 Redis 命令等价：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; SET message &quot;hello, moto&quot;
-OK
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">message</span> <span class="s2">&quot;hello, moto&quot;</span>
+<span class="n">OK</span>
 
-redis&gt; GET message
-&quot;hello, moto&quot;
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">GET</span> <span class="n">message</span>
+<span class="s2">&quot;hello, moto&quot;</span>
 </pre></div>
 </div>
 <p>以下是另外一个集合的例子：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; EVAL &quot;return redis.call(&#39;sadd&#39;, KEYS[1], ARGV[1])&quot; 1 animal snake
-(integer) 1
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">EVAL</span> <span class="s2">&quot;return redis.call(&#39;sadd&#39;, KEYS[1], ARGV[1])&quot;</span> <span class="mi">1</span> <span class="n">animal</span> <span class="n">snake</span>
+<span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">1</span>
 
-redis&gt; EVAL &quot;return redis.call(&#39;sadd&#39;, KEYS[1], unpack(ARGV))&quot; 1 animal wolf lion tiger
-(integer) 3
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">EVAL</span> <span class="s2">&quot;return redis.call(&#39;sadd&#39;, KEYS[1], unpack(ARGV))&quot;</span> <span class="mi">1</span> <span class="n">animal</span> <span class="n">wolf</span> <span class="n">lion</span> <span class="n">tiger</span>
+<span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">3</span>
 </pre></div>
 </div>
 <p>它和以下这两个命令等价：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; SADD animal snake
-(integer) 1
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">SADD</span> <span class="n">animal</span> <span class="n">snake</span>
+<span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">1</span>
 
-redis&gt; SADD animal wolf lion tiger
-(integer) 3
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">SADD</span> <span class="n">animal</span> <span class="n">wolf</span> <span class="n">lion</span> <span class="n">tiger</span>
+<span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">3</span>
 </pre></div>
 </div>
 <p>键名参数并不一定总是只能有一个，比如说，在执行 [RENAME](<a class="reference external" href="http://redis.readthedocs.org/en/latest/key/rename.html">http://redis.readthedocs.org/en/latest/key/rename.html</a>) 命令的时候，就需要两个键名参数：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; EVAL &quot;return redis.call(&#39;rename&#39;, KEYS[1], KEYS[2])&quot; 2 old_name new_name
-OK
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">EVAL</span> <span class="s2">&quot;return redis.call(&#39;rename&#39;, KEYS[1], KEYS[2])&quot;</span> <span class="mi">2</span> <span class="n">old_name</span> <span class="n">new_name</span>
+<span class="n">OK</span>
 </pre></div>
 </div>
 <p>这个脚本和以下命令等价：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; rename old_name new_name
-OK
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">rename</span> <span class="n">old_name</span> <span class="n">new_name</span>
+<span class="n">OK</span>
 </pre></div>
 </div>
 <p>关于 <code class="docutils literal"><span class="pre">EVAL</span></code> 命令的使用，最后要提醒的一点是，应该总是通过 <code class="docutils literal"><span class="pre">KEYS</span></code> 和 <code class="docutils literal"><span class="pre">ARGV</span></code> 两个变量来访问相应的键和参数，不要将键名和命令参数硬写到脚本里面，这会导致脚本无法使用 <code class="docutils literal"><span class="pre">EVALSHA</span></code> 命令来优化，也没有办法被 Redis 集群所执行。</p>
 <p>这是一个典型的坏例子，不要这样做(尽管它可能暂时是可用的)：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; EVAL &quot;return redis.call(&#39;rpush&#39;, &#39;language&#39;, &#39;ruby&#39;, &#39;python&#39;, &#39;lua&#39;)&quot; 0
-(integer) 3
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">EVAL</span> <span class="s2">&quot;return redis.call(&#39;rpush&#39;, &#39;language&#39;, &#39;ruby&#39;, &#39;python&#39;, &#39;lua&#39;)&quot;</span> <span class="mi">0</span>
+<span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">3</span>
 </pre></div>
 </div>
 </div>
@@ -266,11 +268,11 @@ OK
 <li>可以在 Lua 脚本里面使用 <code class="docutils literal"><span class="pre">redis.call</span></code> 执行 Redis 命令</li>
 </ol>
 <p>如果将这两个特性组合起来使用，就可以实现一些有趣的操作，比如说，我们可以写一个脚本，它只在键不存在的情况下对键执行 <code class="docutils literal"><span class="pre">SET</span></code> 命令，就像 Redis 的 <code class="docutils literal"><span class="pre">SETNX</span></code> 命令一样：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; EVAL &quot;if redis.call(&#39;exists&#39;, KEYS[1]) == 0 then return redis.call(&#39;set&#39;, KEYS[1], ARGV[1]) end&quot; 1 date 2012.4.4
-OK
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">EVAL</span> <span class="s2">&quot;if redis.call(&#39;exists&#39;, KEYS[1]) == 0 then return redis.call(&#39;set&#39;, KEYS[1], ARGV[1]) end&quot;</span> <span class="mi">1</span> <span class="n">date</span> <span class="mf">2012.4</span><span class="o">.</span><span class="mi">4</span>
+<span class="n">OK</span>
 
-redis&gt; EVAL &quot;if redis.call(&#39;exists&#39;, KEYS[1]) == 0 then return redis.call(&#39;set&#39;, KEYS[1], ARGV[1]) end&quot; 1 date 2012.4.4
-(nil)
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">EVAL</span> <span class="s2">&quot;if redis.call(&#39;exists&#39;, KEYS[1]) == 0 then return redis.call(&#39;set&#39;, KEYS[1], ARGV[1]) end&quot;</span> <span class="mi">1</span> <span class="n">date</span> <span class="mf">2012.4</span><span class="o">.</span><span class="mi">4</span>
+<span class="p">(</span><span class="n">nil</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>上面执行的脚本也是一个典型的 CAS 操作，它先检查一个键是否存在，然后根据反馈决定该怎么处理给定的键。如果在客户端执行 <code class="docutils literal"><span class="pre">EVAL</span></code> 里面的那一段代码，那可以肯定它是不是原子性操作，但是，在 <code class="docutils literal"><span class="pre">EVAL</span></code> 命令中，这个脚本并不会产生安全问题 —— 这是因为， <code class="docutils literal"><span class="pre">EVAL</span></code> 的执行是原子性的，这也是你需要知道的，关于 <code class="docutils literal"><span class="pre">EVAL</span></code> 的，第三个特性：</p>
@@ -279,12 +281,12 @@ redis&gt; EVAL &quot;if redis.call(&#39;exists&#39;, KEYS[1]) == 0 then return r
 </ol>
 <p>这样一来，在 Redis 2.6 版本以前一直困扰我们的很多 CAS 类型的问题，一下子就不复存在了：因为只要简单地将操作写成脚本，然后放到 <code class="docutils literal"><span class="pre">EVAL</span></code> 命令里运行，这样就再也不必担心原子性的问题了，也可以从此跟麻烦的 <code class="docutils literal"><span class="pre">WATCH</span></code> 命令说再见了。</p>
 <p>作为一个演示 <code class="docutils literal"><span class="pre">EVAL</span></code> 真正威力的例子，我们回过头来，使用脚本实现之前讨论的 <code class="docutils literal"><span class="pre">LPOPRPUSH</span></code> 操作：</p>
-<div class="highlight-lua"><div class="highlight"><pre><span class="c1">-- script_lpoprpush.lua</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="c1">-- script_lpoprpush.lua</span>
 
-<span class="kd">local</span> <span class="n">redis</span> <span class="o">=</span> <span class="nb">require</span> <span class="s1">&#39;</span><span class="s">redis&#39;</span>
-<span class="kd">local</span> <span class="n">client</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">6379</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">redis</span> <span class="o">=</span> <span class="nb">require</span> <span class="s1">&#39;redis&#39;</span>
+<span class="kd">local</span> <span class="n">client</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">6379</span><span class="p">)</span>
 
-<span class="k">function</span> <span class="nf">lpoprpush</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+<span class="kr">function</span> <span class="nf">lpoprpush</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
     <span class="n">script</span> <span class="o">=</span> <span class="s">[[</span>
 <span class="s">        local item = redis.call(&#39;lpop&#39;, KEYS[1])</span>
 <span class="s">        if item ~= nil then</span>
@@ -293,8 +295,8 @@ redis&gt; EVAL &quot;if redis.call(&#39;exists&#39;, KEYS[1]) == 0 then return r
 <span class="s">        end</span>
 <span class="s">    ]]</span>
 
-    <span class="k">return</span> <span class="n">client</span><span class="p">:</span><span class="n">eval</span><span class="p">(</span><span class="n">script</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
-<span class="k">end</span>
+    <span class="kr">return</span> <span class="n">client</span><span class="p">:</span><span class="n">eval</span><span class="p">(</span><span class="n">script</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+<span class="kr">end</span>
 </pre></div>
 </div>
 <p>我们可以将三个版本的 <code class="docutils literal"><span class="pre">LPOPRPUSH</span></code> 放在一起进行对比：</p>
@@ -378,14 +380,11 @@ redis&gt; EVAL &quot;if redis.call(&#39;exists&#39;, KEYS[1]) == 0 then return r
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
           
@@ -416,7 +415,7 @@ redis&gt; EVAL &quot;if redis.call(&#39;exists&#39;, KEYS[1]) == 0 then return r
     </div>
     <div class="footer">
         &copy; Copyright 2017, huangz.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
     </div>
   </body>
 </html>

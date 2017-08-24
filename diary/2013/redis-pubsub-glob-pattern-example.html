@@ -23,6 +23,8 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="top" title="huangz/blog" href="../../index.html" />
     <link rel="up" title="2013 年" href="index.html" />
     <link rel="next" title="Redis 处理和修复不合法 AOF 文件的方法" href="how-redis-fix-invalid-aof-file.html" />
@@ -88,29 +90,29 @@
 包括空字符串。</p>
 <p>比如说，
 模式 <code class="docutils literal"><span class="pre">*news</span></code> 可以匹配 <code class="docutils literal"><span class="pre">sport</span> <span class="pre">news</span></code> 、 <code class="docutils literal"><span class="pre">breaking</span> <span class="pre">news</span></code> ：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis 127.0.0.1:6379&gt; PSUBSCRIBE *news
-Reading messages... (press Ctrl-C to quit)
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span> <span class="n">PSUBSCRIBE</span> <span class="o">*</span><span class="n">news</span>
+<span class="n">Reading</span> <span class="n">messages</span><span class="o">...</span> <span class="p">(</span><span class="n">press</span> <span class="n">Ctrl</span><span class="o">-</span><span class="n">C</span> <span class="n">to</span> <span class="n">quit</span><span class="p">)</span>
 
-1) &quot;psubscribe&quot;
-2) &quot;*news&quot;
-3) (integer) 1
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;psubscribe&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;*news&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">1</span>
 
-1) &quot;pmessage&quot;
-2) &quot;*news&quot;
-3) &quot;sport news&quot;
-4) &quot;hello world from sport news&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;*news&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;sport news&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;hello world from sport news&quot;</span>
 
-1) &quot;pmessage&quot;
-2) &quot;*news&quot;
-3) &quot;breaking news&quot;
-4) &quot;hello world from breaking news&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;*news&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;breaking news&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;hello world from breaking news&quot;</span>
 </pre></div>
 </div>
 <p>或者正好是字符串 <code class="docutils literal"><span class="pre">news</span></code> ：</p>
-<div class="highlight-python"><div class="highlight"><pre>1) &quot;pmessage&quot;
-2) &quot;*news&quot;
-3) &quot;news&quot;
-4) &quot;hello world&quot;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;*news&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;news&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;hello world&quot;</span>
 </pre></div>
 </div>
 <p>等等。</p>
@@ -121,7 +123,7 @@ Reading messages... (press Ctrl-C to quit)
 <p>比如说，
 <code class="docutils literal"><span class="pre">Re?is</span></code> 可以匹配 <code class="docutils literal"><span class="pre">Redis</span></code> 、 <code class="docutils literal"><span class="pre">ReDis</span></code> 、 <code class="docutils literal"><span class="pre">Regis</span></code> 、 <code class="docutils literal"><span class="pre">Re-is</span></code> 等等。</p>
 <p>以下是一个订阅 <code class="docutils literal"><span class="pre">Re?is</span></code> 模式的客户端：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis 127.0.0.1:6379&gt; PSUBSCRIBE Re?is
+<div class="highlight-default"><div class="highlight"><pre><span></span>redis 127.0.0.1:6379&gt; PSUBSCRIBE Re?is
 Reading messages... (press Ctrl-C to quit)
 
 1) &quot;psubscribe&quot;
@@ -131,25 +133,25 @@ Reading messages... (press Ctrl-C to quit)
 </div>
 <p>当有信息发送到 <code class="docutils literal"><span class="pre">Redis</span></code> 频道的时候，
 它将接收到以下信息：</p>
-<div class="highlight-python"><div class="highlight"><pre>1) &quot;pmessage&quot;
-2) &quot;Re?is&quot;
-3) &quot;Redis&quot;
-4) &quot;hello from channel Redis&quot;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;Re?is&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;Redis&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;hello from channel Redis&quot;</span>
 </pre></div>
 </div>
 <p>另外，
 因为 <code class="docutils literal"><span class="pre">ReDis</span></code> 和 <code class="docutils literal"><span class="pre">Re-is</span></code> 等频道也和 <code class="docutils literal"><span class="pre">Re?is</span></code> 模式匹配，
 所以当有信息发送到这些频道的时候，
 订阅 <code class="docutils literal"><span class="pre">Re?is</span></code> 模式的客户端也会收到信息：</p>
-<div class="highlight-python"><div class="highlight"><pre>1) &quot;pmessage&quot;
-2) &quot;Re?is&quot;
-3) &quot;ReDis&quot;
-4) &quot;hello from channel ReDis&quot;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;Re?is&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;ReDis&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;hello from channel ReDis&quot;</span>
 
-1) &quot;pmessage&quot;
-2) &quot;Re?is&quot;
-3) &quot;Re-is&quot;
-4) &quot;hello from channel Re-is&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;Re?is&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;Re-is&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;hello from channel Re-is&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -161,30 +163,30 @@ Reading messages... (press Ctrl-C to quit)
 <p>比如说，
 如果我们想匹配 <code class="docutils literal"><span class="pre">Redis</span></code> 、 <code class="docutils literal"><span class="pre">Tedis</span></code> 和 <code class="docutils literal"><span class="pre">Uedis</span></code> 三个频道的信息，
 那么可以订阅模式 <code class="docutils literal"><span class="pre">[RTU]edis</span></code> ：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis 127.0.0.1:6379&gt; PSUBSCRIBE [RTU]edis
-Reading messages... (press Ctrl-C to quit)
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span> <span class="n">PSUBSCRIBE</span> <span class="p">[</span><span class="n">RTU</span><span class="p">]</span><span class="n">edis</span>
+<span class="n">Reading</span> <span class="n">messages</span><span class="o">...</span> <span class="p">(</span><span class="n">press</span> <span class="n">Ctrl</span><span class="o">-</span><span class="n">C</span> <span class="n">to</span> <span class="n">quit</span><span class="p">)</span>
 
-1) &quot;psubscribe&quot;
-2) &quot;[RTU]edis&quot;
-3) (integer) 1
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;psubscribe&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;[RTU]edis&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">1</span>
 </pre></div>
 </div>
 <p>当有信息发送给 <code class="docutils literal"><span class="pre">Redis</span></code> 、 <code class="docutils literal"><span class="pre">Tedis</span></code> 或 <code class="docutils literal"><span class="pre">Uedis</span></code> 中的任意一个时，
 订阅客户端都会收到信息：</p>
-<div class="highlight-python"><div class="highlight"><pre>1) &quot;pmessage&quot;
-2) &quot;[RTU]edis&quot;
-3) &quot;Redis&quot;
-4) &quot;hello from Redis&quot;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;[RTU]edis&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;Redis&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;hello from Redis&quot;</span>
 
-1) &quot;pmessage&quot;
-2) &quot;[RTU]edis&quot;
-3) &quot;Tedis&quot;
-4) &quot;hello from Tedis&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;[RTU]edis&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;Tedis&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;hello from Tedis&quot;</span>
 
-1) &quot;pmessage&quot;
-2) &quot;[RTU]edis&quot;
-3) &quot;Uedis&quot;
-4) &quot;hello from Uedis&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;[RTU]edis&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;Uedis&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;hello from Uedis&quot;</span>
 </pre></div>
 </div>
 <p>和 <code class="docutils literal"><span class="pre">glob</span></code> 程序一样，
@@ -192,51 +194,51 @@ Redis 的 <code class="docutils literal"><span class="pre">[...]</span></code> �
 <p>比如说，
 要匹配频道 <code class="docutils literal"><span class="pre">iPhone4</span></code> 、 <code class="docutils literal"><span class="pre">iPhone5</span></code> 和 <code class="docutils literal"><span class="pre">iPhone6</span></code> ，
 可以订阅模式 <code class="docutils literal"><span class="pre">iPhone[4-6]</span></code> ：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis 127.0.0.1:6379&gt; PSUBSCRIBE iPhone[4-6]
-Reading messages... (press Ctrl-C to quit)
-1) &quot;psubscribe&quot;
-2) &quot;iPhone[4-6]&quot;
-3) (integer) 1
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span> <span class="n">PSUBSCRIBE</span> <span class="n">iPhone</span><span class="p">[</span><span class="mi">4</span><span class="o">-</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">Reading</span> <span class="n">messages</span><span class="o">...</span> <span class="p">(</span><span class="n">press</span> <span class="n">Ctrl</span><span class="o">-</span><span class="n">C</span> <span class="n">to</span> <span class="n">quit</span><span class="p">)</span>
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;psubscribe&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;iPhone[4-6]&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">1</span>
 
-1) &quot;pmessage&quot;
-2) &quot;iPhone[4-6]&quot;
-3) &quot;iPhone4&quot;
-4) &quot;...&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;iPhone[4-6]&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;iPhone4&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;...&quot;</span>
 
-1) &quot;pmessage&quot;
-2) &quot;iPhone[4-6]&quot;
-3) &quot;iPhone5&quot;
-4) &quot;...&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;iPhone[4-6]&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;iPhone5&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;...&quot;</span>
 
-1) &quot;pmessage&quot;
-2) &quot;iPhone[4-6]&quot;
-3) &quot;iPhone6&quot;
-4) &quot;...&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;iPhone[4-6]&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;iPhone6&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;...&quot;</span>
 </pre></div>
 </div>
 <p>另外，
 要匹配 <code class="docutils literal"><span class="pre">Aedis</span></code> 、 <code class="docutils literal"><span class="pre">Bedis</span></code> 、 <code class="docutils literal"><span class="pre">Cedis</span></code> 一直到 <code class="docutils literal"><span class="pre">Zedis</span></code> 频道，
 可以订阅 <code class="docutils literal"><span class="pre">[A-Z]edis</span></code> 模式：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis 127.0.0.1:6379&gt; PSUBSCRIBE [A-Z]edis
-Reading messages... (press Ctrl-C to quit)
-1) &quot;psubscribe&quot;
-2) &quot;[A-Z]edis&quot;
-3) (integer) 1
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span> <span class="n">PSUBSCRIBE</span> <span class="p">[</span><span class="n">A</span><span class="o">-</span><span class="n">Z</span><span class="p">]</span><span class="n">edis</span>
+<span class="n">Reading</span> <span class="n">messages</span><span class="o">...</span> <span class="p">(</span><span class="n">press</span> <span class="n">Ctrl</span><span class="o">-</span><span class="n">C</span> <span class="n">to</span> <span class="n">quit</span><span class="p">)</span>
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;psubscribe&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;[A-Z]edis&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">1</span>
 
-1) &quot;pmessage&quot;
-2) &quot;[A-Z]edis&quot;
-3) &quot;Aedis&quot;
-4) &quot;...&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;[A-Z]edis&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;Aedis&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;...&quot;</span>
 
-1) &quot;pmessage&quot;
-2) &quot;[A-Z]edis&quot;
-3) &quot;Redis&quot;
-4) &quot;...&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;[A-Z]edis&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;Redis&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;...&quot;</span>
 
-1) &quot;pmessage&quot;
-2) &quot;[A-Z]edis&quot;
-3) &quot;Zedis&quot;
-4) &quot;...&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;[A-Z]edis&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;Zedis&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;...&quot;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -263,56 +265,56 @@ Redis 允许一个模式中包含多个匹配符，
 并且每个匹配符的数量没有限制。</p>
 <p>比如说，
 模式 <code class="docutils literal"><span class="pre">[ig]Phone*</span></code> 可以匹配 <code class="docutils literal"><span class="pre">iPhone</span></code> 、 <code class="docutils literal"><span class="pre">gPhone</span></code> 、 <code class="docutils literal"><span class="pre">iPhone</span> <span class="pre">news</span></code> 、 <code class="docutils literal"><span class="pre">gPhone</span> <span class="pre">7</span></code> 等任意频道：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis 127.0.0.1:6379&gt; PSUBSCRIBE [ig]Phone*
-Reading messages... (press Ctrl-C to quit)
-1) &quot;psubscribe&quot;
-2) &quot;[ig]Phone*&quot;
-3) (integer) 1
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span> <span class="n">PSUBSCRIBE</span> <span class="p">[</span><span class="n">ig</span><span class="p">]</span><span class="n">Phone</span><span class="o">*</span>
+<span class="n">Reading</span> <span class="n">messages</span><span class="o">...</span> <span class="p">(</span><span class="n">press</span> <span class="n">Ctrl</span><span class="o">-</span><span class="n">C</span> <span class="n">to</span> <span class="n">quit</span><span class="p">)</span>
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;psubscribe&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;[ig]Phone*&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">1</span>
 
-1) &quot;pmessage&quot;
-2) &quot;[ig]Phone*&quot;
-3) &quot;iPhone&quot;
-4) &quot;...&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;[ig]Phone*&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;iPhone&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;...&quot;</span>
 
-1) &quot;pmessage&quot;
-2) &quot;[ig]Phone*&quot;
-3) &quot;gPhone&quot;
-4) &quot;...&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;[ig]Phone*&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;gPhone&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;...&quot;</span>
 
-1) &quot;pmessage&quot;
-2) &quot;[ig]Phone*&quot;
-3) &quot;iPhone news&quot;
-4) &quot;...&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;[ig]Phone*&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;iPhone news&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;...&quot;</span>
 
-1) &quot;pmessage&quot;
-2) &quot;[ig]Phone*&quot;
-3) &quot;gPhone 7&quot;
-4) &quot;...&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;[ig]Phone*&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;gPhone 7&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;...&quot;</span>
 </pre></div>
 </div>
 <p>而模式 <code class="docutils literal"><span class="pre">*news*</span></code> 则可以匹配任何包含 <code class="docutils literal"><span class="pre">news</span></code> 这一字符串的频道，
 比如 <code class="docutils literal"><span class="pre">news</span></code> 、 <code class="docutils literal"><span class="pre">release</span> <span class="pre">news</span> <span class="pre">of</span> <span class="pre">Redis</span></code> 、 <code class="docutils literal"><span class="pre">lastes</span> <span class="pre">news</span></code> ，
 诸如此类：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis 127.0.0.1:6379&gt; PSUBSCRIBE *news*
-Reading messages... (press Ctrl-C to quit)
-1) &quot;psubscribe&quot;
-2) &quot;*news*&quot;
-3) (integer) 1
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span> <span class="n">PSUBSCRIBE</span> <span class="o">*</span><span class="n">news</span><span class="o">*</span>
+<span class="n">Reading</span> <span class="n">messages</span><span class="o">...</span> <span class="p">(</span><span class="n">press</span> <span class="n">Ctrl</span><span class="o">-</span><span class="n">C</span> <span class="n">to</span> <span class="n">quit</span><span class="p">)</span>
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;psubscribe&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;*news*&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">1</span>
 
-1) &quot;pmessage&quot;
-2) &quot;*news*&quot;
-3) &quot;news&quot;
-4) &quot;...&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;*news*&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;news&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;...&quot;</span>
 
-1) &quot;pmessage&quot;
-2) &quot;*news*&quot;
-3) &quot;release news of Redis&quot;
-4) &quot;...&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;*news*&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;release news of Redis&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;...&quot;</span>
 
-1) &quot;pmessage&quot;
-2) &quot;*news*&quot;
-3) &quot;lastes news&quot;
-4) &quot;...&quot;
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;pmessage&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;*news*&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;lastes news&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;...&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -392,14 +394,11 @@ Reading messages... (press Ctrl-C to quit)
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
           
@@ -430,7 +429,7 @@ Reading messages... (press Ctrl-C to quit)
     </div>
     <div class="footer">
         &copy; Copyright 2017, huangz.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
     </div>
   </body>
 </html>

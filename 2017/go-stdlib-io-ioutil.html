@@ -23,6 +23,8 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="top" title="huangz/blog" href="../index.html" />
     <link rel="up" title="2017" href="index.html" />
     <link rel="next" title="Go 标准库文档翻译：encoding/xml 包" href="go-stdlib-encoding-xml.html" />
@@ -72,13 +74,13 @@
 <h2>变量<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>Discard 是一个 io.Writer ，
 它的所有成功执行的 Write 操作都不会产生任何实际的效果：</p>
-<div class="highlight-go"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">Discard</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Writer</span> <span class="p">=</span> <span class="nx">devNull</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">Discard</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Writer</span> <span class="p">=</span> <span class="nx">devNull</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="nopcloser">
 <h2>NopCloser 函数<a class="headerlink" href="#nopcloser" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-go"><div class="highlight"><pre><span class="kd">func</span> <span class="nx">NopCloser</span><span class="p">(</span><span class="nx">r</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Reader</span><span class="p">)</span> <span class="nx">io</span><span class="p">.</span><span class="nx">ReadCloser</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="kd">func</span> <span class="nx">NopCloser</span><span class="p">(</span><span class="nx">r</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Reader</span><span class="p">)</span> <span class="nx">io</span><span class="p">.</span><span class="nx">ReadCloser</span>
 </pre></div>
 </div>
 <p>NopCloser 返回一个包裹起给定 Reader r 的 ReadCloser ，
@@ -86,7 +88,7 @@
 </div>
 <div class="section" id="readall">
 <h2>ReadAll 函数<a class="headerlink" href="#readall" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-go"><div class="highlight"><pre><span class="kd">func</span> <span class="nx">ReadAll</span><span class="p">(</span><span class="nx">r</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Reader</span><span class="p">)</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="kd">func</span> <span class="nx">ReadAll</span><span class="p">(</span><span class="nx">r</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Reader</span><span class="p">)</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>对 r 进行读取，
@@ -97,7 +99,7 @@
 所以它不会把读取到的 EOF 当做错误，
 也不会向调用者返回它。</p>
 <p>示例：</p>
-<div class="highlight-go"><div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="p">(</span>
 	<span class="s">&quot;fmt&quot;</span>
@@ -120,19 +122,19 @@
 </pre></div>
 </div>
 <p>示例执行结果：</p>
-<div class="highlight-go"><div class="highlight"><pre><span class="nx">Go</span> <span class="nx">is</span> <span class="nx">a</span> <span class="nx">general</span><span class="o">-</span><span class="nx">purpose</span> <span class="nx">language</span> <span class="nx">designed</span> <span class="nx">with</span> <span class="nx">systems</span> <span class="nx">programming</span> <span class="nx">in</span> <span class="nx">mind</span><span class="p">.</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="nx">Go</span> <span class="nx">is</span> <span class="nx">a</span> <span class="nx">general</span><span class="o">-</span><span class="nx">purpose</span> <span class="nx">language</span> <span class="nx">designed</span> <span class="nx">with</span> <span class="nx">systems</span> <span class="nx">programming</span> <span class="nx">in</span> <span class="nx">mind</span><span class="p">.</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="readdir">
 <h2>ReadDir 函数<a class="headerlink" href="#readdir" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-go"><div class="highlight"><pre><span class="kd">func</span> <span class="nx">ReadDir</span><span class="p">(</span><span class="nx">dirname</span> <span class="kt">string</span><span class="p">)</span> <span class="p">([]</span><span class="nx">os</span><span class="p">.</span><span class="nx">FileInfo</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="kd">func</span> <span class="nx">ReadDir</span><span class="p">(</span><span class="nx">dirname</span> <span class="kt">string</span><span class="p">)</span> <span class="p">([]</span><span class="nx">os</span><span class="p">.</span><span class="nx">FileInfo</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>读取 dirname 指定的目录，
 并返回一个根据文件名进行排序的目录节点列表。</p>
 <p>示例：</p>
-<div class="highlight-go"><div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="p">(</span>
 	<span class="s">&quot;fmt&quot;</span>
@@ -153,7 +155,7 @@
 </pre></div>
 </div>
 <p>示例执行结果：</p>
-<div class="highlight-go"><div class="highlight"><pre><span class="nx">dev</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="nx">dev</span>
 <span class="nx">etc</span>
 <span class="nx">tmp</span>
 <span class="nx">usr</span>
@@ -162,7 +164,7 @@
 </div>
 <div class="section" id="readfile">
 <h2>ReadFile 函数<a class="headerlink" href="#readfile" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-go"><div class="highlight"><pre><span class="kd">func</span> <span class="nx">ReadFile</span><span class="p">(</span><span class="nx">filename</span> <span class="kt">string</span><span class="p">)</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="kd">func</span> <span class="nx">ReadFile</span><span class="p">(</span><span class="nx">filename</span> <span class="kt">string</span><span class="p">)</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>读取名字为 filename 的文件并返回文件中的内容。
@@ -173,7 +175,7 @@
 </div>
 <div class="section" id="tempdir">
 <h2>TempDir 函数<a class="headerlink" href="#tempdir" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-go"><div class="highlight"><pre><span class="kd">func</span> <span class="nx">TempDir</span><span class="p">(</span><span class="nx">dir</span><span class="p">,</span> <span class="nx">prefix</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="kd">func</span> <span class="nx">TempDir</span><span class="p">(</span><span class="nx">dir</span><span class="p">,</span> <span class="nx">prefix</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>在目录 dir 中新创建一个带有指定前缀 prefix 的临时目录，
@@ -184,7 +186,7 @@
 TempDir 也不会创建出相同的目录。</p>
 <p>调用者负责在使用完这个临时目录之后删除它。</p>
 <p>示例：</p>
-<div class="highlight-go"><div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="p">(</span>
 	<span class="s">&quot;fmt&quot;</span>
@@ -206,13 +208,13 @@ TempDir 也不会创建出相同的目录。</p>
 </pre></div>
 </div>
 <p>示例执行结果：</p>
-<div class="highlight-go"><div class="highlight"><pre><span class="o">/</span><span class="nx">tmp</span><span class="o">/</span><span class="nx">example054003078</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="o">/</span><span class="nx">tmp</span><span class="o">/</span><span class="nx">example054003078</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="tempfile">
 <h2>TempFile 函数<a class="headerlink" href="#tempfile" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-go"><div class="highlight"><pre><span class="kd">func</span> <span class="nx">TempFile</span><span class="p">(</span><span class="nx">dir</span><span class="p">,</span> <span class="nx">prefix</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">f</span> <span class="o">*</span><span class="nx">os</span><span class="p">.</span><span class="nx">File</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="kd">func</span> <span class="nx">TempFile</span><span class="p">(</span><span class="nx">dir</span><span class="p">,</span> <span class="nx">prefix</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">f</span> <span class="o">*</span><span class="nx">os</span><span class="p">.</span><span class="nx">File</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>在目录 dir 新创建一个名字带有指定前缀 prefix 的临时文件，
@@ -225,7 +227,7 @@ TempFile 也不会创建出相同的文件。</p>
 <p>调用者可以通过 f.Name() 来获取这个文件的路径名。</p>
 <p>调用者负责在使用完这个临时文件之后删除它。</p>
 <p>示例：</p>
-<div class="highlight-go"><div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="p">(</span>
 	<span class="s">&quot;fmt&quot;</span>
@@ -249,13 +251,13 @@ TempFile 也不会创建出相同的文件。</p>
 </pre></div>
 </div>
 <p>示例执行结果：</p>
-<div class="highlight-go"><div class="highlight"><pre><span class="o">/</span><span class="nx">tmp</span><span class="o">/</span><span class="nx">example054003078</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="o">/</span><span class="nx">tmp</span><span class="o">/</span><span class="nx">example054003078</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="writefile">
 <h2>WriteFile 函数<a class="headerlink" href="#writefile" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-go"><div class="highlight"><pre><span class="kd">func</span> <span class="nx">WriteFile</span><span class="p">(</span><span class="nx">filename</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">data</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">perm</span> <span class="nx">os</span><span class="p">.</span><span class="nx">FileMode</span><span class="p">)</span> <span class="kt">error</span>
+<div class="highlight-go"><div class="highlight"><pre><span></span><span class="kd">func</span> <span class="nx">WriteFile</span><span class="p">(</span><span class="nx">filename</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">data</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">perm</span> <span class="nx">os</span><span class="p">.</span><span class="nx">FileMode</span><span class="p">)</span> <span class="kt">error</span>
 </pre></div>
 </div>
 <p>将给定的数据 data 写入到名字为 filename 的文件里面。
@@ -337,14 +339,11 @@ TempFile 也不会创建出相同的文件。</p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
           
@@ -375,7 +374,7 @@ TempFile 也不会创建出相同的文件。</p>
     </div>
     <div class="footer">
         &copy; Copyright 2017, huangz.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
     </div>
   </body>
 </html>

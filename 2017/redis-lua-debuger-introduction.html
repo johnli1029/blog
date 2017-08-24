@@ -23,6 +23,8 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="top" title="huangz/blog" href="../index.html" />
     <link rel="up" title="2017" href="index.html" />
     <link rel="next" title="翻译笔记之十二：无标准译法词汇的处理办法" href="notes-about-translation-12.html" />
@@ -123,7 +125,7 @@ Redis 服务器将被用作调试服务器，
 你可以将需要传递给脚本的键名以及参数一并提供给客户端，
 其中键名和参数之间使用一个逗号来进行分割，
 就像这样：</p>
-<div class="highlight-lua"><div class="highlight"><pre><span class="n">redis</span><span class="o">-</span><span class="n">cli</span> <span class="c1">--ldb --eval /tmp/script.lua mykey somekey , arg1 arg2</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">-</span><span class="n">cli</span> <span class="c1">--ldb --eval /tmp/script.lua mykey somekey , arg1 arg2</span>
 </pre></div>
 </div>
 <p>在执行这条命令之后，
@@ -148,7 +150,7 @@ redis-cli 就会进入特殊的调试模式，
 <li><code class="docutils literal"><span class="pre">help</span></code> ——
 打印出可用的调试命令。</li>
 </ul>
-<div class="highlight-lua"><div class="highlight"><pre>lua debugger&gt; help
+<div class="highlight-lua"><div class="highlight"><pre><span></span>lua debugger&gt; help
 Redis Lua debugger help:
 [h]elp               打印这个帮助
 [s]tep               运行当前行然后再次停止
@@ -189,11 +191,11 @@ redis.breakpoint()   暂停脚本的执行，就像遇到了一个断点一样�
 在执行 <code class="docutils literal"><span class="pre">step</span></code> 命令时，
 服务器将会展示出服务器执行的所有命令，
 就像这样：</p>
-<div class="highlight-lua"><div class="highlight"><pre><span class="o">*</span> <span class="n">Stopped</span> <span class="n">at</span> <span class="mi">1</span><span class="p">,</span> <span class="n">stop</span> <span class="n">reason</span> <span class="o">=</span> <span class="n">step</span> <span class="n">over</span>
-<span class="o">-&gt;</span> <span class="mi">1</span>   <span class="n">redis</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">ping&#39;</span><span class="p">)</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">Stopped</span> <span class="n">at</span> <span class="mi">1</span><span class="p">,</span> <span class="n">stop</span> <span class="n">reason</span> <span class="o">=</span> <span class="n">step</span> <span class="n">over</span>
+<span class="o">-&gt;</span> <span class="mi">1</span>   <span class="n">redis</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="s1">&#39;ping&#39;</span><span class="p">)</span>
 <span class="n">lua</span> <span class="n">debugger</span><span class="o">&gt;</span> <span class="n">step</span>
 <span class="o">&lt;</span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">ping</span>
-<span class="o">&lt;</span><span class="n">reply</span><span class="o">&gt;</span> <span class="s2">&quot;</span><span class="s">+PONG&quot;</span>
+<span class="o">&lt;</span><span class="n">reply</span><span class="o">&gt;</span> <span class="s2">&quot;+PONG&quot;</span>
 <span class="o">*</span> <span class="n">Stopped</span> <span class="n">at</span> <span class="mi">2</span><span class="p">,</span> <span class="n">stop</span> <span class="n">reason</span> <span class="o">=</span> <span class="n">step</span> <span class="n">over</span>
 </pre></div>
 </div>
@@ -250,7 +252,7 @@ redis.breakpoint()   暂停脚本的执行，就像遇到了一个断点一样�
 我们可以考虑在 Lua 脚本中使用 <code class="docutils literal"><span class="pre">redis.breakpoint()</span></code> 函数，
 这个函数将在接下来将要被执行的代码行前面模拟一个断点。</p>
 <p>以下是一个使用动态断点的例子：</p>
-<div class="highlight-lua"><div class="highlight"><pre><span class="k">if</span> <span class="n">counter</span> <span class="o">&gt;</span> <span class="mi">10</span> <span class="k">then</span> <span class="n">redis</span><span class="p">.</span><span class="n">breakpoint</span><span class="p">()</span> <span class="k">end</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="kr">if</span> <span class="n">counter</span> <span class="o">&gt;</span> <span class="mi">10</span> <span class="kr">then</span> <span class="n">redis</span><span class="p">.</span><span class="n">breakpoint</span><span class="p">()</span> <span class="kr">end</span>
 </pre></div>
 </div>
 <p>这个特性在调试时非常有用，
@@ -269,7 +271,7 @@ LDB 在默认情况下将使用子进程来创建调试会话，
 用户可以会想要保留每个调试会话对数据库所做的修改。
 想要这么做的用户可以在启动调试器时，
 向 <code class="docutils literal"><span class="pre">redis-cli</span></code> 客户端给定 <code class="docutils literal"><span class="pre">ldb-sync-mode</span></code> 选项：</p>
-<div class="highlight-lua"><div class="highlight"><pre><span class="n">redis</span><span class="o">-</span><span class="n">cli</span> <span class="c1">--ldb-sync-mode --eval /tmp/script.lua</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">-</span><span class="n">cli</span> <span class="c1">--ldb-sync-mode --eval /tmp/script.lua</span>
 </pre></div>
 </div>
 <p>注意，
@@ -287,7 +289,7 @@ LDB 在默认情况下将使用子进程来创建调试会话，
 <p><code class="docutils literal"><span class="pre">redis.debug()</span></code> 函数是一个非常强力的调试手段，
 它可以在 Lua 脚本内部调用，
 并将日志写入至调试终端：</p>
-<div class="highlight-lua"><div class="highlight"><pre><span class="n">lua</span> <span class="n">debugger</span><span class="o">&gt;</span> <span class="n">list</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">lua</span> <span class="n">debugger</span><span class="o">&gt;</span> <span class="n">list</span>
 <span class="o">-&gt;</span> <span class="mi">1</span>   <span class="kd">local</span> <span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span>
    <span class="mi">2</span>   <span class="kd">local</span> <span class="n">b</span> <span class="o">=</span> <span class="kc">false</span>
    <span class="mi">3</span>   <span class="n">redis</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
@@ -318,8 +320,8 @@ LDB 在默认情况下将使用子进程来创建调试会话，
 <p><code class="docutils literal"><span class="pre">eval</span></code> 命令可以在当前调用幁之外的上下文中执行指定的一小段 Lua 脚本
 （顺带一提，在当前的 Lua 内部实现中，在当前调用幁的上下文中进行求值是不可能的）。
 用户可以通过这个命令来测试 Lua 函数：</p>
-<div class="highlight-lua"><div class="highlight"><pre><span class="n">lua</span> <span class="n">debugger</span><span class="o">&gt;</span> <span class="n">e</span> <span class="n">redis</span><span class="p">.</span><span class="n">sha1hex</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">foo&#39;</span><span class="p">)</span>
-<span class="o">&lt;</span><span class="n">retval</span><span class="o">&gt;</span> <span class="s2">&quot;</span><span class="s">0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33&quot;</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="n">lua</span> <span class="n">debugger</span><span class="o">&gt;</span> <span class="n">e</span> <span class="n">redis</span><span class="p">.</span><span class="n">sha1hex</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">retval</span><span class="o">&gt;</span> <span class="s2">&quot;0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -340,10 +342,10 @@ LDB 在默认情况下将使用子进程来创建调试会话，
 <p>比如说，
 <a class="reference external" href="http://studio.zerobrane.com/">ZeroBrane Studio</a> 的 <a class="reference external" href="https://redislabs.com/blog/zerobrane-studio-plugin-for-redis-lua-scripts">Redis plugin</a> 就通过 <a class="reference external" href="https://github.com/nrk/redis-lua">redis-lua</a> 集成了 LDB 。
 以下这个简单的示例演示了这个插件是如何完成这一工作的：</p>
-<div class="highlight-lua"><div class="highlight"><pre><span class="kd">local</span> <span class="n">redis</span> <span class="o">=</span> <span class="nb">require</span> <span class="s1">&#39;</span><span class="s">redis&#39;</span>
+<div class="highlight-lua"><div class="highlight"><pre><span></span><span class="kd">local</span> <span class="n">redis</span> <span class="o">=</span> <span class="nb">require</span> <span class="s1">&#39;redis&#39;</span>
 
 <span class="c1">-- add LDB&#39;s Continue command</span>
-<span class="n">redis</span><span class="p">.</span><span class="n">commands</span><span class="p">[</span><span class="s1">&#39;</span><span class="s">ldbcontinue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">command</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">C&#39;</span><span class="p">)</span>
+<span class="n">redis</span><span class="p">.</span><span class="n">commands</span><span class="p">[</span><span class="s1">&#39;ldbcontinue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">command</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
 
 <span class="c1">-- script to be debugged</span>
 <span class="kd">local</span> <span class="n">script</span> <span class="o">=</span> <span class="s">[[</span>
@@ -352,9 +354,9 @@ LDB 在默认情况下将使用子进程来创建调试会话，
 <span class="s">  return result</span>
 <span class="s">]]</span>
 
-<span class="kd">local</span> <span class="n">client</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;</span><span class="s">127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">6379</span><span class="p">)</span>
-<span class="n">client</span><span class="p">:</span><span class="n">script</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">DEBUG&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s">YES&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">unpack</span><span class="p">(</span><span class="n">client</span><span class="p">:</span><span class="n">eval</span><span class="p">(</span><span class="n">script</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">)))</span>
+<span class="kd">local</span> <span class="n">client</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">6379</span><span class="p">)</span>
+<span class="n">client</span><span class="p">:</span><span class="n">script</span><span class="p">(</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span> <span class="s2">&quot;YES&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">unpack</span><span class="p">(</span><span class="n">client</span><span class="p">:</span><span class="n">eval</span><span class="p">(</span><span class="n">script</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">)))</span>
 <span class="n">client</span><span class="p">:</span><span class="n">ldbcontinue</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -432,14 +434,11 @@ LDB 在默认情况下将使用子进程来创建调试会话，
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
           
@@ -470,7 +469,7 @@ LDB 在默认情况下将使用子进程来创建调试会话，
     </div>
     <div class="footer">
         &copy; Copyright 2017, huangz.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
     </div>
   </body>
 </html>

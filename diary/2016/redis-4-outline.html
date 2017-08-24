@@ -23,6 +23,8 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="top" title="huangz/blog" href="../../index.html" />
     <link rel="up" title="2016" href="index.html" />
     <link rel="next" title="翻译笔记之十一：简化非必要技术名词" href="notes-about-translation-11.html" />
@@ -78,13 +80,13 @@
 它与 Redis 内核本身完全分离、互不干扰，
 所以用户可以在有需要的情况下才启用这个功能，
 以下是 <code class="docutils literal"><span class="pre">redis.conf</span></code> 中记载的模块载入方法：</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c">################################## MODULES #####################################</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">################################## MODULES #####################################</span>
 
-<span class="c"># Load modules at startup. If the server is not able to load modules</span>
-<span class="c"># it will abort. It is possible to use multiple loadmodule directives.</span>
-<span class="c">#</span>
-<span class="c"># loadmodule /path/to/my_module.so</span>
-<span class="c"># loadmodule /path/to/other_module.so</span>
+<span class="c1"># Load modules at startup. If the server is not able to load modules</span>
+<span class="c1"># it will abort. It is possible to use multiple loadmodule directives.</span>
+<span class="c1">#</span>
+<span class="c1"># loadmodule /path/to/my_module.so</span>
+<span class="c1"># loadmodule /path/to/other_module.so</span>
 </pre></div>
 </div>
 <p>目前已经有人使用这个功能开发了各种各样的模块，
@@ -131,8 +133,8 @@ Redis 4.0 新添加了 <code class="docutils literal"><span class="pre">UNLINK</
 这个命令是 <code class="docutils literal"><span class="pre">DEL</span></code> 命令的异步版本，
 它可以将删除指定键的操作放在后台线程里面执行，
 从而尽可能地避免服务器阻塞：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; UNLINK fruits
-(integer) 1
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">UNLINK</span> <span class="n">fruits</span>
+<span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">1</span>
 </pre></div>
 </div>
 <p>因为一些历史原因，
@@ -140,11 +142,11 @@ Redis 4.0 新添加了 <code class="docutils literal"><span class="pre">UNLINK</
 <p>此外，
 Redis 4.0 中的 <code class="docutils literal"><span class="pre">FLUSHDB</span></code> 和 <code class="docutils literal"><span class="pre">FLUSHALL</span></code> 这两个命令都新添加了 <code class="docutils literal"><span class="pre">ASYNC</span></code> 选项，
 带有这个选项的数据库删除操作将在后台线程进行：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; FLUSHDB ASYNC
-OK
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">FLUSHDB</span> <span class="n">ASYNC</span>
+<span class="n">OK</span>
 
-redis&gt; FLUSHALL ASYNC
-OK
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">FLUSHALL</span> <span class="n">ASYNC</span>
+<span class="n">OK</span>
 </pre></div>
 </div>
 </div>
@@ -157,23 +159,23 @@ OK
 我们可以将原来的数据库 0 变成数据库 1 ，
 而原来的数据库 1 则变成数据库 0 。</p>
 <p>以下是一个使用 <code class="docutils literal"><span class="pre">SWAPDB</span></code> 的例子：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; SET your_name &quot;huangz&quot;  -- 在数据库 0 中设置一个键
-OK
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">your_name</span> <span class="s2">&quot;huangz&quot;</span>  <span class="o">--</span> <span class="n">在数据库</span> <span class="mi">0</span> <span class="n">中设置一个键</span>
+<span class="n">OK</span>
 
-redis&gt; GET your_name
-&quot;huangz&quot;
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">GET</span> <span class="n">your_name</span>
+<span class="s2">&quot;huangz&quot;</span>
 
-redis&gt; SWAPDB 0 1  -- 互换数据库 0 和数据库 1
-OK
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">SWAPDB</span> <span class="mi">0</span> <span class="mi">1</span>  <span class="o">--</span> <span class="n">互换数据库</span> <span class="mi">0</span> <span class="n">和数据库</span> <span class="mi">1</span>
+<span class="n">OK</span>
 
-redis&gt; GET your_name  -- 现在的数据库 0 已经没有之前设置的键了
-(nil)
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">GET</span> <span class="n">your_name</span>  <span class="o">--</span> <span class="n">现在的数据库</span> <span class="mi">0</span> <span class="n">已经没有之前设置的键了</span>
+<span class="p">(</span><span class="n">nil</span><span class="p">)</span>
 
-redis&gt; SELECT 1  -- 切换到数据库 1
-OK
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">SELECT</span> <span class="mi">1</span>  <span class="o">--</span> <span class="n">切换到数据库</span> <span class="mi">1</span>
+<span class="n">OK</span>
 
-redis[1]&gt; GET your_name  -- 之前在数据库 0 设置的键现在可以在数据库 1 找到
-&quot;huangz&quot;                 -- 证明两个数据库已经互换
+<span class="n">redis</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span> <span class="n">GET</span> <span class="n">your_name</span>  <span class="o">--</span> <span class="n">之前在数据库</span> <span class="mi">0</span> <span class="n">设置的键现在可以在数据库</span> <span class="mi">1</span> <span class="n">找到</span>
+<span class="s2">&quot;huangz&quot;</span>                 <span class="o">--</span> <span class="n">证明两个数据库已经互换</span>
 </pre></div>
 </div>
 </div>
@@ -191,19 +193,19 @@ AOF 重写产生的文件将同时包含 RDB 格式的内容和 AOF 格式的内
 快速地载入数据。</p>
 <p>这个功能可以通过 <code class="docutils literal"><span class="pre">aof-use-rdb-preamble</span></code> 选项进行开启，
 <code class="docutils literal"><span class="pre">redis.conf</span></code> 文件中记录了这个选项的使用方法：</p>
-<div class="highlight-python"><div class="highlight"><pre># When rewriting the AOF file, Redis is able to use an RDB preamble in the
-# AOF file for faster rewrites and recoveries. When this option is turned
-# on the rewritten AOF file is composed of two different stanzas:
-#
-#   [RDB file][AOF tail]
-#
-# When loading Redis recognizes that the AOF file starts with the &quot;REDIS&quot;
-# string and loads the prefixed RDB file, and continues loading the AOF
-# tail.
-#
-# This is currently turned off by default in order to avoid the surprise
-# of a format change, but will at some point be used as the default.
-aof-use-rdb-preamble no
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># When rewriting the AOF file, Redis is able to use an RDB preamble in the</span>
+<span class="c1"># AOF file for faster rewrites and recoveries. When this option is turned</span>
+<span class="c1"># on the rewritten AOF file is composed of two different stanzas:</span>
+<span class="c1">#</span>
+<span class="c1">#   [RDB file][AOF tail]</span>
+<span class="c1">#</span>
+<span class="c1"># When loading Redis recognizes that the AOF file starts with the &quot;REDIS&quot;</span>
+<span class="c1"># string and loads the prefixed RDB file, and continues loading the AOF</span>
+<span class="c1"># tail.</span>
+<span class="c1">#</span>
+<span class="c1"># This is currently turned off by default in order to avoid the surprise</span>
+<span class="c1"># of a format change, but will at some point be used as the default.</span>
+<span class="n">aof</span><span class="o">-</span><span class="n">use</span><span class="o">-</span><span class="n">rdb</span><span class="o">-</span><span class="n">preamble</span> <span class="n">no</span>
 </pre></div>
 </div>
 </div>
@@ -212,73 +214,73 @@ aof-use-rdb-preamble no
 <p>新添加了一个 <code class="docutils literal"><span class="pre">MEMORY</span></code> 命令，
 这个命令可以用于视察内存使用情况，
 并进行相应的内存管理操作：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; MEMORY HELP
-1) &quot;MEMORY USAGE &lt;key&gt; [SAMPLES &lt;count&gt;] - Estimate memory usage of key&quot;
-2) &quot;MEMORY STATS                         - Show memory usage details&quot;
-3) &quot;MEMORY PURGE                         - Ask the allocator to release memory&quot;
-4) &quot;MEMORY MALLOC-STATS                  - Show allocator internal stats&quot;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">MEMORY</span> <span class="n">HELP</span>
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;MEMORY USAGE &lt;key&gt; [SAMPLES &lt;count&gt;] - Estimate memory usage of key&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;MEMORY STATS                         - Show memory usage details&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;MEMORY PURGE                         - Ask the allocator to release memory&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;MEMORY MALLOC-STATS                  - Show allocator internal stats&quot;</span>
 </pre></div>
 </div>
 <p>其中，
 使用 <code class="docutils literal"><span class="pre">MEMORY</span> <span class="pre">USAGE</span></code> 子命令可以估算储存给定键所需的内存：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; SET msg &quot;hello world&quot;
-OK
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">msg</span> <span class="s2">&quot;hello world&quot;</span>
+<span class="n">OK</span>
 
-redis&gt; SADD fruits apple banana cherry
-(integer) 3
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">SADD</span> <span class="n">fruits</span> <span class="n">apple</span> <span class="n">banana</span> <span class="n">cherry</span>
+<span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">3</span>
 
-redis&gt; MEMORY USAGE msg
-(integer) 62
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">MEMORY</span> <span class="n">USAGE</span> <span class="n">msg</span>
+<span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">62</span>
 
-redis&gt; MEMORY USAGE fruits
-(integer) 375
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">MEMORY</span> <span class="n">USAGE</span> <span class="n">fruits</span>
+<span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">375</span>
 </pre></div>
 </div>
 <p>使用 <code class="docutils literal"><span class="pre">MEMORY</span> <span class="pre">STATS</span></code> 子命令可以查看 Redis 当前的内存使用情况：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; MEMORY STATS
-1) &quot;peak.allocated&quot;
-2) (integer) 1014480
-3) &quot;total.allocated&quot;
-4) (integer) 1014512
-5) &quot;startup.allocated&quot;
-6) (integer) 963040
-7) &quot;replication.backlog&quot;
-8) (integer) 0
-9) &quot;clients.slaves&quot;
-10) (integer) 0
-11) &quot;clients.normal&quot;
-12) (integer) 49614
-13) &quot;aof.buffer&quot;
-14) (integer) 0
-15) &quot;db.0&quot;
-16) 1) &quot;overhead.hashtable.main&quot;
-    2) (integer) 264
-    3) &quot;overhead.hashtable.expires&quot;
-    4) (integer) 32
-17) &quot;overhead.total&quot;
-18) (integer) 1012950
-19) &quot;keys.count&quot;
-20) (integer) 5
-21) &quot;keys.bytes-per-key&quot;
-22) (integer) 10294
-23) &quot;dataset.bytes&quot;
-24) (integer) 1562
-25) &quot;dataset.percentage&quot;
-26) &quot;3.0346596240997314&quot;
-27) &quot;peak.percentage&quot;
-28) &quot;100.00315093994141&quot;
-29) &quot;fragmentation&quot;
-30) &quot;2.1193723678588867&quot;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">MEMORY</span> <span class="n">STATS</span>
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;peak.allocated&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">1014480</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;total.allocated&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">1014512</span>
+<span class="mi">5</span><span class="p">)</span> <span class="s2">&quot;startup.allocated&quot;</span>
+<span class="mi">6</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">963040</span>
+<span class="mi">7</span><span class="p">)</span> <span class="s2">&quot;replication.backlog&quot;</span>
+<span class="mi">8</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">0</span>
+<span class="mi">9</span><span class="p">)</span> <span class="s2">&quot;clients.slaves&quot;</span>
+<span class="mi">10</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">0</span>
+<span class="mi">11</span><span class="p">)</span> <span class="s2">&quot;clients.normal&quot;</span>
+<span class="mi">12</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">49614</span>
+<span class="mi">13</span><span class="p">)</span> <span class="s2">&quot;aof.buffer&quot;</span>
+<span class="mi">14</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">0</span>
+<span class="mi">15</span><span class="p">)</span> <span class="s2">&quot;db.0&quot;</span>
+<span class="mi">16</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;overhead.hashtable.main&quot;</span>
+    <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">264</span>
+    <span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;overhead.hashtable.expires&quot;</span>
+    <span class="mi">4</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">32</span>
+<span class="mi">17</span><span class="p">)</span> <span class="s2">&quot;overhead.total&quot;</span>
+<span class="mi">18</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">1012950</span>
+<span class="mi">19</span><span class="p">)</span> <span class="s2">&quot;keys.count&quot;</span>
+<span class="mi">20</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">5</span>
+<span class="mi">21</span><span class="p">)</span> <span class="s2">&quot;keys.bytes-per-key&quot;</span>
+<span class="mi">22</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">10294</span>
+<span class="mi">23</span><span class="p">)</span> <span class="s2">&quot;dataset.bytes&quot;</span>
+<span class="mi">24</span><span class="p">)</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">1562</span>
+<span class="mi">25</span><span class="p">)</span> <span class="s2">&quot;dataset.percentage&quot;</span>
+<span class="mi">26</span><span class="p">)</span> <span class="s2">&quot;3.0346596240997314&quot;</span>
+<span class="mi">27</span><span class="p">)</span> <span class="s2">&quot;peak.percentage&quot;</span>
+<span class="mi">28</span><span class="p">)</span> <span class="s2">&quot;100.00315093994141&quot;</span>
+<span class="mi">29</span><span class="p">)</span> <span class="s2">&quot;fragmentation&quot;</span>
+<span class="mi">30</span><span class="p">)</span> <span class="s2">&quot;2.1193723678588867&quot;</span>
 </pre></div>
 </div>
 <p>使用 <code class="docutils literal"><span class="pre">MEMORY</span> <span class="pre">PURGE</span></code> 子命令可以要求分配器释放更多内存：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; MEMORY PURGE
-OK
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">MEMORY</span> <span class="n">PURGE</span>
+<span class="n">OK</span>
 </pre></div>
 </div>
 <p>使用 <code class="docutils literal"><span class="pre">MEMORY</span> <span class="pre">MALLOC-STATS</span></code> 子命令可以展示分配器内部状态：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; MEMORY MALLOC-STATS
-Stats not supported for the current allocator
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">MEMORY</span> <span class="n">MALLOC</span><span class="o">-</span><span class="n">STATS</span>
+<span class="n">Stats</span> <span class="ow">not</span> <span class="n">supported</span> <span class="k">for</span> <span class="n">the</span> <span class="n">current</span> <span class="n">allocator</span>
 </pre></div>
 </div>
 </div>
@@ -286,38 +288,38 @@ Stats not supported for the current allocator
 <h2>兼容 NAT 和 Docker<a class="headerlink" href="#nat-docker" title="Permalink to this headline">¶</a></h2>
 <p>Redis 4.0 将兼容 NAT 和 Docker ，
 具体的使用方法在 <code class="docutils literal"><span class="pre">redis.conf</span></code> 中有记载：</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c">########################## CLUSTER DOCKER/NAT support  ########################</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">########################## CLUSTER DOCKER/NAT support  ########################</span>
 
-<span class="c"># In certain deployments, Redis Cluster nodes address discovery fails, because</span>
-<span class="c"># addresses are NAT-ted or because ports are forwarded (the typical case is</span>
-<span class="c"># Docker and other containers).</span>
-<span class="c">#</span>
-<span class="c"># In order to make Redis Cluster working in such environments, a static</span>
-<span class="c"># configuration where each node known its public address is needed. The</span>
-<span class="c"># following two options are used for this scope, and are:</span>
-<span class="c">#</span>
-<span class="c"># * cluster-announce-ip</span>
-<span class="c"># * cluster-announce-port</span>
-<span class="c"># * cluster-announce-bus-port</span>
-<span class="c">#</span>
-<span class="c"># Each instruct the node about its address, client port, and cluster message</span>
-<span class="c"># bus port. The information is then published in the header of the bus packets</span>
-<span class="c"># so that other nodes will be able to correctly map the address of the node</span>
-<span class="c"># publishing the information.</span>
-<span class="c">#</span>
-<span class="c"># If the above options are not used, the normal Redis Cluster auto-detection</span>
-<span class="c"># will be used instead.</span>
-<span class="c">#</span>
-<span class="c"># Note that when remapped, the bus port may not be at the fixed offset of</span>
-<span class="c"># clients port + 10000, so you can specify any port and bus-port depending</span>
-<span class="c"># on how they get remapped. If the bus-port is not set, a fixed offset of</span>
-<span class="c"># 10000 will be used as usually.</span>
-<span class="c">#</span>
-<span class="c"># Example:</span>
-<span class="c">#</span>
-<span class="c"># cluster-announce-ip 10.1.1.5</span>
-<span class="c"># cluster-announce-port 6379</span>
-<span class="c"># cluster-announce-bus-port 6380</span>
+<span class="c1"># In certain deployments, Redis Cluster nodes address discovery fails, because</span>
+<span class="c1"># addresses are NAT-ted or because ports are forwarded (the typical case is</span>
+<span class="c1"># Docker and other containers).</span>
+<span class="c1">#</span>
+<span class="c1"># In order to make Redis Cluster working in such environments, a static</span>
+<span class="c1"># configuration where each node known its public address is needed. The</span>
+<span class="c1"># following two options are used for this scope, and are:</span>
+<span class="c1">#</span>
+<span class="c1"># * cluster-announce-ip</span>
+<span class="c1"># * cluster-announce-port</span>
+<span class="c1"># * cluster-announce-bus-port</span>
+<span class="c1">#</span>
+<span class="c1"># Each instruct the node about its address, client port, and cluster message</span>
+<span class="c1"># bus port. The information is then published in the header of the bus packets</span>
+<span class="c1"># so that other nodes will be able to correctly map the address of the node</span>
+<span class="c1"># publishing the information.</span>
+<span class="c1">#</span>
+<span class="c1"># If the above options are not used, the normal Redis Cluster auto-detection</span>
+<span class="c1"># will be used instead.</span>
+<span class="c1">#</span>
+<span class="c1"># Note that when remapped, the bus port may not be at the fixed offset of</span>
+<span class="c1"># clients port + 10000, so you can specify any port and bus-port depending</span>
+<span class="c1"># on how they get remapped. If the bus-port is not set, a fixed offset of</span>
+<span class="c1"># 10000 will be used as usually.</span>
+<span class="c1">#</span>
+<span class="c1"># Example:</span>
+<span class="c1">#</span>
+<span class="c1"># cluster-announce-ip 10.1.1.5</span>
+<span class="c1"># cluster-announce-port 6379</span>
+<span class="c1"># cluster-announce-bus-port 6380</span>
 </pre></div>
 </div>
 </div>
@@ -401,14 +403,11 @@ Stats not supported for the current allocator
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
           
@@ -439,7 +438,7 @@ Stats not supported for the current allocator
     </div>
     <div class="footer">
         &copy; Copyright 2017, huangz.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
     </div>
   </body>
 </html>

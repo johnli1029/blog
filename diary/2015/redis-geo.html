@@ -23,6 +23,8 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="top" title="huangz/blog" href="../../index.html" />
     <link rel="up" title="2015" href="index.html" />
     <link rel="next" title="翻译笔记之九：如何避免被机器翻译取代？" href="notes-about-translation-9.html" />
@@ -82,7 +84,7 @@
 我们首先需要将具体的地理位置记录起来，
 这一点可以通过执行 <code class="docutils literal"><span class="pre">GEOADD</span></code> 命令来完成，
 该命令的基本格式如下：</p>
-<div class="highlight-python"><div class="highlight"><pre>GEOADD location-set longitude latitude name [longitude latitude name ...]
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">GEOADD</span> <span class="n">location</span><span class="o">-</span><span class="nb">set</span> <span class="n">longitude</span> <span class="n">latitude</span> <span class="n">name</span> <span class="p">[</span><span class="n">longitude</span> <span class="n">latitude</span> <span class="n">name</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">GEOADD</span></code> 命令每次可以添加一个或多个经纬度地理位置。
@@ -91,29 +93,29 @@
 <p>举个例子，
 以下代码展示了如何通过 <code class="docutils literal"><span class="pre">GEOADD</span></code> 命令，
 将清远、广州、佛山、东莞、深圳等数个广东省的市添加到位置集合 <code class="docutils literal"><span class="pre">Guangdong-cities</span></code> 里面：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; GEOADD Guangdong-cities 113.2099647 23.593675 Qingyuan
-1    -- 成功添加一个位置
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">GEOADD</span> <span class="n">Guangdong</span><span class="o">-</span><span class="n">cities</span> <span class="mf">113.2099647</span> <span class="mf">23.593675</span> <span class="n">Qingyuan</span>
+<span class="mi">1</span>    <span class="o">--</span> <span class="n">成功添加一个位置</span>
 
-redis&gt; GEOADD Guangdong-cities 113.2278442 23.1255978 Guangzhou 113.106308 23.0088312 Foshan 113.7943267 22.9761989 Dongguan 114.0538788 22.5551603 Shenzhen
-4    -- 成功添加四个位置
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">GEOADD</span> <span class="n">Guangdong</span><span class="o">-</span><span class="n">cities</span> <span class="mf">113.2278442</span> <span class="mf">23.1255978</span> <span class="n">Guangzhou</span> <span class="mf">113.106308</span> <span class="mf">23.0088312</span> <span class="n">Foshan</span> <span class="mf">113.7943267</span> <span class="mf">22.9761989</span> <span class="n">Dongguan</span> <span class="mf">114.0538788</span> <span class="mf">22.5551603</span> <span class="n">Shenzhen</span>
+<span class="mi">4</span>    <span class="o">--</span> <span class="n">成功添加四个位置</span>
 </pre></div>
 </div>
 <p>在将位置记录到位置集合之后，
 我们可以使用 <code class="docutils literal"><span class="pre">GEOPOS</span></code> 命令，
 输入位置的名字并取得位置的具体经纬度：</p>
-<div class="highlight-python"><div class="highlight"><pre>GEOPOS location-set name [name ...]
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">GEOPOS</span> <span class="n">location</span><span class="o">-</span><span class="nb">set</span> <span class="n">name</span> <span class="p">[</span><span class="n">name</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>比如说，
 如果我们想要获取清远、广州和佛山的经纬度，
 那么可以执行以下代码：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; GEOPOS Guangdong-cities Qingyuan Guangzhou Foshan
-1) 1) &quot;113.20996731519699&quot;    -- 清远的经度
-   2) &quot;23.593675019671288&quot;    -- 清远的纬度
-2) 1) &quot;113.22784155607224&quot;    -- 广州的经度
-   2) &quot;23.125598202060807&quot;    -- 广州的纬度
-3) 1) &quot;113.10631066560745&quot;    -- 佛山的经度
-   2) &quot;23.008831202413539&quot;    -- 佛山的纬度
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">GEOPOS</span> <span class="n">Guangdong</span><span class="o">-</span><span class="n">cities</span> <span class="n">Qingyuan</span> <span class="n">Guangzhou</span> <span class="n">Foshan</span>
+<span class="mi">1</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;113.20996731519699&quot;</span>    <span class="o">--</span> <span class="n">清远的经度</span>
+   <span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;23.593675019671288&quot;</span>    <span class="o">--</span> <span class="n">清远的纬度</span>
+<span class="mi">2</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;113.22784155607224&quot;</span>    <span class="o">--</span> <span class="n">广州的经度</span>
+   <span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;23.125598202060807&quot;</span>    <span class="o">--</span> <span class="n">广州的纬度</span>
+<span class="mi">3</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;113.10631066560745&quot;</span>    <span class="o">--</span> <span class="n">佛山的经度</span>
+   <span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;23.008831202413539&quot;</span>    <span class="o">--</span> <span class="n">佛山的纬度</span>
 </pre></div>
 </div>
 </div>
@@ -125,7 +127,7 @@ redis&gt; GEOADD Guangdong-cities 113.2278442 23.1255978 Guangzhou 113.106308 23
 就是计算两个位置之间的距离。</p>
 <p>在 Redis 里面，
 计算两个位置之间的距离可以通过 <code class="docutils literal"><span class="pre">GEODIST</span></code> 命令来实现：</p>
-<div class="highlight-python"><div class="highlight"><pre>GEODIST location-set location-x location-y [unit]
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">GEODIST</span> <span class="n">location</span><span class="o">-</span><span class="nb">set</span> <span class="n">location</span><span class="o">-</span><span class="n">x</span> <span class="n">location</span><span class="o">-</span><span class="n">y</span> <span class="p">[</span><span class="n">unit</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>在调用这个命令时，
@@ -143,8 +145,8 @@ redis&gt; GEOADD Guangdong-cities 113.2278442 23.1255978 Guangzhou 113.106308 23
 那么 <code class="docutils literal"><span class="pre">GEODIST</span></code> 默认使用米为单位。</p>
 <p>作为例子，
 以下代码展示了如何计算清远和广州之间的距离：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; GEODIST Guangdong-cities Qingyuan Guangzhou
-&quot;52094.433840356309&quot;    -- 两地相距 52094 米
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">GEODIST</span> <span class="n">Guangdong</span><span class="o">-</span><span class="n">cities</span> <span class="n">Qingyuan</span> <span class="n">Guangzhou</span>
+<span class="s2">&quot;52094.433840356309&quot;</span>    <span class="o">--</span> <span class="n">两地相距</span> <span class="mi">52094</span> <span class="n">米</span>
 </pre></div>
 </div>
 <p>上面的计算结果使用了米来表示清远和广州两地的距离，
@@ -152,8 +154,8 @@ redis&gt; GEOADD Guangdong-cities 113.2278442 23.1255978 Guangzhou 113.106308 23
 我们更习惯采用公里（km）作为单位。
 通过显式地给定 <code class="docutils literal"><span class="pre">km</span></code> （千米）作为单位，
 我们可以让 <code class="docutils literal"><span class="pre">GEODIST</span></code> 显示两个地点之间相距的公里数：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; GEODIST Guangdong-cities Qingyuan Guangzhou km
-&quot;52.094433840356309&quot;    -- 两地相距 52 公里
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">GEODIST</span> <span class="n">Guangdong</span><span class="o">-</span><span class="n">cities</span> <span class="n">Qingyuan</span> <span class="n">Guangzhou</span> <span class="n">km</span>
+<span class="s2">&quot;52.094433840356309&quot;</span>    <span class="o">--</span> <span class="n">两地相距</span> <span class="mi">52</span> <span class="n">公里</span>
 </pre></div>
 </div>
 </div>
@@ -169,9 +171,9 @@ redis&gt; GEOADD Guangdong-cities 113.2278442 23.1255978 Guangzhou 113.106308 23
 <code class="docutils literal"><span class="pre">GEORADIUS</span></code> 使用用户给定的经纬度作为计算范围时的中心点，
 而 <code class="docutils literal"><span class="pre">GEORADIUSBYMEMBER</span></code> 则使用储存在位置集合里面的某个地点作为中心点。
 以下是这两个命令的基本格式：</p>
-<div class="highlight-python"><div class="highlight"><pre>GEORADIUS location-set longitude latitude radius m|km|ft|mi [WITHCOORD] [WITHDIST] [ASC|DESC] [COUNT count]
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">GEORADIUS</span> <span class="n">location</span><span class="o">-</span><span class="nb">set</span> <span class="n">longitude</span> <span class="n">latitude</span> <span class="n">radius</span> <span class="n">m</span><span class="o">|</span><span class="n">km</span><span class="o">|</span><span class="n">ft</span><span class="o">|</span><span class="n">mi</span> <span class="p">[</span><span class="n">WITHCOORD</span><span class="p">]</span> <span class="p">[</span><span class="n">WITHDIST</span><span class="p">]</span> <span class="p">[</span><span class="n">ASC</span><span class="o">|</span><span class="n">DESC</span><span class="p">]</span> <span class="p">[</span><span class="n">COUNT</span> <span class="n">count</span><span class="p">]</span>
 
-GEORADIUSBYMEMBER location-set location radius m|km|ft|mi [WITHCOORD] [WITHDIST] [ASC|DESC] [COUNT count]
+<span class="n">GEORADIUSBYMEMBER</span> <span class="n">location</span><span class="o">-</span><span class="nb">set</span> <span class="n">location</span> <span class="n">radius</span> <span class="n">m</span><span class="o">|</span><span class="n">km</span><span class="o">|</span><span class="n">ft</span><span class="o">|</span><span class="n">mi</span> <span class="p">[</span><span class="n">WITHCOORD</span><span class="p">]</span> <span class="p">[</span><span class="n">WITHDIST</span><span class="p">]</span> <span class="p">[</span><span class="n">ASC</span><span class="o">|</span><span class="n">DESC</span><span class="p">]</span> <span class="p">[</span><span class="n">COUNT</span> <span class="n">count</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>这两个命令的各个参数的意义如下：</p>
@@ -189,22 +191,22 @@ GEORADIUSBYMEMBER location-set location radius m|km|ft|mi [WITHCOORD] [WITHDIST]
 </ul>
 <p>作为示例，
 我们可以使用 <code class="docutils literal"><span class="pre">GEORADIUSBYMEMBER</span></code> 去找出位于广州 50 公里、 100 公里以及 150 公里以内的城市：</p>
-<div class="highlight-python"><div class="highlight"><pre>redis&gt; GEORADIUSBYMEMBER Guangdong-cities Guangzhou 50 km
-1) &quot;Foshan&quot;
-2) &quot;Guangzhou&quot;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">redis</span><span class="o">&gt;</span> <span class="n">GEORADIUSBYMEMBER</span> <span class="n">Guangdong</span><span class="o">-</span><span class="n">cities</span> <span class="n">Guangzhou</span> <span class="mi">50</span> <span class="n">km</span>
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;Foshan&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;Guangzhou&quot;</span>
 
-redis&gt; GEORADIUSBYMEMBER Guangdong-cities Guangzhou 100 km
-1) &quot;Foshan&quot;
-2) &quot;Guangzhou&quot;
-3) &quot;Dongguan&quot;
-4) &quot;Qingyuan&quot;
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">GEORADIUSBYMEMBER</span> <span class="n">Guangdong</span><span class="o">-</span><span class="n">cities</span> <span class="n">Guangzhou</span> <span class="mi">100</span> <span class="n">km</span>
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;Foshan&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;Guangzhou&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;Dongguan&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;Qingyuan&quot;</span>
 
-redis&gt; GEORADIUSBYMEMBER Guangdong-cities Guangzhou 150 km
-1) &quot;Foshan&quot;
-2) &quot;Guangzhou&quot;
-3) &quot;Dongguan&quot;
-4) &quot;Qingyuan&quot;
-5) &quot;Shenzhen&quot;
+<span class="n">redis</span><span class="o">&gt;</span> <span class="n">GEORADIUSBYMEMBER</span> <span class="n">Guangdong</span><span class="o">-</span><span class="n">cities</span> <span class="n">Guangzhou</span> <span class="mi">150</span> <span class="n">km</span>
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;Foshan&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;Guangzhou&quot;</span>
+<span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;Dongguan&quot;</span>
+<span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;Qingyuan&quot;</span>
+<span class="mi">5</span><span class="p">)</span> <span class="s2">&quot;Shenzhen&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -218,17 +220,17 @@ redis&gt; GEORADIUSBYMEMBER Guangdong-cities Guangzhou 150 km
 通过 Redis ，
 我们也可以实现同样的功能，
 以下是实现该功能的伪代码：</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">pin</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">latitude</span><span class="p">):</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pin</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">latitude</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    记录用户的地理位置。</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">GEOADD</span><span class="p">(</span><span class="s">&#39;user-location-set&#39;</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+    <span class="n">GEOADD</span><span class="p">(</span><span class="s1">&#39;user-location-set&#39;</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">find_nearby</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    返回指定用户附近 n 公里的所有其他用户。</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">GEORADIUSBYMEMBER</span><span class="p">(</span><span class="s">&#39;user-location-set&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;km&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">GEORADIUSBYMEMBER</span><span class="p">(</span><span class="s1">&#39;user-location-set&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;km&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -240,14 +242,14 @@ redis&gt; GEORADIUSBYMEMBER Guangdong-cities Guangzhou 150 km
 而是随机地返回指定范围内的某个人，
 这也就是非常著名的“摇一摇”功能。
 以下是实现该功能的伪代码：</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">RANDOM_RADIUS</span> <span class="o">=</span> <span class="mi">1</span>    <span class="c"># 随机查找的范围为 1 公里</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">RANDOM_RADIUS</span> <span class="o">=</span> <span class="mi">1</span>    <span class="c1"># 随机查找的范围为 1 公里</span>
 
 <span class="k">def</span> <span class="nf">find_random</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
-    <span class="c"># 获取范围内的所有其他用户</span>
+    <span class="c1"># 获取范围内的所有其他用户</span>
     <span class="n">get_all_near_users</span> <span class="o">=</span> <span class="n">find_nearby</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">RANDOM_RADIUS</span><span class="p">)</span>
-    <span class="c"># 将查找的结果从 Python 列表转换为 Python 集合</span>
+    <span class="c1"># 将查找的结果从 Python 列表转换为 Python 集合</span>
     <span class="n">user_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">get_all_near_users</span><span class="p">)</span>
-    <span class="c"># 然后调用 pop() 方法，从集合里面随机地移除并返回一个元素</span>
+    <span class="c1"># 然后调用 pop() 方法，从集合里面随机地移除并返回一个元素</span>
     <span class="k">return</span> <span class="n">user_set</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -360,14 +362,11 @@ redis&gt; GEORADIUSBYMEMBER Guangdong-cities Guangzhou 150 km
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
           
@@ -398,7 +397,7 @@ redis&gt; GEORADIUSBYMEMBER Guangdong-cities Guangzhou 150 km
     </div>
     <div class="footer">
         &copy; Copyright 2017, huangz.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
     </div>
   </body>
 </html>

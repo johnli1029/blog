@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>翻译笔记之十二：无标准译法词汇的处理办法 &mdash; huangz/blog</title>
+    <title>《Go Web 编程》翻译手稿集 &mdash; huangz/blog</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -27,8 +27,8 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="top" title="huangz/blog" href="../index.html" />
     <link rel="up" title="2017" href="index.html" />
-    <link rel="next" title="Go 标准库文档翻译：container/list 包" href="go-stdlib-container-list.html" />
-    <link rel="prev" title="Redis Lua 脚本调试器用法说明" href="redis-lua-debuger-introduction.html" />
+    <link rel="next" title="QQ 群聊天记录 001 号：关于盗版书的讨论" href="qq-group-log-001.html" />
+    <link rel="prev" title="2017" href="index.html" />
 <!--[if lte IE 6]>
 <link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->
@@ -46,10 +46,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="go-stdlib-container-list.html" title="Go 标准库文档翻译：container/list 包"
+          <a href="qq-group-log-001.html" title="QQ 群聊天记录 001 号：关于盗版书的讨论"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="redis-lua-debuger-introduction.html" title="Redis Lua 脚本调试器用法说明"
+          <a href="index.html" title="2017"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">huangz/blog</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">2017</a> &raquo;</li> 
@@ -61,36 +61,49 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="id1">
-<h1>翻译笔记之十二：无标准译法词汇的处理办法<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>在进行翻译以及写作，
-特别是面向一些高新技术进行翻译和写作时，
-常常会遇到一些在国内没有标准译法的词汇，
-这时我们可以：</p>
-<ol class="arabic simple">
-<li>寻找同类型中比较权威的中文著作，
-看看其他译者/作者是怎样处理这些词汇的。</li>
-<li>查阅中文维基百科，
-看看维基里面是怎样翻译这些词汇的。</li>
-<li>把几个候选的译法输入到搜索引擎里面，
-然后使用搜索结果最多的那个译法 ——
-一种译法返回的搜索结果越多，
-意味着使用这种译法的人和资料就越多，
-采用这种译法也就越安全。</li>
-</ol>
-<p>在选定好了一种译法之后，
-我们可以以“译文（原文）”的方式，
-将指定的词汇添加到正文里面，
-就像这样：“软件事务内存（Software transactional memory）”。</p>
-<p>另一方面，
-如果译者使用了上述方法仍然无法找到心目中最佳的译法，
-那也不必过于紧张：
-毕竟这种难以翻译的词汇只是少数，
-即使在书本出版之后找到了更好的译法，
-在之后的印刷版次中进行修改也并不是一件困难的事情。</p>
+  <div class="section" id="go-web">
+<h1>《Go Web 编程》翻译手稿集<a class="headerlink" href="#go-web" title="Permalink to this headline">¶</a></h1>
+<p>对<a class="reference external" href="http://blog.huangz.me/diary/2014/translation-method.html">我的翻译方式</a>有所了解的朋友应该会知道，
+我在开始翻译之前，
+都会先看通读一遍原稿，
+并在原稿上添加相应的笔记和注释，
+然后才开始进行翻译。</p>
+<p>这次在翻译<a class="reference external" href="http://gwpcn.com/">《Go Web 编程》</a>的时候，
+我也是先把整本书的稿子打印了出来，
+边阅读边在稿子上进行注释，
+并因此产生了一系列手稿。</p>
+<p>虽然之前曾经以拍照的方式展示过自己的翻译手稿，
+但我想如果能够把这些手稿以扫描的形式展现在大家的面前，
+对于那些对《Go Web 编程》的翻译过程感兴趣的读者，
+以及那些对翻译工作的幕后过程感兴趣的人来说，
+应该都会是一件有趣的事情。</p>
+<p>为此，
+我选取了这次《Go Web 编程》的其中一部分手稿，
+使用扫描仪将它们扫描了下来。
+为了让大家可以尽可能地了解到真实的翻译过程，
+这次展示的所有手稿图片都是高清格式的，
+并且手稿在扫描之前没有经过任何人为的改动。</p>
+<p>本文只展示了其中几张手稿样张，
+公开的全部九张手稿可以在以下代码库里面看到：
+<a class="reference external" href="https://github.com/huangz1990/gwpcn-translation-manuscript">https://github.com/huangz1990/gwpcn-translation-manuscript</a></p>
+<p>顺带一提，
+手稿中一些常见标记的作用分别为：</p>
+<ul class="simple">
+<li>逗号 —— 用于将长句分割为多个短句。</li>
+<li>直线 —— 用于将多个短句拼接成长句。</li>
+<li>波浪线 —— 用于标识重点词句。</li>
+<li>指向某个句子的箭头 —— 用于记录句子的翻译或者句子的注释。</li>
+<li>前置 —— 用于调转句子之间的关系，比如将“&lt;a&gt; because &lt;b&gt;”翻译为“因为 &lt;b&gt; ，所以 &lt;a&gt;”。</li>
+</ul>
 <div class="line-block">
 <div class="line">黄健宏</div>
-<div class="line">2017.3.24</div>
+<div class="line">2017.8.24</div>
+</div>
+<div class="section" id="id3">
+<h2>手稿样张<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<img alt="https://github.com/huangz1990/gwpcn-translation-manuscript/blob/master/page155.jpeg?raw=true" src="https://github.com/huangz1990/gwpcn-translation-manuscript/blob/master/page155.jpeg?raw=true" />
+<img alt="https://github.com/huangz1990/gwpcn-translation-manuscript/blob/master/page156.jpeg?raw=true" src="https://github.com/huangz1990/gwpcn-translation-manuscript/blob/master/page156.jpeg?raw=true" />
+<img alt="https://github.com/huangz1990/gwpcn-translation-manuscript/blob/master/page157.jpeg?raw=true" src="https://github.com/huangz1990/gwpcn-translation-manuscript/blob/master/page157.jpeg?raw=true" />
 </div>
 </div>
 
@@ -135,12 +148,20 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">《Go Web 编程》翻译手稿集</a><ul>
+<li><a class="reference internal" href="#id3">手稿样张</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="redis-lua-debuger-introduction.html"
-                        title="previous chapter">Redis Lua 脚本调试器用法说明</a></p>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2017</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="go-stdlib-container-list.html"
-                        title="next chapter">Go 标准库文档翻译：container/list 包</a></p>
+  <p class="topless"><a href="qq-group-log-001.html"
+                        title="next chapter">QQ 群聊天记录 001 号：关于盗版书的讨论</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
