@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   memories-of-gwpcn-translation
    gwpcn-translation-manuscript
    qq-group-log-001
    gastroscope-experience
