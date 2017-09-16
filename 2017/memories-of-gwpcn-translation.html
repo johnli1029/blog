@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>《Go Web 编程》翻译记事 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="huangz/blog" href="../index.html" />
+    <link rel="up" title="2017" href="index.html" />
+    <link rel="next" title="《Go Web 编程》翻译手稿集" href="gwpcn-translation-manuscript.html" />
+    <link rel="prev" title="2017" href="index.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="gwpcn-translation-manuscript.html" title="《Go Web 编程》翻译手稿集"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="2017"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2017</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="go-web">
+<h1>《Go Web 编程》翻译记事<a class="headerlink" href="#go-web" title="Permalink to this headline">¶</a></h1>
+<p><strong>本文节选自即将出版的《Go Web 编程》一书中的《译者记事》一章。</strong></p>
+<p><a class="reference external" href="http://gwpcn.com/">《Go Web 编程》</a>是我的第二本译作， 在翻译第一本译作<a class="reference external" href="http://redisinaction.com/">《Redis 实战》</a>的时候， 因为受到经验、知识以及时间等条件限制， 我只能把时间尽量花在保证译文的准确性上面， 但是对于译文本身的可读性却未能有太多的关注。 这次在翻译《Go Web 编程》的过程中， 我给自己订立了更高的目标， 那就是， 在保证译文正确性的前提下， 通过合理的用词遣句， 让译文更符合中文的表达方式， 并且更具表现力。</p>
+<p>以本书的《前言》原文为例子， 其中就有一句“My own journey in developing applications for the web started around the same time, in the mid-1990s”， 这句话的原意是说作者的 Web 开发生涯跟万维网的发展轨迹正好重合， 因此把它单纯地译为“本人的 Web 应用开发生涯也是从 20 世纪 90 年代中期开始……”是完全没有问题的， 但是通过在句子前面添加“无独有偶”一词来与“around the same time”的翻译“也是”相互呼应， 就会一下子给译文带来画龙点睛的效果：“无独有偶，本人的 Web 应用开发生涯也是从 20 世纪 90 年代中期开始……”。</p>
+<p>继续以《前言》为例子， 在这篇文章的原文当中， 出现了不少常见的英文短语以及词汇， 这些短语和词汇通常都有一个正确、常见并且平庸的翻译， 但是本书却抛弃了这些翻译， 转而选择了更准确也更有表现力的译法。 比如说， “Writing web applications has changed dramatically over the years”中的“changed dramatically”没有直译为“发生了戏剧性的变化”， 而是翻译为“发生了翻天覆地的变化”； “Almost as soon as the first web applications were written, web application frameworks appeared, ” 中的“were written”和“appeared”没有直译为“被编写出来之后”以及“出现”， 而是分别翻译为“闪亮登场”和“应运而生”， 前者突出了 Web 应用的出现对于互联网的巨大改变， 而后者则突出了 Web 应用和 Web 框架之间相辅相成的关系。 类似的例子还有很多很多， 并且它们不仅出现在了《前言》这样的文章里面， 还出现在了本书的正文当中。</p>
+<p>当然， 提高译文的可读性并不是一件一蹴而就的事： 为了让译文更有“中文味”， 本书的大多数译文都已三易其稿， 有时候仅仅为了挑选出一个更恰当的词语或成语， 就不得不对着词典推敲半天。 这本书的翻译从 2016 年 8 月开始， 到 2017 年 8 月交稿， 整整跨越了一年时间， 其中翻译原文和润色译文两项工作花费的时间可谓各占一半。 如果读者能够从译文的字里行间感受到这种润物细无声的优化， 那么对于本人的翻译工作来说将是最好的肯定。</p>
+<p>另外， 因为这是一本使用 Go 语言标准库进行 Web 开发的书籍， 所以对于 Go Web 开发相关标准库的理解程度将是能否准确地翻译本书技术内容的关键。 为了进一步地熟悉本书用到的标准库， 本人通读了书中用到的各个标准库的文档， 阅读了其中部分标准库的源码， 并且因为有时候“好记性比不上烂笔头”， 所以本人还<a class="reference external" href="http://cngolib.com/">翻译了其中一部分标准库文档</a>， 力求在尽可能地掌握标准库细节的情况下， 再进行翻译工作， 尽量做到知其然也知其所以然， 而不是单纯地根据纸面上的文字和代码进行翻译。</p>
+<p>最后， 在翻译本书的过程中， 本人也发现了原著中大大小小数十个 bug ， 并在译文中一一进行了修正。 综上所述， 读者看到的这个译本从某个角度来说将比原著更准确也更易读。 这也是我一直以来在实践翻译工作时的信念 —— 译作不应该是原著的“劣化版”， 而是应该以“青出于蓝而胜于蓝”的方式超越原著。 当然， 要做到这一点并不是一件容易的事， 但每一个合格的译者都应该以此为目标， 不断奋斗。</p>
+<div class="line-block">
+<div class="line">黄健宏</div>
+<div class="line">2017.9.16</div>
+</div>
+</div>
+
+
+
+            <div class="section" id="copyright_info">
+
+    <h2>
+        版权声明
+        <a class="headerlink" href="#copyright_info" title="永久链接至标题">¶</a>
+    </h2>
+
+    <p>本博客中的所有文章均为作者原创，受著作权法律保护，任何人不得在未经授权的情况下转载本博客的文章或将其用于商业活动，违者必究。</p>
+
+</div>
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2017</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="gwpcn-translation-manuscript.html"
+                        title="next chapter">《Go Web 编程》翻译手稿集</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/">小象学院（ChinaHadoop.cn）</a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2017, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>
