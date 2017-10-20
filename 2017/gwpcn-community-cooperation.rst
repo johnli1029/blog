@@ -60,3 +60,5 @@
 
 | 黄健宏
 | 2017.10.20
+
+.. image:: ../image/2017/gwpcn-cooperation.jpeg
