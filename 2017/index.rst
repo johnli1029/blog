@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   gwpcn-community-cooperation
    memories-of-gwpcn-translation
    gwpcn-translation-manuscript
    qq-group-log-001
