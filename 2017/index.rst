@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   redis-streams
    gwpcn-community-cooperation
    memories-of-gwpcn-translation
    gwpcn-translation-manuscript
