@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Redis Streams（流）数据结构简介 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="huangz/blog" href="../index.html" />
+    <link rel="up" title="2017" href="index.html" />
+    <link rel="next" title="《Go Web 编程》社区合作计划" href="gwpcn-community-cooperation.html" />
+    <link rel="prev" title="2017" href="index.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="gwpcn-community-cooperation.html" title="《Go Web 编程》社区合作计划"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="2017"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2017</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="redis-streams">
+<h1>Redis Streams（流）数据结构简介<a class="headerlink" href="#redis-streams" title="Permalink to this headline">¶</a></h1>
+<p>Redis 的 Streams （流）是即将要添加到 Redis 4.x 版本的一种新的数据结构，
+该结构是为了抹平 List 、SortedSet 和 Pub/Sub 之间的空隙，
+以便更好地实现时间序列、消息的流式传递等应用而出现的。</p>
+<p>目前来说，
+用户只需要获取 <a class="reference external" href="https://github.com/antirez/redis">https://github.com/antirez/redis</a> 的 <code class="docutils literal"><span class="pre">streams</span></code> 分支，
+就可以看到流结构的具体实现代码。</p>
+<p>在 Redis 中，
+所有流命令都是以 <code class="docutils literal"><span class="pre">X</span></code> 为开头的，
+比如 <code class="docutils literal"><span class="pre">XADD</span></code> 、 <code class="docutils literal"><span class="pre">XRANGE</span></code> 和 <code class="docutils literal"><span class="pre">XREAD</span></code> ，
+本文接下来将对这三个元素进行介绍。</p>
+<div class="section" id="id1">
+<h2>向流中添加新元素<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>向流中添加信息可以通过使用 <code class="docutils literal"><span class="pre">XADD</span></code> 命令来完成。</p>
+<p>比如以下命令就向流 <code class="docutils literal"><span class="pre">user-timeline</span></code> 添加了一个拥有两个字段的元素，
+这两个字段为 <code class="docutils literal"><span class="pre">user</span></code> 和 <code class="docutils literal"><span class="pre">message</span></code> ，
+它们的值分别为 <code class="docutils literal"><span class="pre">huangz</span></code> 和 <code class="docutils literal"><span class="pre">hello</span> <span class="pre">world!</span></code> ：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">XADD</span> <span class="n">user</span><span class="o">-</span><span class="n">timeline</span> <span class="o">*</span> <span class="n">user</span> <span class="s2">&quot;huangz&quot;</span> <span class="n">message</span> <span class="s2">&quot;hello world!&quot;</span>
+<span class="mf">1508829813213.0</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">XADD</span></code> 命令的第二个参数用于设置元素的 ID ，
+使用 <code class="docutils literal"><span class="pre">*</span></code> 为值则表示让 Redis 自行为该元素设置 ID 。
+对于上面执行的 <code class="docutils literal"><span class="pre">XADD</span></code> 命令来说，
+命令返回的 <code class="docutils literal"><span class="pre">1508829813213.0</span></code> 就是新添加元素的 ID 。</p>
+<p>每个流元素的 ID 都可以由两个 64 位无符号整数组成。
+对于 Redis 自动生成的 ID 来说，
+点号 <code class="docutils literal"><span class="pre">.</span></code> 之前的数字为添加元素时的毫秒精度的时间戳，
+而点号之后的数字则是一个从 0 开始自增的数字，
+用于却别同一毫秒内出现的多个不同元素。</p>
+</div>
+<div class="section" id="id">
+<h2>从流中获取指定 ID 范围内的元素<a class="headerlink" href="#id" title="Permalink to this headline">¶</a></h2>
+<p>通过使用 <code class="docutils literal"><span class="pre">XRANGE</span></code> 命令，
+用户可以获取指定 ID 范围内的元素。
+跟有序集合命令一样，
+ID 范围可以使用 <code class="docutils literal"><span class="pre">-</span></code> 或者 <code class="docutils literal"><span class="pre">+</span></code> 来表示负无穷和正无穷。</p>
+<p>比如说，
+通过执行以下命令，
+我们可以获取流中 ID 大于等于 <code class="docutils literal"><span class="pre">1508829813213.0</span></code> 的所有元素：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">XRANGE</span> <span class="n">user</span><span class="o">-</span><span class="n">timeline</span> <span class="mf">1508829813213.0</span> <span class="o">+</span>
+<span class="mi">1</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span> <span class="mf">1508829813213.0</span>
+<span class="mi">2</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;user&quot;</span>
+   <span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;huangz&quot;</span>
+   <span class="mi">3</span><span class="p">)</span> <span class="s2">&quot;message&quot;</span>
+   <span class="mi">4</span><span class="p">)</span> <span class="s2">&quot;hello world!&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>以阻塞方式获取流中元素<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>跟列表一样，
+流也支持阻塞式的获取操作。</p>
+<p>比如说，
+通过执行以下命令：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>XREAD BLOCK 5000 STREAMS user-timeline $
+</pre></div>
+</div>
+<p>用户可以在一个时间最长为 5000 毫秒的阻塞操作中，
+等待 <code class="docutils literal"><span class="pre">user-timeline</span></code> 流最新添加的一个元素：
+如果 <code class="docutils literal"><span class="pre">user-timeline</span></code> 流在指定时间内都没有出现新添加的元素，
+那么 <code class="docutils literal"><span class="pre">XREAD</span></code> 命令将返回一个空值；
+否则，
+<code class="docutils literal"><span class="pre">XREAD</span></code> 命令将返回流新添加的元素。</p>
+</div>
+<div class="section" id="id3">
+<h2>结语<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>除了上述提到的功能之外，
+流还支持定长功能（限制流最多只能包含指定数量的元素），
+并且将来还会支持组发送功能（类似于Pub/Sub，将一个元素分发给指定的一组客户端），
+有兴趣的朋友可以关注 Redis 的 <code class="docutils literal"><span class="pre">Streams</span></code> 分支和作者的博客，
+我也会继续和大家分享更多这方面的知识。</p>
+<div class="line-block">
+<div class="line">黄健宏</div>
+<div class="line">2017.10.24</div>
+</div>
+</div>
+</div>
+
+
+
+            <div class="section" id="copyright_info">
+
+    <h2>
+        版权声明
+        <a class="headerlink" href="#copyright_info" title="永久链接至标题">¶</a>
+    </h2>
+
+    <p>本博客中的所有文章均为作者原创，受著作权法律保护，任何人不得在未经授权的情况下转载本博客的文章或将其用于商业活动，违者必究。</p>
+
+</div>
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Redis Streams（流）数据结构简介</a><ul>
+<li><a class="reference internal" href="#id1">向流中添加新元素</a></li>
+<li><a class="reference internal" href="#id">从流中获取指定 ID 范围内的元素</a></li>
+<li><a class="reference internal" href="#id2">以阻塞方式获取流中元素</a></li>
+<li><a class="reference internal" href="#id3">结语</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2017</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="gwpcn-community-cooperation.html"
+                        title="next chapter">《Go Web 编程》社区合作计划</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/">小象学院（ChinaHadoop.cn）</a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2017, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>
