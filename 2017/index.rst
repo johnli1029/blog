@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   release-redis-cheatsheet-as-free
    redis-streams
    gwpcn-community-cooperation
    memories-of-gwpcn-translation
