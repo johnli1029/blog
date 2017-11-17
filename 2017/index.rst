@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   redis-rdb-aof-mixed-persistence
    release-redis-cheatsheet-as-free
    redis-streams
    gwpcn-community-cooperation
