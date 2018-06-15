@@ -13,6 +13,7 @@ huangz/blog
 .. toctree::
    :maxdepth: 2
 
+   2018/index
    2017/index
    diary/2016/index
    diary/2015/index
