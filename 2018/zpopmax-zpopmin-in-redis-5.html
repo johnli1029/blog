@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Redis 5 新功能介绍：ZPOPMAX、ZPOPMIN 以及它们的阻塞变种 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="huangz/blog" href="../index.html" />
+    <link rel="up" title="2018" href="index.html" />
+    <link rel="next" title="2017" href="../2017/index.html" />
+    <link rel="prev" title="2018" href="index.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../2017/index.html" title="2017"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="2018"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2018</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="redis-5-zpopmaxzpopmin">
+<h1>Redis 5 新功能介绍：ZPOPMAX、ZPOPMIN 以及它们的阻塞变种<a class="headerlink" href="#redis-5-zpopmaxzpopmin" title="Permalink to this headline">¶</a></h1>
+<p>有序集合（SortedSet又称zset）是 Redis 的老牌数据结构之一，
+它的 API 一直以来都是很稳定的，
+基本上没有发生过变化，
+但随着 Redis 5 的到来，
+新版本 Redis 也给它加上了四个新的命令，
+这些命令分别是：</p>
+<ul class="simple">
+<li><a class="reference external" href="https://redis.io/commands/bzpopmax">ZPOPMAX</a></li>
+<li><a class="reference external" href="https://redis.io/commands/zpopmin">ZPOPMIN</a></li>
+<li><a class="reference external" href="https://redis.io/commands/bzpopmax">BZPOPMAX</a></li>
+<li><a class="reference external" href="https://redis.io/commands/bzpopmin">BZPOPMIN</a></li>
+</ul>
+<p>其中，
+<code class="docutils literal"><span class="pre">ZPOPMAX</span></code> 命令用于移除并弹出有序集合中分值最大的 <code class="docutils literal"><span class="pre">count</span></code> 个元素：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ZPOPMAX</span> <span class="n">key</span> <span class="p">[</span><span class="n">count</span><span class="p">]</span>
+<span class="n">summary</span><span class="p">:</span> <span class="n">Remove</span> <span class="ow">and</span> <span class="k">return</span> <span class="n">members</span> <span class="k">with</span> <span class="n">the</span> <span class="n">highest</span> <span class="n">scores</span> <span class="ow">in</span> <span class="n">a</span> <span class="nb">sorted</span> <span class="nb">set</span>
+<span class="n">since</span><span class="p">:</span> <span class="mf">5.0</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">group</span><span class="p">:</span> <span class="n">sorted_set</span>
+</pre></div>
+</div>
+<p>而 <code class="docutils literal"><span class="pre">ZPOPMIN</span></code> 命令则用于移除并弹出有序集合中分值最小的 <code class="docutils literal"><span class="pre">count</span></code> 个元素：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ZPOPMIN</span> <span class="n">key</span> <span class="p">[</span><span class="n">count</span><span class="p">]</span>
+<span class="n">summary</span><span class="p">:</span> <span class="n">Remove</span> <span class="ow">and</span> <span class="k">return</span> <span class="n">members</span> <span class="k">with</span> <span class="n">the</span> <span class="n">lowest</span> <span class="n">scores</span> <span class="ow">in</span> <span class="n">a</span> <span class="nb">sorted</span> <span class="nb">set</span>
+<span class="n">since</span><span class="p">:</span> <span class="mf">5.0</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">group</span><span class="p">:</span> <span class="n">sorted_set</span>
+</pre></div>
+</div>
+<p>如果用户没有显式地为 <code class="docutils literal"><span class="pre">count</span></code> 参数指定值，
+那么命令默认将移除并弹出一个元素。</p>
+<p>以下是这两个命令的使用示例：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span> <span class="n">ZADD</span> <span class="n">zset</span> <span class="mf">1.0</span> <span class="s2">&quot;one&quot;</span> <span class="mf">2.0</span> <span class="s2">&quot;two&quot;</span> <span class="mf">3.0</span> <span class="s2">&quot;three&quot;</span>
+<span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="mi">3</span>
+
+<span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span> <span class="n">ZPOPMAX</span> <span class="n">zset</span>
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;three&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;3&quot;</span>
+
+<span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span> <span class="n">ZPOPMIN</span> <span class="n">zset</span>
+<span class="mi">1</span><span class="p">)</span> <span class="s2">&quot;one&quot;</span>
+<span class="mi">2</span><span class="p">)</span> <span class="s2">&quot;1&quot;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">BZPOPMAX</span></code> 和 <code class="docutils literal"><span class="pre">BZPOPMIN</span></code> 是上述两个命令的阻塞变种，
+这两个命令每次只能弹出单个元素，
+但可以接受多个键作为被弹出的对象，
+并且需要使用 <code class="docutils literal"><span class="pre">timeout</span></code> 参数去指定命令的最长阻塞时间：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">BZPOPMAX</span> <span class="n">key</span> <span class="p">[</span><span class="n">key</span> <span class="o">...</span><span class="p">]</span> <span class="n">timeout</span>
+<span class="n">summary</span><span class="p">:</span> <span class="n">Remove</span> <span class="ow">and</span> <span class="k">return</span> <span class="n">the</span> <span class="n">member</span> <span class="k">with</span> <span class="n">the</span> <span class="n">highest</span> <span class="n">score</span> <span class="kn">from</span> <span class="nn">one</span> <span class="ow">or</span> <span class="n">more</span> <span class="nb">sorted</span> <span class="n">sets</span><span class="p">,</span> <span class="ow">or</span> <span class="n">block</span> <span class="n">until</span> <span class="n">one</span> <span class="ow">is</span> <span class="n">available</span>
+<span class="n">since</span><span class="p">:</span> <span class="mf">5.0</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">group</span><span class="p">:</span> <span class="n">sorted_set</span>
+
+<span class="n">BZPOPMIN</span> <span class="n">key</span> <span class="p">[</span><span class="n">key</span> <span class="o">...</span><span class="p">]</span> <span class="n">timeout</span>
+<span class="n">summary</span><span class="p">:</span> <span class="n">Remove</span> <span class="ow">and</span> <span class="k">return</span> <span class="n">the</span> <span class="n">member</span> <span class="k">with</span> <span class="n">the</span> <span class="n">lowest</span> <span class="n">score</span> <span class="kn">from</span> <span class="nn">one</span> <span class="ow">or</span> <span class="n">more</span> <span class="nb">sorted</span> <span class="n">sets</span><span class="p">,</span> <span class="ow">or</span> <span class="n">block</span> <span class="n">until</span> <span class="n">one</span> <span class="ow">is</span> <span class="n">available</span>
+<span class="n">since</span><span class="p">:</span> <span class="mf">5.0</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">group</span><span class="p">:</span> <span class="n">sorted_set</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">BZPOPMAX</span></code> 命令和 <code class="docutils literal"><span class="pre">BZPOPMIN</span></code> 命令的行为跟 <code class="docutils literal"><span class="pre">BLPOP</span></code> 、 <code class="docutils literal"><span class="pre">BRPOP</span></code> 等命令的语义非常相似，
+熟悉上述两个命令的读者应该不会对这两个新命令感到陌生。</p>
+<div class="line-block">
+<div class="line">黄健宏</div>
+<div class="line">2018.6.15</div>
+</div>
+</div>
+
+
+
+            <div class="section" id="copyright_info">
+
+    <h2>
+        版权声明
+        <a class="headerlink" href="#copyright_info" title="永久链接至标题">¶</a>
+    </h2>
+
+    <p>本博客中的所有文章均为作者原创，受著作权法律保护，任何人不得在未经授权的情况下转载本博客的文章或将其用于商业活动，违者必究。</p>
+
+</div>
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2018</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../2017/index.html"
+                        title="next chapter">2017</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/">小象学院（ChinaHadoop.cn）</a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2017, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>
