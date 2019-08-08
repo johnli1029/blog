@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,6 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="top" title="huangz/blog" href="../../index.html" />
@@ -71,18 +73,20 @@
 争取让译文的表述变得更自然一些。</p>
 <p>比如在《Redis in Action》第 147 页“AGGREGATING DATA LOCALLY”一节中：</p>
 <blockquote>
-<div>If we perform the aggregates locally on a per-country basis for the entire day
+<div><p>If we perform the aggregates locally on a per-country basis for the entire day
 (being that there are around 300 countries),
-we can instead write 300 values to Redis.</div></blockquote>
+we can instead write 300 values to Redis.</p>
+</div></blockquote>
 <p>这里的“(being that there are around 300 countries)”就是一个括号用得不好的例子 —— “there are around 300 countries”这个陈述应该出现在最前面，这样之后的条件“if we perform … the entire day”和之后的结果“we can instead … to Redis”就会来得更自然一些。</p>
 <p>为此，
 我在翻译时就将括号的内容提到了句子的前面，
 这样这个句子就有完整的因果关系了。</p>
 <p>以下为修改后的译文：</p>
 <blockquote>
-<div>因为只有大约 300 个国家，
+<div><p>因为只有大约 300 个国家，
 所以如果执行……，
-那么只需要对 Redis 写入大约 300 个值就可以了。</div></blockquote>
+那么只需要对 Redis 写入大约 300 个值就可以了。</p>
+</div></blockquote>
 <p>可以看到，
 句子的表述在修改之后变得更自然了，
 而原文要表达的意思也没有变化。</p>
@@ -139,14 +143,21 @@ we can instead write 300 values to Redis.</div></blockquote>
   <h4>Next topic</h4>
   <p class="topless"><a href="notes-about-translation-2.html"
                         title="next chapter">翻译笔记之二：翻译的定义</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/diary/2014/notes-about-translation-3.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
           
@@ -177,7 +188,7 @@ we can instead write 300 values to Redis.</div></blockquote>
     </div>
     <div class="footer">
         &copy; Copyright 2017, huangz.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>

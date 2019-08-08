@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,6 +24,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="top" title="huangz/blog" href="../index.html" />
@@ -66,10 +68,10 @@
 <p>在过去，
 Redis 用户通常会因为 RDB 持久化和 AOF 持久化之间不同的优缺点而陷入两难的选择当中：</p>
 <ul class="simple">
-<li>RDB 持久化能够快速地储存和回复数据，
-但是在服务器停机时却会丢失大量数据；</li>
-<li>AOF 持久化能够有效地提高数据的安全性，
-但是在储存和恢复数据方面却要耗费大量的时间。</li>
+<li><p>RDB 持久化能够快速地储存和回复数据，
+但是在服务器停机时却会丢失大量数据；</p></li>
+<li><p>AOF 持久化能够有效地提高数据的安全性，
+但是在储存和恢复数据方面却要耗费大量的时间。</p></li>
 </ul>
 <p>为了让用户能够同时拥有上述两种持久化的优点，
 Redis 4.0 推出了一个能够“鱼和熊掌兼得”的持久化方案 ——
@@ -84,7 +86,7 @@ RDB-AOF 混合持久化：
 <h2>创建包含混合持久化内容的 AOF 文件<a class="headerlink" href="#aof" title="Permalink to this headline">¶</a></h2>
 <p>在启用了 RDB-AOF 混合持久化功能的情况下，
 如果我们执行以下命令：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">K1</span> <span class="s2">&quot;V1&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">K1</span> <span class="s2">&quot;V1&quot;</span>
 <span class="n">OK</span>
 
 <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">6379</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">K2</span> <span class="s2">&quot;V2&quot;</span>
@@ -101,7 +103,7 @@ RDB-AOF 混合持久化：
 </pre></div>
 </div>
 <p>那么 Redis 服务器将创建出包含以下内容的 AOF 文件：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ od -c appendonly.aof
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ od -c appendonly.aof
 0000000    R   E   D   I   S   0   0   0   8 372  \t   r   e   d   i   s
 0000020    -   v   e   r  \v   9   9   9   .   9   9   9   .   9   9   9
 0000040  372  \n   r   e   d   i   s   -   b   i   t   s 300   @ 372 005
@@ -128,9 +130,9 @@ RDB-AOF 混合持久化：
 RDB-AOF 混合持久化功能默认是处于关闭状态的，
 为了启用该功能，
 用户不仅需要开启 AOF 持久化功能，
-还需要将 <code class="docutils literal"><span class="pre">aof-use-rdb-preamble</span></code> 选项的值设置为真，
+还需要将 <code class="docutils literal notranslate"><span class="pre">aof-use-rdb-preamble</span></code> 选项的值设置为真，
 就像这样：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cat redis.conf
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cat redis.conf
 appendonly yes
 aof-use-rdb-preamble yes
 
@@ -219,7 +221,7 @@ $ redis-server redis.conf
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Redis 4.0 新功能简介：RDB-AOF 混合持久化</a><ul>
 <li><a class="reference internal" href="#aof">创建包含混合持久化内容的 AOF 文件</a></li>
@@ -235,14 +237,21 @@ $ redis-server redis.conf
   <h4>Next topic</h4>
   <p class="topless"><a href="release-redis-cheatsheet-as-free.html"
                         title="next chapter">《Redis 命令速查表》开放免费下载</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/2017/redis-rdb-aof-mixed-persistence.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
           
@@ -273,7 +282,7 @@ $ redis-server redis.conf
     </div>
     <div class="footer">
         &copy; Copyright 2017, huangz.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>

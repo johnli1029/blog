@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,6 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="top" title="huangz/blog" href="../../index.html" />
@@ -87,8 +89,8 @@ huangz 决定对 <a class="reference external" href="http://www.postgresql.org/d
 就让我们随着文档，
 一起来探究 PostgreSQL 的 JSON 数据类型以及 JSONB 数据类型吧：</p>
 <ul class="simple">
-<li>阅读 8.14 节《JSON Types》译文： <a class="reference external" href="http://pgcn.huangz.me/part2/chp8/section14.html">http://pgcn.huangz.me/part2/chp8/section14.html</a></li>
-<li>阅读 9.15 节《JSON Functions and Operators》译文： <a class="reference external" href="http://pgcn.huangz.me/part2/chp9/section15.html">http://pgcn.huangz.me/part2/chp9/section15.html</a></li>
+<li><p>阅读 8.14 节《JSON Types》译文： <a class="reference external" href="http://pgcn.huangz.me/part2/chp8/section14.html">http://pgcn.huangz.me/part2/chp8/section14.html</a></p></li>
+<li><p>阅读 9.15 节《JSON Functions and Operators》译文： <a class="reference external" href="http://pgcn.huangz.me/part2/chp9/section15.html">http://pgcn.huangz.me/part2/chp9/section15.html</a></p></li>
 </ul>
 <div class="line-block">
 <div class="line">huangz</div>
@@ -143,14 +145,21 @@ huangz 决定对 <a class="reference external" href="http://www.postgresql.org/d
   <h4>Next topic</h4>
   <p class="topless"><a href="notes-about-translation-3.html"
                         title="next chapter">翻译笔记之三：消除不恰当的括号</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/diary/2014/postgresql-json-types.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
           
@@ -181,7 +190,7 @@ huangz 决定对 <a class="reference external" href="http://www.postgresql.org/d
     </div>
     <div class="footer">
         &copy; Copyright 2017, huangz.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>

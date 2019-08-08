@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,6 +24,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="top" title="huangz/blog" href="../index.html" />
@@ -73,7 +75,7 @@
 <div class="section" id="hash">
 <h2>Hash 类型<a class="headerlink" href="#hash" title="Permalink to this headline">¶</a></h2>
 <p>Hash 是实现散列函数所需的公共接口。</p>
-<div class="highlight-go"><div class="highlight"><pre><span></span><span class="kd">type</span> <span class="nx">Hash</span> <span class="kd">interface</span> <span class="p">{</span>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kd">type</span> <span class="nx">Hash</span> <span class="kd">interface</span> <span class="p">{</span>
     <span class="c1">// 通过 Write 方法将更多数据添加到正在运行的散列当中。</span>
     <span class="c1">// 这个方法不会返回错误。</span>
     <span class="c1">// Write 方法通过嵌入 io.Writer 接口来实现。</span>
@@ -101,7 +103,7 @@
 <div class="section" id="hash32">
 <h2>Hash32 类型<a class="headerlink" href="#hash32" title="Permalink to this headline">¶</a></h2>
 <p>Hash32 是实现 32 位散列函数所需的公共接口。</p>
-<div class="highlight-go"><div class="highlight"><pre><span></span><span class="kd">type</span> <span class="nx">Hash32</span> <span class="kd">interface</span> <span class="p">{</span>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kd">type</span> <span class="nx">Hash32</span> <span class="kd">interface</span> <span class="p">{</span>
     <span class="nx">Hash</span>
     <span class="nx">Sum32</span><span class="p">()</span> <span class="kt">uint32</span>
 <span class="p">}</span>
@@ -111,7 +113,7 @@
 <div class="section" id="hash64">
 <h2>Hash64 类型<a class="headerlink" href="#hash64" title="Permalink to this headline">¶</a></h2>
 <p>Hash64 是实现 64 位散列函数所需的公共接口。</p>
-<div class="highlight-go"><div class="highlight"><pre><span></span><span class="kd">type</span> <span class="nx">Hash64</span> <span class="kd">interface</span> <span class="p">{</span>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kd">type</span> <span class="nx">Hash64</span> <span class="kd">interface</span> <span class="p">{</span>
     <span class="nx">Hash</span>
     <span class="nx">Sum64</span><span class="p">()</span> <span class="kt">uint64</span>
 <span class="p">}</span>
@@ -165,7 +167,7 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Go 标准库文档翻译：hash 包</a><ul>
 <li><a class="reference internal" href="#id1">概述</a></li>
@@ -183,14 +185,21 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="go-stdlib-path.html"
                         title="next chapter">Go 标准库文档翻译：path 包</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/2017/go-stdlib-hash.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
           
@@ -221,7 +230,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2017, huangz.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.6.3.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>
