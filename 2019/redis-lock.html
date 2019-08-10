@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>使用 Redis 实现锁 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="huangz/blog" href="../index.html" />
+    <link rel="up" title="2019" href="index.html" />
+    <link rel="next" title="Redis 数据库取样程序" href="redis-database-sampling.html" />
+    <link rel="prev" title="2019" href="index.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="redis-database-sampling.html" title="Redis 数据库取样程序"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="2019"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2019</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="redis">
+<h1>使用 Redis 实现锁<a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>本文摘录自即将出版的《Redis使用手册》，
+详情请见： <a class="reference external" href="http://RedisGuide.com">RedisGuide.com</a> 。</p>
+</div>
+<p>锁是一种同步机制，
+它可以保证一项资源在任何时候只能被一个进程使用，
+如果有其他进程想要使用相同的资源，
+那么它们就必须等待，
+直到正在使用资源的进程放弃使用权为止。</p>
+<p>一个锁实现通常会有获取（acquire）和释放（release）这两种操作：</p>
+<ul class="simple">
+<li><p>获取操作用于取得资源的独占使用权。
+在任何时候，
+最多只能有一个进程取得锁，
+我们把成功取得锁的这个进程称之为锁的持有者。
+在锁已经被持有的情况下，
+所有尝试再次获取锁的操作都会失败。</p></li>
+<li><p>释放操作用于放弃资源的独占使用权，
+一般由锁的持有者调用。
+在锁被释放之后，
+其他进程就可以再次尝试获取这个锁了。</p></li>
+</ul>
+<p>代码清单 2-2 展示了一个使用字符串键实现的锁程序，
+这个程序会根据给定的字符串键是否有值来判断锁是否已经被获取，
+而针对锁的获取操作和释放操作则是分别通过设置字符串键和删除字符串键来完成的。</p>
+<hr class="docutils" />
+<p>代码清单 2-2 使用字符串键实现的锁程序：<code class="docutils literal notranslate"><span class="pre">/string/lock.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VALUE_OF_LOCK</span> <span class="o">=</span> <span class="s2">&quot;locking&quot;</span>
+
+<span class="k">class</span> <span class="nc">Lock</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+
+    <span class="k">def</span> <span class="nf">acquire</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        尝试获取锁。</span>
+<span class="sd">        成功时返回 True ，失败时返回 False 。</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">VALUE_OF_LOCK</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">release</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        尝试释放锁。</span>
+<span class="sd">        成功时返回 True ，失败时返回 False 。</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>获取操作 <code class="docutils literal notranslate"><span class="pre">acquire()</span></code> 方法是通过执行带有 <code class="docutils literal notranslate"><span class="pre">NX</span></code> 选项的 <code class="docutils literal notranslate"><span class="pre">SET</span></code> 命令来实现的：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">VALUE_OF_LOCK</span><span class="p">,</span> <span class="n">nx</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">NX</span></code> 选项的效果确保了代表锁的字符串键只会在没有值的情况下被设置：</p>
+<ul class="simple">
+<li><p>如果给定的字符串键没有值，
+那么说明锁尚未被获取，
+<code class="docutils literal notranslate"><span class="pre">SET</span></code> 命令将执行设置操作，
+并将 <code class="docutils literal notranslate"><span class="pre">result</span></code> 变量的值设置为 <code class="docutils literal notranslate"><span class="pre">True</span></code> ；</p></li>
+<li><p>与此相反，
+如果给定的字符串键已经有值了，
+那么说明锁已经被获取，
+<code class="docutils literal notranslate"><span class="pre">SET</span></code> 命令将放弃执行设置操作，
+并将 <code class="docutils literal notranslate"><span class="pre">result</span></code> 变量的值将为 <code class="docutils literal notranslate"><span class="pre">None</span></code> ；</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">acquire()</span></code> 方法最后会通过检查 <code class="docutils literal notranslate"><span class="pre">result</span></code> 变量的值是否为 <code class="docutils literal notranslate"><span class="pre">True</span></code> 来判断自己是否成功取得了锁。</p>
+<p>释放操作 <code class="docutils literal notranslate"><span class="pre">release()</span></code> 方法使用了本书之前没有介绍过的 <code class="docutils literal notranslate"><span class="pre">DEL</span></code> 命令，
+这个命令接受一个或多个数据库键作为参数，
+尝试删除这些键以及与之相关联的值，
+并返回被成功删除的键数量作为结果：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DEL</span> <span class="n">key</span> <span class="p">[</span><span class="n">key</span> <span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>因为 Redis 的 <code class="docutils literal notranslate"><span class="pre">DEL</span></code> 命令和 Python 的 <code class="docutils literal notranslate"><span class="pre">del</span></code> 关键字重名，
+所以在 redis-py 客户端中，
+执行 <code class="docutils literal notranslate"><span class="pre">DEL</span></code> 命令实际上是通过调用 <code class="docutils literal notranslate"><span class="pre">delete()</span></code> 方法来完成的：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">release()</span></code> 方法通过检查 <code class="docutils literal notranslate"><span class="pre">delete()</span></code> 方法的返回值是否为 <code class="docutils literal notranslate"><span class="pre">1</span></code> 来判断删除操作是否执行成功：
+如果用户尝试对一个尚未被获取的锁执行 <code class="docutils literal notranslate"><span class="pre">release()</span></code> 方法，
+那么方法将返回 <code class="docutils literal notranslate"><span class="pre">false</span></code> ，
+表示没有锁被释放。</p>
+<p>在使用 <code class="docutils literal notranslate"><span class="pre">DEL</span></code> 命令删除代表锁的字符串键之后，
+字符串键将重新回到没有值的状态，
+这时用户就可以再次调用 <code class="docutils literal notranslate"><span class="pre">acquire()</span></code> 方法去获取锁了。</p>
+<p>以下代码演示了这个锁的使用方法：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">redis</span> <span class="k">import</span> <span class="n">Redis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lock</span> <span class="k">import</span> <span class="n">Lock</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">Redis</span><span class="p">(</span><span class="n">decode_responses</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;test-lock&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>  <span class="c1"># 成功获取锁</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>  <span class="c1"># 锁已被获取，无法再次获取</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>  <span class="c1"># 释放锁</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>  <span class="c1"># 锁释放之后可以再次被获取</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>虽然代码清单 2-2 中展示的锁实现了基本的获取和释放功能，
+但它并不完美：</p>
+<ol class="arabic simple">
+<li><p>因为这个锁的释放操作无法验证进程的身份，
+所以无论执行释放操作的进程是否就是锁的持有者，
+锁都会被释放。
+如果锁被持有者以外的其他进程释放了的话，
+那么系统中可能就会同时出现多个锁，
+导致锁的唯一性被破坏。</p></li>
+<li><p>这个锁的获取操作不能设置最大加锁时间，
+它无法让锁在超过给定的时限之后自动释放。
+因此，
+如果持有锁的进程因为故障或者编程错误而没有在退出之前主动释放锁，
+那么锁就会一直处于已被获取的状态，
+导致其他进程永远无法取得锁。</p></li>
+</ol>
+<p>本书后续将继续改进这个锁实现，
+使得它可以解决这两个问题。</p>
+</div>
+
+
+
+            <div class="section" id="copyright_info">
+
+    <h2>
+        版权声明
+        <a class="headerlink" href="#copyright_info" title="永久链接至标题">¶</a>
+    </h2>
+
+    <p>本博客中的所有文章均为作者原创，受著作权法律保护，任何人不得在未经授权的情况下转载本博客的文章或将其用于商业活动，违者必究。</p>
+
+</div>
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2019</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="redis-database-sampling.html"
+                        title="next chapter">Redis 数据库取样程序</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/2019/redis-lock.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/">小象学院（ChinaHadoop.cn）</a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2017, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>
