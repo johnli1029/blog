@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2019 &mdash; huangz/blog</title>
+    <title>读者来信：现在读《Redis设计与实现》和《Redis实战》还有用吗？ &mdash; huangz/blog</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -28,8 +28,9 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="top" title="huangz/blog" href="../index.html" />
-    <link rel="next" title="读者来信：现在读《Redis设计与实现》和《Redis实战》还有用吗？" href="letter-20190811.html" />
-    <link rel="prev" title="huangz/blog" href="../index.html" />
+    <link rel="up" title="2019" href="index.html" />
+    <link rel="next" title="使用 Redis 实现锁" href="redis-lock.html" />
+    <link rel="prev" title="2019" href="index.html" />
 <!--[if lte IE 6]>
 <link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->
@@ -47,12 +48,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="letter-20190811.html" title="读者来信：现在读《Redis设计与实现》和《Redis实战》还有用吗？"
+          <a href="redis-lock.html" title="使用 Redis 实现锁"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../index.html" title="huangz/blog"
+          <a href="index.html" title="2019"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">huangz/blog</a> &raquo;</li> 
+        <li><a href="../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2019</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -61,18 +63,45 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="id1">
-<h1>2019<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="letter-20190811.html">读者来信：现在读《Redis设计与实现》和《Redis实战》还有用吗？</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="letter-20190811.html#id1">来信</a></li>
-<li class="toctree-l2"><a class="reference internal" href="letter-20190811.html#id2">回复</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="redis-lock.html">使用 Redis 实现锁</a></li>
-<li class="toctree-l1"><a class="reference internal" href="redis-database-sampling.html">Redis 数据库取样程序</a></li>
-</ul>
+  <div class="section" id="redisredis">
+<h1>读者来信：现在读《Redis设计与实现》和《Redis实战》还有用吗？<a class="headerlink" href="#redisredis" title="Permalink to this headline">¶</a></h1>
+<p>最近接到了读者 Minor 的来信，
+询问我时至今日阅读《Redis设计与实现》（2014年出版）和《Redis实战》（2015年出版）是否合适，
+以及学习 Redis 应该注意的问题等等。
+考虑到最近有不少朋友也向我咨询过类似的问题，
+故公开这封来信以及回复，
+希望能给其他有类似问题的朋友以帮助。</p>
+<div class="section" id="id1">
+<h2>来信<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>你好，健宏：
+首先感谢你的对redis实战的翻译和撰写设计与实现，以及还未出版的使用手册。
+自我介绍一下，我是一个Oracle DBA，从业七八年，我们同年出生。做关系型数据库久了，想学一下NoSQL的库，首当其冲选择了Redis
+而显然最容易搜到的是你的书。
+我读了实战这本书的前半段，后半段偏应用和开发的对我来说有些吃力，现在正在阅读你的设计与实现。</p>
+<p>有个疑问想向您请教，我看书中说的是3.0版本，现在版本是505了应该，您的书是否依然坚挺？或者说
+我需要在学习您书的过程中，注意些什么？</p>
+<p>此外，还请能多点拨一下在redis学习中最应该注意和关注的是什么。</p>
+<p>非常感谢。</p>
+</div>
+<div class="section" id="id2">
+<h2>回复<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>Minor 你好！</p>
+<p>很高兴收到你的来信，《Redis实战》和《Redis设计与实现》分别基于 Redis 2.6 和 3.0 编写 ，现在看来的确有些落后了，
+但得益于 Redis 绝佳的向后兼容性，书中大多数内容即使在最新版 Redis 上也仍然是有效的。
+不过考虑到上述两本书并未覆盖 Redis 4 和 5 的新功能，所以建议你在阅读完这两本书之后，再补充阅读一些最新的 Redis 资料和书本会比较好。</p>
+<p>关于你提到学习 Redis 需要注意的地方，我觉得学习如何使用 Redis 并不难，它比你正在使用的 Oracle 或者其他传统关系式数据库都要简单得多，
+但由于 Redis 还是一个高速发展的开源软件，它在设计和细节上还有很多不成熟和不完美的地方，所以如果在使用 Redis 的基础上，
+还能够深入地了解 Redis 的内部构造，那么对于理解和使用 Redis 就会有事半功倍的效果。</p>
+<p>不过我觉得这一点你已经做得不错了，毕竟开始阅读《Redis设计与实现》就已经开了一个好头。
+当别人提起列表（List）的时候，他们可能想到的只是 LPUSH 、LRANGE 等命令本身，
+但你想到的却是 LPUSH 命令如何将元素推入到列表底层的链表里面，
+而 LRANGE 命令又是如何通过遍历列表底层的链表来获取每个列表元素的，这难道不是很酷吗？！
+：）</p>
+<p>最后祝你阅读快乐，开卷有益！</p>
+<div class="line-block">
+<div class="line">黄健宏</div>
+<div class="line">2019.8.11</div>
+</div>
 </div>
 </div>
 
@@ -117,16 +146,25 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">读者来信：现在读《Redis设计与实现》和《Redis实战》还有用吗？</a><ul>
+<li><a class="reference internal" href="#id1">来信</a></li>
+<li><a class="reference internal" href="#id2">回复</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../index.html"
-                        title="previous chapter">huangz/blog</a></p>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2019</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="letter-20190811.html"
-                        title="next chapter">读者来信：现在读《Redis设计与实现》和《Redis实战》还有用吗？</a></p>
+  <p class="topless"><a href="redis-lock.html"
+                        title="next chapter">使用 Redis 实现锁</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/2019/index.rst.txt"
+      <li><a href="../_sources/2019/letter-20190811.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
