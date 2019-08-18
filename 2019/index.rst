@@ -4,7 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
-   paging
+   compare-string-and-hash 
    redis-login-session
    redis-shorty-url
    letter-20190811
