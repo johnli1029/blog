@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>对比 Redis 的字符串和散列 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="huangz/blog" href="../index.html" />
+    <link rel="up" title="2019" href="index.html" />
+    <link rel="next" title="使用 Redis 实现登录会话" href="redis-login-session.html" />
+    <link rel="prev" title="2019" href="index.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="redis-login-session.html" title="使用 Redis 实现登录会话"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="2019"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2019</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="redis">
+<h1>对比 Redis 的字符串和散列<a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>本文摘录自即将出版的《Redis使用手册》，
+详情请见： <a class="reference external" href="http://RedisGuide.com">RedisGuide.com</a> 。</p>
+</div>
+<p>本章从开头到现在，
+陆续介绍了 HSET 、 HSETNX 、 HGET 、 HINCRBY 和 HINCRBYFLOAT 等多个散列命令，
+如果读者对上一章介绍过的字符串命令还有印象的话，
+那么应该会记得，
+字符串也有类似的 SET 、 SETNX 、 GET 、 INCRBY 和 INCRBYFLOAT 命令。
+这种相似并不是巧合，
+正如表 3-1 所示，
+散列的确拥有很多与字符串命令功能相似的命令。</p>
+<hr class="docutils" />
+<p>表 3-1 字符串命令与类似的散列命令</p>
+<table class="docutils align-center">
+<colgroup>
+<col style="width: 48%" />
+<col style="width: 52%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字符串</p></th>
+<th class="head"><p>散列</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SET</span></code> —— 为一个字符串键设置值。</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">HSET</span></code> —— 为散列的给定字段设置值。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SETNX</span></code> —— 仅在字符串键不存在的情况下为它设置值。</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">HSETNX</span></code> —— 仅在散列不包含指定字段的情况下，为它设置值。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GET</span></code> —— 获取字符串键的值。</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">HGET</span></code> —— 从散列里面获取给定字段的值。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">STRLEN</span></code> —— 获取字符串值的字节长度。</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">HSTRLEN</span></code> —— 获取给定字段值的字节长度。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">INCRBY</span></code> —— 对字符串键储存的数字值执行整数加法操作。</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">HINCRBY</span></code> —— 对字段储存的数字值执行整数加法操作。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">INCRBYFLOAT</span></code> —— 对字符串键储存的数字值执行浮点数加法操作。</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">HINCRBYFLOAT</span></code> —— 对字段储存的数字值执行浮点数加法操作。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MSET</span></code> —— 一次为多个字符串键设置值。</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">HMSET</span></code> —— 一次为散列的多个字段设置值。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MGET</span></code> —— 一次获取多个字符串键的值。</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">HMGET</span></code> —— 一次获取散列中多个字段的值。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">EXISTS</span></code> —— 检查给定的键是否存在于数据库当中，
+这个命令可以用于包括字符串键在内的所有数据库键，
+本书稍后将在《数据库》一章对这个命令进行详细的介绍。</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">HEXISTS</span></code> —— 检查给定字段是否存在于散列当中。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DEL</span></code> —— 从数据库里面删除指定的键，
+这个命令可以用于包括字符串键在内的所有数据库键，
+本书稍后将在《数据库》一章对这个命令进行详细的介绍。</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">HDEL</span></code> —— 从散列中删除给定字段，以及它的值。</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<p>对于表中列出的字符串命令和散列命令来说，
+它们之间的最大区别就是前者处理的是字符串键，
+而后者处理的则是散列键，
+除此之外，
+这些命令要做的事情几乎都是相同的。</p>
+<p>Redis 之所以会选择同时提供字符串键和散列键这两种数据结构，
+原因在于它们虽然在操作上非常相似，
+但是各自却又拥有不同的优点，
+这使得它们在某些场合无法被对方替代。</p>
+<p>表 3-2 从资源占用、支持的操作以及过期时间三个方面对比了字符串键和散列键的优缺点。</p>
+<hr class="docutils" />
+<p>表 3-2 对比字符串键和散列键</p>
+<table class="docutils align-center">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>比较的范畴</p></th>
+<th class="head"><p>结果</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>资源占用</p></td>
+<td><p>字符串键在数量较多的情况下，将占用大量的内存和 CPU 时间。
+与此相反，将多个数据项储存到同一个散列里面可以有效地减少内存和 CPU 消耗。</p></td>
+</tr>
+<tr class="row-odd"><td><p>支持的操作</p></td>
+<td><p>散列键支持的所有命令，几乎都有相应的字符串键版本，但字符串键支持的 <code class="docutils literal notranslate"><span class="pre">SETRANGE</span></code> 、 <code class="docutils literal notranslate"><span class="pre">GETRANGE</span></code> 等操作散列键并不具备。</p></td>
+</tr>
+<tr class="row-even"><td><p>过期时间</p></td>
+<td><p>字符串键可以为每个键单独设置过期时间，独立删除某个数据项；而散列一旦到期，它包含的所有字段和值都会被删除。</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<p>既然字符串键和散列键各有优点，
+那么我们在构建应用程序的时候，
+什么时候应该使用字符串键，
+而什么时候又应该使用散列键呢？
+对于这个问题，
+以下总结了一些选择的条件和方法：</p>
+<ol class="arabic simple">
+<li><p>如果程序需要为每个数据项单独设置过期时间，
+那么使用字符串键。</p></li>
+<li><p>如果程序需要对数据项执行诸如 <code class="docutils literal notranslate"><span class="pre">SETRANGE</span></code> 、 <code class="docutils literal notranslate"><span class="pre">GETRANGE</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">APPEND</span></code> 等操作，
+那么优先考虑使用字符串键。
+当然，
+用户也可以选择把数据储存在散列里面，
+然后将类似 <code class="docutils literal notranslate"><span class="pre">SETRANGE</span></code> 、 <code class="docutils literal notranslate"><span class="pre">GETRANGE</span></code> 这样的操作交给客户端执行。</p></li>
+<li><p>如果程序需要储存的数据项比较多，
+并且你希望尽可能地减少储存数据所需的内存，
+那么就应该优先考虑使用散列键。</p></li>
+<li><p>如果多个数据项在逻辑上属于同一组或者同一类，
+那么应该优先考虑使用散列键。</p></li>
+</ol>
+</div>
+
+
+
+            <div class="section" id="copyright_info">
+
+    <h2>
+        版权声明
+        <a class="headerlink" href="#copyright_info" title="永久链接至标题">¶</a>
+    </h2>
+
+    <p>本博客中的所有文章均为作者原创，受著作权法律保护，任何人不得在未经授权的情况下转载本博客的文章或将其用于商业活动，违者必究。</p>
+
+</div>
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2019</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="redis-login-session.html"
+                        title="next chapter">使用 Redis 实现登录会话</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/2019/compare-string-and-hash.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/">小象学院（ChinaHadoop.cn）</a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2017, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>
