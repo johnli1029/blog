@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   redis-paging
    compare-string-and-hash 
    redis-login-session
    redis-shorty-url
