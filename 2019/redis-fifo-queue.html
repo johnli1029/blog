@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>使用 Redis 构建先进先出队列解决秒杀问题 &mdash; huangz/blog</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'present',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="huangz/blog" href="../index.html" />
+    <link rel="up" title="2019" href="index.html" />
+    <link rel="next" title="使用 Redis 列表构建分页程序" href="redis-paging.html" />
+    <link rel="prev" title="2019" href="index.html" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+
+
+
+
+</head>
+<body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="redis-paging.html" title="使用 Redis 列表构建分页程序"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="2019"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2019</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="redis">
+<h1>使用 Redis 构建先进先出队列解决秒杀问题<a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>本文摘录自即将出版的《Redis使用手册》，
+详情请见： <a class="reference external" href="http://RedisGuide.com">RedisGuide.com</a> 。</p>
+</div>
+<p>先进先出队列（first in first out queue）是一种非常常见的数据结构，
+一般都会包含入队（enqueue）和出队（dequeue）这两个操作，
+其中入队操作会将一个元素放入到队列中，
+而出队操作则会从队列中移除最先被入队的元素。</p>
+<p>先进先出队列的应用非常广泛，
+它见诸于各式各样的应用程序当中。
+举个例子，
+很多电商网站都会在节日时推出一些秒杀活动，
+这些活动会放出数量有限的商品供用户抢购，
+秒杀系统的一个特点就是在短时间内会有大量用户同时进行相同的购买操作，
+如果使用事务或者锁去实现秒杀程序，
+那么就会因为锁和事务的重试特性而导致性能低下，
+并且由于重试的存在，
+成功购买商品的用户可能并不是最早执行购买操作的用户，
+因此这种秒杀系统实际上是不公平的。</p>
+<p>解决上述问题的其中一个方法就是把用户的购买操作都放入到先进先出队列里面，
+然后以队列方式处理用户的购买操作，
+这样程序就可以在不使用锁或者事务的情况下实现秒杀系统，
+并且得益于先进先出队列的特性，
+这种秒杀系统可以按照用户执行购买操作的顺序来判断哪些用户可以成功执行购买操作，
+因此它是公平的。</p>
+<p>代码清单 4-1 展示了一个使用 Redis 列表实现先进先出队列的方法。</p>
+<hr class="docutils" />
+<p>代码清单 4-1 使用列表实现的先进先出队列：<code class="docutils literal notranslate"><span class="pre">/list/fifo_queue.py</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FIFOqueue</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+
+    <span class="k">def</span> <span class="nf">enqueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        将给定元素放入队列，然后返回队列当前包含的元素数量作为结果。</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">rpush</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">dequeue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        移除并返回队列目前入队时间最长的元素。</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">lpop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>作为例子，
+我们可以通过执行以下代码，
+载入并创建一个先进先出队列：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">redis</span> <span class="k">import</span> <span class="n">Redis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">fifo_queue</span> <span class="k">import</span> <span class="n">FIFOqueue</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">Redis</span><span class="p">(</span><span class="n">decode_responses</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">FIFOqueue</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="s2">&quot;buy-request&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>然后通过执行以下代码，
+将三个用户的购买请求依次放入到队列里面：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="s2">&quot;peter-buy-milk&quot;</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="s2">&quot;john-buy-rice&quot;</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="s2">&quot;david-buy-keyboard&quot;</span><span class="p">)</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<p>最后，
+按照先进先出顺序，
+依次从队列中弹出相应的购买请求：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">dequeue</span><span class="p">()</span>
+<span class="go">&#39;peter-buy-milk&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">dequeue</span><span class="p">()</span>
+<span class="go">&#39;john-buy-rice&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">dequeue</span><span class="p">()</span>
+<span class="go">&#39;david-buy-keyboard&#39;</span>
+</pre></div>
+</div>
+<p>可以看到，
+队列弹出元素的顺序跟元素入队时的顺序是完全相同的：
+最先是 <code class="docutils literal notranslate"><span class="pre">&quot;peter-buy-milk&quot;</span></code> 元素，
+接着是 <code class="docutils literal notranslate"><span class="pre">&quot;john-buy-rice&quot;</span></code> 元素，
+最后是 <code class="docutils literal notranslate"><span class="pre">&quot;david-buy-keyboard&quot;</span></code> 元素。</p>
+</div>
+
+
+
+            <div class="section" id="copyright_info">
+
+    <h2>
+        版权声明
+        <a class="headerlink" href="#copyright_info" title="永久链接至标题">¶</a>
+    </h2>
+
+    <p>本博客中的所有文章均为作者原创，受著作权法律保护，任何人不得在未经授权的情况下转载本博客的文章或将其用于商业活动，违者必究。</p>
+
+</div>
+            <div class="section" id="discuss">
+
+    <h2>
+        留言
+        <a class="headerlink" href="#discuss" title="永久链接至标题">¶</a>
+    </h2>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'huangzblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2019</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="redis-paging.html"
+                        title="next chapter">使用 Redis 列表构建分页程序</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/2019/redis-fifo-queue.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+          
+          <div id="friends">
+
+    <h3>Friends</h3>
+
+    <ul>
+        <li>
+            <a href="http://www.hoterran.info/">运维和开发 —— hoterran</a>
+        </li>
+        <li>
+            <a href="http://lisp.es/">台北小碼農 —— juanito</a>
+        </li>
+        <li>
+            <a href="http://udonmai.com/">麥町 · 乌冬 —— udonmai</a>
+        </li>
+        <li>
+            <a href="http://www.chinahadoop.cn/">小象学院（ChinaHadoop.cn）</a>
+        </li>
+    </ul>
+
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2017, huangz.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>
