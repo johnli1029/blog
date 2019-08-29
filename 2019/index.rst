@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   redis-voting
    redis-fifo-queue
    redis-paging
    compare-string-and-hash 
