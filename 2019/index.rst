@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   redis-sns-relationship
    redis-voting
    redis-fifo-queue
    redis-paging
