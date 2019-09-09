@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   redis-autocomplete
    redis-sns-relationship
    redis-voting
    redis-fifo-queue
