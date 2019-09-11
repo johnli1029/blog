@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   redisguide-preface
    redis-autocomplete
    redis-sns-relationship
    redis-voting
