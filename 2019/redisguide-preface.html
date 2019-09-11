@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2019 &mdash; huangz/blog</title>
+    <title>《Redis使用手册》前言 &mdash; huangz/blog</title>
     
     <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -28,8 +28,9 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="top" title="huangz/blog" href="../index.html" />
-    <link rel="next" title="《Redis使用手册》前言" href="redisguide-preface.html" />
-    <link rel="prev" title="huangz/blog" href="../index.html" />
+    <link rel="up" title="2019" href="index.html" />
+    <link rel="next" title="使用 Redis 实现自动补全" href="redis-autocomplete.html" />
+    <link rel="prev" title="2019" href="index.html" />
 <!--[if lte IE 6]>
 <link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
 <![endif]-->
@@ -47,12 +48,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="redisguide-preface.html" title="《Redis使用手册》前言"
+          <a href="redis-autocomplete.html" title="使用 Redis 实现自动补全"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../index.html" title="huangz/blog"
+          <a href="index.html" title="2019"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">huangz/blog</a> &raquo;</li> 
+        <li><a href="../index.html">huangz/blog</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2019</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -61,27 +63,67 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="id1">
-<h1>2019<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="redisguide-preface.html">《Redis使用手册》前言</a></li>
-<li class="toctree-l1"><a class="reference internal" href="redis-autocomplete.html">使用 Redis 实现自动补全</a></li>
-<li class="toctree-l1"><a class="reference internal" href="redis-sns-relationship.html">使用 Redis 储存社交关系</a></li>
-<li class="toctree-l1"><a class="reference internal" href="redis-voting.html">使用 Redis 实现投票功能</a></li>
-<li class="toctree-l1"><a class="reference internal" href="redis-fifo-queue.html">使用 Redis 构建先进先出队列解决秒杀问题</a></li>
-<li class="toctree-l1"><a class="reference internal" href="redis-paging.html">使用 Redis 列表构建分页程序</a></li>
-<li class="toctree-l1"><a class="reference internal" href="compare-string-and-hash.html">对比 Redis 的字符串和散列</a></li>
-<li class="toctree-l1"><a class="reference internal" href="redis-login-session.html">使用 Redis 实现登录会话</a></li>
-<li class="toctree-l1"><a class="reference internal" href="redis-shorty-url.html">使用 Redis 构建短网址生成程序</a></li>
-<li class="toctree-l1"><a class="reference internal" href="letter-20190811.html">读者来信：现在读《Redis设计与实现》和《Redis实战》还有用吗？</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="letter-20190811.html#id1">来信</a></li>
-<li class="toctree-l2"><a class="reference internal" href="letter-20190811.html#id2">回复</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="redis-lock.html">使用 Redis 实现锁</a></li>
-<li class="toctree-l1"><a class="reference internal" href="redis-database-sampling.html">Redis 数据库取样程序</a></li>
-</ul>
+  <div class="section" id="redis">
+<h1>《Redis使用手册》前言<a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>本文摘录自即将出版的《Redis使用手册》，
+详情请见： <a class="reference external" href="http://RedisGuide.com">RedisGuide.com</a> 。</p>
+</div>
+<p>时光荏苒，
+距离我的第一本书《Redis设计与实现》出版已经过去了整整五年。
+在这五年间，
+Redis 从一个不为人熟知、只有少量应用的崭新数据库，
+逐渐变成了内存数据库领域的事实标准。</p>
+<p>五年之前，
+当人们提到 Redis 的时候，
+语气通常都充满了怀疑：
+“Redis 我还是第一次听说，它好用吗？”
+“Redis 比起 Memcached 有什么优势？”
+“用 Redis 储存数据安全吗，不会丢数据吧？！”。
+然而时至今日，
+经过大量的实践应用，
+Redis 简洁高效、安全稳定的印象已经深入人心。
+无论是国内还是国外，
+从财富五百强到小型初创公司都在使用 Redis ，
+很多云服务提供商还以 Redis 为基础构建了相应的缓存服务、消息队列服务以及内存存储服务 ——
+当你使用这些服务时，
+你实际上就是在使用 Redis 。</p>
+<p>除了变得越来越受欢迎之外，
+Redis 在过去数年的另一个变化就是更新速度越来越快，
+功能也变得越来越多、越来越强大：
+比如说，
+Redis 的数据结构数量已经从过去的五种增加到了九种，
+RDB-AOF 混合持久化模式的引入使得用户不必再陷入“鱼和熊掌不可兼得”的难题中，
+而集群功能和模块机制的引入则让 Redis 在性能和功能上拥有了近乎无限的扩展能力。</p>
+<p>综上所述，
+我们可以说现在的 Redis 跟五年前比起来已经完全不一样了，
+而如何向读者讲述新版 Redis 方方面面的变化，
+则是每一本 Redis 书都必须回答的问题。
+本书以服务 Redis 初学者和使用者为目标，
+介绍了 Redis 日常使用中最常用到的部分，
+并以“命令描述+代码示例”的模式详细列举了各个 Redis 命令的用法和用例。
+我相信无论是刚开始学习 Redis 的读者，
+还是每天都要使用 Redis 的读者，
+在阅读本书的时候都会有所收获。</p>
+<p>虽然本书在写作的过程中已经思虑再三并且数易其稿，
+但百密一疏，
+书中难免还是会有错误或者遗漏的地方。
+如果读者朋友在阅读的过程中发现任何错误或是有任何疑问或建议，
+都可以通过邮箱 <a class="reference external" href="mailto:huangz1990&#37;&#52;&#48;gmail&#46;com">huangz1990<span>&#64;</span>gmail<span>&#46;</span>com</a> 或者 huangz.me 中列出的联系方式来联系我。
+由于技术研究和写作工作较为繁重，
+本人可能无法每封邮件都予以回复，
+但只要有来信我就一定会阅读，
+决不食言。</p>
+<p>最后，
+感谢吴怡编辑在写作过程中给我的帮助和指导，
+感谢赵亮宇编辑为本书出版所做的努力，
+还有感谢我的家人和朋友，
+如果没有他们的关怀和支持，
+本书是不可能顺利完成。</p>
+<div class="line-block">
+<div class="line">黄健宏</div>
+<div class="line">2019 年 8 月于清远</div>
 </div>
 </div>
 
@@ -127,15 +169,15 @@
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../index.html"
-                        title="previous chapter">huangz/blog</a></p>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">2019</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="redisguide-preface.html"
-                        title="next chapter">《Redis使用手册》前言</a></p>
+  <p class="topless"><a href="redis-autocomplete.html"
+                        title="next chapter">使用 Redis 实现自动补全</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/2019/index.rst.txt"
+      <li><a href="../_sources/2019/redisguide-preface.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
