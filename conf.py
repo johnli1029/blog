@@ -164,7 +164,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'RightTrackWrongTraindoc'
+htmlhelp_basename = 'huangzblogdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -183,7 +183,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'RightTrackWrongTrain.tex', u'Right Track Wrong Train Documentation',
+  ('index', 'huangzblog.tex', u'Right Track Wrong Train Documentation',
    u'huangz', 'manual'),
 ]
 
@@ -227,8 +227,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'RightTrackWrongTrain', u'Right Track Wrong Train Documentation',
-   u'huangz', 'RightTrackWrongTrain', 'One line description of project.',
+  ('index', 'huangzblog', u'Right Track Wrong Train Documentation',
+   u'huangz', 'huangzblog', 'One line description of project.',
    'Miscellaneous'),
 ]
 
