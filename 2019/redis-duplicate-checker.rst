@@ -49,7 +49,7 @@ HyperLogLog 判断信息是否重复所需的时间也非常短；
 
 代码 7-2 使用 HyperLogLog 实现的重复信息检测程序：\ ``/hyperloglog/duplicate_checker.py``
 
-.. literalinclude:: hyperloglog/duplicate_checker.py
+.. literalinclude:: code/duplicate_checker.py
 
 ----
 
