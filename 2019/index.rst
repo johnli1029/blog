@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   redis-geo-location
    redis-duplicate-checker
    redisguide-preface
    redis-autocomplete
