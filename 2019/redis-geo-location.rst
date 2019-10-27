@@ -7,7 +7,6 @@
     详情请见： `RedisGuide.com <http://RedisGuide.com>`_ 。
 
     .. image:: image/redisguide.png
-       :scale: 20%
 
 很多社交网站都提供了与地理位置相关的功能，
 比如记录用户自己的位置、获取指定用户的位置，
