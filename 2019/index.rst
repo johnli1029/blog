@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   gpwgcn-preface
    redis-message-queue
    redis-geo-location
    redis-duplicate-checker
