@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   what-is-go
    gpwgcn-preface
    redis-message-queue
    redis-geo-location
