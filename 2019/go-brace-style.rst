@@ -6,6 +6,24 @@ Go 唯一无二的大括号放置风格
     本文摘录自即将出版的《Go语言趣学指南》，
     请访问 `gpwgcn.com <http://gpwgcn.com>`_  以获取更多相关信息。
 
+----
+
+代码清单 1-1 与 Go Playground 的初次见面： ``playground.go``
+
+.. code-block:: go
+
+    package main                            // 声明本代码所属的包
+
+    import (
+        "fmt"                               // 导入 fmt 包，使其可用（fmt是format的缩写）
+    )
+
+    func main() {                           // 声明一个名为 main 的函数
+        fmt.Println("Hello, playground")    // 在屏幕上打印出“Hello, playground”
+    }
+
+----
+
 Go 对于大括号 ``{}`` 的摆放位置非常挑剔。 在代码清单 1-1 中，左大括号
 ``{`` 跟 ``func`` 关键字位于同一行，而右大括号 ``}`` 则独占一行。 这是
 Go
