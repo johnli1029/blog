@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Go 唯一无二的大括号放置风格 &#8212; blog.huangz.me</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="什么是 Go 语言？" href="what-is-go.html" />
+    <link rel="prev" title="2019" href="index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          blog.huangz.me</a>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">全站 <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">2019</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2018/index.html">2018</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2017/index.html">2017</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../diary/2016/index.html">2016</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../diary/2015/index.html">2015</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../diary/2014/index.html">2014</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../diary/2013/index.html">2013</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../diary/2012/index.html">2012</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">分页 <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Go 唯一无二的大括号放置风格</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="index.html" title="Previous Chapter: 2019"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; 2019</span>
+    </a>
+  </li>
+  <li>
+    <a href="what-is-go.html" title="Next Chapter: 什么是 Go 语言？"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">什么是 Go 语言？ &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <div class="section" id="go">
+<h1>Go 唯一无二的大括号放置风格<a class="headerlink" href="#go" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>本文摘录自即将出版的《Go语言趣学指南》，
+请访问 <a class="reference external" href="http://gpwgcn.com">gpwgcn.com</a>  以获取更多相关信息。</p>
+</div>
+<p>Go 对于大括号 <code class="docutils literal notranslate"><span class="pre">{}</span></code> 的摆放位置非常挑剔。 在代码清单 1-1 中，左大括号
+<code class="docutils literal notranslate"><span class="pre">{</span></code> 跟 <code class="docutils literal notranslate"><span class="pre">func</span></code> 关键字位于同一行，而右大括号 <code class="docutils literal notranslate"><span class="pre">}</span></code> 则独占一行。 这是
+Go
+语言<em>唯一允许的大括号放置风格</em>，除此之外的其他风格都是不被允许的。
+作为参考，<a class="reference external" href="http://mng.bz/NdE2">mng.bz/NdE2</a>
+展示了各种不同的大括号放置风格。</p>
+<p>Go
+之所以如此严格地限制大括号的放置风格，跟这门语言刚刚诞生时发生的一些事情有关。
+在早期，使用 Go
+编写的代码总是无一幸免地带有分号，它们就像迷路的小狗一样跟在每条单独的语句后面，比如这样：</p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Hello, fire hydrant&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>到了 2009 年 12 月，一群忍者 gopher 决定把分号从语言中驱逐出去。
+好吧，这么说也不太准确。 实际上，Go
+编译器将为你代劳，自动地插入那些可爱的分号。
+这种机制运行得非常完美，但它的代价就是要求用户必须遵守上面提到的<em>唯一无二的大括号放置风格</em>。</p>
+<img alt="../_images/kongfu_gopher.jpg" class="align-right" src="../_images/kongfu_gopher.jpg" />
+<p>如果用户尝试将左大括号和 <code class="docutils literal notranslate"><span class="pre">func</span></code> 关键字放在不同的行里面，那么 Go
+将报告一个语法错误：</p>
+<hr class="docutils" />
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span>      <span class="c1">// 函数体缺失</span>
+<span class="p">{</span>                <span class="c1">// 语法错误：在 { 之前发现了意料之外的分号或新行</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>出现这个问题并不是编译器有意刁难，这纯粹是由于分号被插入到了错误的位置，导致编译器犯了点小迷糊，最终才不得不求助于你。</p>
+<blockquote>
+<div><p>{提示}</p>
+<p>在阅读本书的时候，
+亲力亲为、不厌其烦地键入书中展示的每段代码将是一个不错的主意。
+这样一来， 如果你键入了错误的代码， 那么就会看到相应的语法错误，
+但这并不是一件坏事。
+能够阅读、理解并纠正代码中的错误是一种至关重要的技能，
+而且坚持不懈也是一种宝贵的品质。</p>
+</div></blockquote>
+<blockquote>
+<div><p>{速查 1-4}</p>
+<p>用户必须将左大括号 <code class="docutils literal notranslate"><span class="pre">{</span></code> 置于何处才能避免引起语法错误？</p>
+</div></blockquote>
+<blockquote>
+<div><p>{速查 1-4 答案}</p>
+<p>左大括号必须与 <code class="docutils literal notranslate"><span class="pre">func</span></code> 关键字位于同一行而不是独占一行， 这是 Go
+语言唯一允许的大括号放置风格。</p>
+</div></blockquote>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, 黄健宏.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
