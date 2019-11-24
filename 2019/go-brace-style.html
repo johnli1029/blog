@@ -122,6 +122,20 @@
 <p>本文摘录自即将出版的《Go语言趣学指南》，
 请访问 <a class="reference external" href="http://gpwgcn.com">gpwgcn.com</a>  以获取更多相关信息。</p>
 </div>
+<hr class="docutils" />
+<p>代码清单 1-1 与 Go Playground 的初次见面： <code class="docutils literal notranslate"><span class="pre">playground.go</span></code></p>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>                            <span class="c1">// 声明本代码所属的包</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>                               <span class="c1">// 导入 fmt 包，使其可用（fmt是format的缩写）</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>                           <span class="c1">// 声明一个名为 main 的函数</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Hello, playground&quot;</span><span class="p">)</span>    <span class="c1">// 在屏幕上打印出“Hello, playground”</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<hr class="docutils" />
 <p>Go 对于大括号 <code class="docutils literal notranslate"><span class="pre">{}</span></code> 的摆放位置非常挑剔。 在代码清单 1-1 中，左大括号
 <code class="docutils literal notranslate"><span class="pre">{</span></code> 跟 <code class="docutils literal notranslate"><span class="pre">func</span></code> 关键字位于同一行，而右大括号 <code class="docutils literal notranslate"><span class="pre">}</span></code> 则独占一行。 这是
 Go
