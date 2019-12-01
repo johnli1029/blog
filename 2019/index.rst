@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   redis-online-swap-db
    go-brace-style
    what-is-go
    gpwgcn-preface
