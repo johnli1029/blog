@@ -125,18 +125,18 @@
 </div>
 <hr class="docutils" />
 <p>代码清单 2-1 你好，火星： <code class="docutils literal notranslate"><span class="pre">mars.go</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">My</span> <span class="n">weight</span> <span class="n">loss</span> <span class="n">program</span><span class="o">.</span>                              <span class="o">//</span> <span class="n">为人类读者提供的注释</span>
-<span class="n">package</span> <span class="n">main</span>
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">// My weight loss program.                              // 为人类读者提供的注释</span>
+<span class="kn">package</span> <span class="nx">main</span>
 
-<span class="kn">import</span> <span class="s2">&quot;fmt&quot;</span>
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
 
-<span class="o">//</span> <span class="n">main</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">function</span> <span class="n">where</span> <span class="n">it</span> <span class="nb">all</span> <span class="n">begins</span><span class="o">.</span>            <span class="o">//</span> <span class="n">为人类读者提供的注释</span>
-<span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">fmt</span><span class="o">.</span><span class="n">Print</span><span class="p">(</span><span class="s2">&quot;My weight on the surface of Mars is &quot;</span><span class="p">)</span>
-    <span class="n">fmt</span><span class="o">.</span><span class="n">Print</span><span class="p">(</span><span class="mf">149.0</span> <span class="o">*</span> <span class="mf">0.3783</span><span class="p">)</span>                           <span class="o">//</span> <span class="n">打印出</span> <span class="mf">56.3667</span>
-    <span class="n">fmt</span><span class="o">.</span><span class="n">Print</span><span class="p">(</span><span class="s2">&quot; lbs, and I would be &quot;</span><span class="p">)</span>
-    <span class="n">fmt</span><span class="o">.</span><span class="n">Print</span><span class="p">(</span><span class="mi">41</span> <span class="o">*</span> <span class="mi">365</span> <span class="o">/</span> <span class="mi">687</span><span class="p">)</span>                           <span class="o">//</span> <span class="n">打印出</span> <span class="mi">21</span>
-    <span class="n">fmt</span><span class="o">.</span><span class="n">Print</span><span class="p">(</span><span class="s2">&quot; years old.&quot;</span><span class="p">)</span>
+<span class="c1">// main is the function where it all begins.            // 为人类读者提供的注释</span>
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="s">&quot;My weight on the surface of Mars is &quot;</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="mf">149.0</span> <span class="o">*</span> <span class="mf">0.3783</span><span class="p">)</span>                           <span class="c1">// 打印出 56.3667</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="s">&quot; lbs, and I would be &quot;</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="mi">41</span> <span class="o">*</span> <span class="mi">365</span> <span class="o">/</span> <span class="mi">687</span><span class="p">)</span>                           <span class="c1">// 打印出 21</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="s">&quot; years old.&quot;</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -153,20 +153,20 @@
 ，它们分别用于声明常量和变量。</p>
 <hr class="docutils" />
 <p>代码清单 2-3 实现光速旅行： <code class="docutils literal notranslate"><span class="pre">lightspeed.go</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// How long does it take to get to Mars?
-package main
+<div class="highlight-go notranslate"><div class="highlight"><pre><span></span><span class="c1">// How long does it take to get to Mars?</span>
+<span class="kn">package</span> <span class="nx">main</span>
 
-import &quot;fmt&quot;
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
 
-func main() {
-    const lightSpeed = 299792 // km/s
-    var distance = 56000000   // km
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">lightSpeed</span> <span class="p">=</span> <span class="mi">299792</span> <span class="c1">// km/s</span>
+    <span class="kd">var</span> <span class="nx">distance</span> <span class="p">=</span> <span class="mi">56000000</span>   <span class="c1">// km</span>
 
-    fmt.Println(distance/lightSpeed, &quot;seconds&quot;) // 打印出“186 seconds”
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">distance</span><span class="o">/</span><span class="nx">lightSpeed</span><span class="p">,</span> <span class="s">&quot;seconds&quot;</span><span class="p">)</span> <span class="c1">// 打印出“186 seconds”</span>
 
-    distance = 401000000
-    fmt.Println(distance/lightSpeed, &quot;seconds&quot;) // 打印出“1337 seconds”
- }
+    <span class="nx">distance</span> <span class="p">=</span> <span class="mi">401000000</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">distance</span><span class="o">/</span><span class="nx">lightSpeed</span><span class="p">,</span> <span class="s">&quot;seconds&quot;</span><span class="p">)</span> <span class="c1">// 打印出“1337 seconds”</span>
+ <span class="p">}</span>
 </pre></div>
 </div>
 <hr class="docutils" />
