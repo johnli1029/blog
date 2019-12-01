@@ -13,7 +13,7 @@ Go 的变量与常量
 
 代码清单 2-1 你好，火星： ``mars.go``
 
-::
+.. code-block:: go
 
     // My weight loss program.                              // 为人类读者提供的注释
     package main
@@ -51,7 +51,7 @@ Go 的变量与常量
 
 代码清单 2-3 实现光速旅行： ``lightspeed.go``
 
-::
+.. code-block:: go
 
     // How long does it take to get to Mars?
     package main
