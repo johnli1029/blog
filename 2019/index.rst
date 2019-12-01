@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   var-and-const-in-go
    redis-online-swap-db
    go-brace-style
    what-is-go
