@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   go-variable
    go-leap-year
    var-and-const-in-go
    redis-online-swap-db
