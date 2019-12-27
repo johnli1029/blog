@@ -160,7 +160,7 @@ HyperLogLog 判断信息是否重复所需的时间也非常短；
 <p>代码 7-2 使用 HyperLogLog 实现的重复信息检测程序：<code class="docutils literal notranslate"><span class="pre">/hyperloglog/duplicate_checker.py</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DuplicateChecker</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
 
@@ -179,8 +179,8 @@ HyperLogLog 判断信息是否重复所需的时间也非常短；
 </div>
 <hr class="docutils" />
 <p>以下代码展示了如何使用 <code class="docutils literal notranslate"><span class="pre">DuplicateChecker</span></code> 程序去检测并发现重复的信息：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">redis</span> <span class="k">import</span> <span class="n">Redis</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">duplicate_checker</span> <span class="k">import</span> <span class="n">DuplicateChecker</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">redis</span> <span class="kn">import</span> <span class="n">Redis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">duplicate_checker</span> <span class="kn">import</span> <span class="n">DuplicateChecker</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">Redis</span><span class="p">(</span><span class="n">decode_responses</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">checker</span> <span class="o">=</span> <span class="n">DuplicateChecker</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;duplicate-message-checker&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">checker</span><span class="o">.</span><span class="n">is_duplicated</span><span class="p">(</span><span class="s2">&quot;hello world!&quot;</span><span class="p">)</span>  <span class="c1"># 输入一些非重复信息</span>
@@ -212,7 +212,7 @@ HyperLogLog 判断信息是否重复所需的时间也非常短；
     </p>
     <p>
         &copy; Copyright 2019, 黄健宏.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.<br/>
     </p>
   </div>
 </footer>

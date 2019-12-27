@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>读者来信：现在读《Redis设计与实现》和《Redis实战》还有用吗？ &#8212; blog.huangz.me</title>
+    <title>为 Manjaro 18.1.4 配置无线网卡 &#8212; blog.huangz.me</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -14,8 +14,8 @@
     <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="使用 Redis 实现锁" href="redis-lock.html" />
-    <link rel="prev" title="使用 Redis 构建短网址生成程序" href="redis-shorty-url.html" />
+    <link rel="next" title="Go 的变量作用域" href="go-scope.html" />
+    <link rel="prev" title="2019" href="index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -74,9 +74,9 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">读者来信：现在读《Redis设计与实现》和《Redis实战》还有用吗？</a><ul>
-<li><a class="reference internal" href="#id1">来信</a></li>
-<li><a class="reference internal" href="#id2">回复</a></li>
+<li><a class="reference internal" href="#">为 Manjaro 18.1.4 配置无线网卡</a><ul>
+<li><a class="reference internal" href="#id1">系统&amp;设备</a></li>
+<li><a class="reference internal" href="#id2">步骤</a></li>
 </ul>
 </li>
 </ul>
@@ -88,11 +88,11 @@
               
                 
   <li>
-    <a href="redis-shorty-url.html" title="Previous Chapter: 使用 Redis 构建短网址生成程序"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; 使用 Redis 构建短网址生成程序</span>
+    <a href="index.html" title="Previous Chapter: 2019"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; 2019</span>
     </a>
   </li>
   <li>
-    <a href="redis-lock.html" title="Next Chapter: 使用 Redis 实现锁"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">使用 Redis 实现锁 &raquo;</span>
+    <a href="go-scope.html" title="Next Chapter: Go 的变量作用域"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Go 的变量作用域 &raquo;</span>
     </a>
   </li>
               
@@ -119,57 +119,78 @@
   <div class="row">
     <div class="body col-md-12 content" role="main">
       
-  <div class="section" id="redisredis">
-<h1>读者来信：现在读《Redis设计与实现》和《Redis实战》还有用吗？<a class="headerlink" href="#redisredis" title="Permalink to this headline">¶</a></h1>
-<p>最近接到了读者 Minor 的来信，
-询问我时至今日阅读《Redis设计与实现》（2014年出版）和《Redis实战》（2015年出版）是否合适，
-以及学习 Redis 应该注意的问题等等。
-考虑到最近有不少朋友也向我咨询过类似的问题，
-故公开这封来信以及回复，
-希望能给其他有类似问题的朋友以帮助。</p>
+  <div class="section" id="manjaro-18-1-4">
+<h1>为 Manjaro 18.1.4 配置无线网卡<a class="headerlink" href="#manjaro-18-1-4" title="Permalink to this headline">¶</a></h1>
+<p>最近在用 Manjaro 工作，
+想找个合适的无线网卡用但是网上的中文资料并不多，
+特作此文希望能帮助到后来者。</p>
 <div class="section" id="id1">
-<h2>来信<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>你好，健宏：</p>
-<p>首先感谢你的对redis实战的翻译和撰写设计与实现，
-以及还未出版的使用手册。</p>
-<p>自我介绍一下，
-我是一个Oracle DBA，
-从业七八年，
-我们同年出生。
-做关系型数据库久了，
-想学一下NoSQL的库，
-首当其冲选择了Redis，
-而显然最容易搜到的是你的书。</p>
-<p>我读了实战这本书的前半段，
-后半段偏应用和开发的对我来说有些吃力，
-现在正在阅读你的设计与实现。
-有个疑问想向您请教，
-我看书中说的是3.0版本，
-现在版本是5.05了应该，
-您的书是否依然坚挺？
-或者说我需要在学习您书的过程中注意些什么？</p>
-<p>此外，
-还请能多点拨一下在redis学习中最应该注意和关注的是什么。</p>
-<p>非常感谢。</p>
+<h2>系统&amp;设备<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>系统版本： Manjaro 18.1.4</p>
+<p>Linux 内核版本： 5.3.15</p>
+<p>无线网卡： EDIMAX EW-7822UTC （USB 接口，5G 双频）</p>
 </div>
 <div class="section" id="id2">
-<h2>回复<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>Minor 你好！</p>
-<p>很高兴收到你的来信，《Redis实战》和《Redis设计与实现》分别基于 Redis 2.6 和 3.0 编写 ，现在看来的确有些落后了，
-但得益于 Redis 绝佳的向后兼容性，书中大多数内容即使在最新版 Redis 上也仍然是有效的。
-不过考虑到上述两本书并未覆盖 Redis 4 和 5 的新功能，所以建议你在阅读完这两本书之后，再补充阅读一些最新的 Redis 资料和书本会比较好。</p>
-<p>关于你提到学习 Redis 需要注意的地方，我觉得学习如何使用 Redis 并不难，它比你正在使用的 Oracle 或者其他传统关系式数据库都要简单得多，
-但由于 Redis 还是一个高速发展的开源软件，它在设计和细节上还有很多不成熟和不完美的地方，所以如果在使用 Redis 的基础上，
-还能够深入地了解 Redis 的内部构造，那么对于理解和使用 Redis 就会有事半功倍的效果。</p>
-<p>不过我觉得这一点你已经做得不错了，毕竟开始阅读《Redis设计与实现》就已经开了一个好头。
-当别人提起列表（List）的时候，他们可能想到的只是 LPUSH 、LRANGE 等命令本身，
-但你想到的却是 LPUSH 命令如何将元素推入到列表底层的链表里面，
-而 LRANGE 命令又是如何通过遍历列表底层的链表来获取每个列表元素的，这难道不是很酷吗？！
-：）</p>
-<p>最后祝你阅读快乐，开卷有益！</p>
+<h2>步骤<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>首先使用 <code class="docutils literal notranslate"><span class="pre">lsusb</span></code> 命令查看 USB 设备是否已经被正确识别：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ lsusb -v | more
+...
+Bus 003 Device 002: ID 7392:c822 Edimax Technology Co., Ltd AC1200 MU-MIMO USB3.0 Adapter
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.10
+  bDeviceClass            0
+  bDeviceSubClass         0
+  bDeviceProtocol         0
+  bMaxPacketSize0        64
+  idVendor           0x7392 Edimax Technology Co., Ltd
+  idProduct          0xc822
+  bcdDevice            2.10
+  iManufacturer           1
+  iProduct                2
+  iSerial                 3
+  bNumConfigurations      1
+</pre></div>
+</div>
+<p>确认了 USB 设备正确识别之后，
+接下来要做的就是安装驱动，
+但 <a class="reference external" href="https://www.edimax.com/edimax/download/download/data/edimax/global/download/for_home/wireless_adapters/wireless_adapters_ac1200_dual-band/ew-7822utc">Edimax 的官方驱动</a>最新只支持至 Linux 4.15 。
+在网上搜索了下，
+发现已经有人做好了驱动，
+包名为 <a class="reference external" href="https://aur.archlinux.org/packages/rtl8822bu-dkms-git">rtl8822bu-dkms-git</a> ，
+直接在 AUR 里面安装这个包即可。</p>
+<p>另外需要注意的是，
+<code class="docutils literal notranslate"><span class="pre">rtl8822bu-dkms-git</span></code> 包依赖 <code class="docutils literal notranslate"><span class="pre">linux-headers</span></code> 包，
+我们需要根据自己的 Linux 版本安装相应的 headers 包，
+然后再安装网卡驱动：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pacman -Ss linux-headers
+...
+    Header files and scripts for building modules for Linux44 kernel
+core/linux49-headers 4.9.206-1
+    Header files and scripts for building modules for Linux49 kernel
+core/linux53-headers 5.3.15-1 [已安装]
+    Header files and scripts for building modules for Linux53 kernel
+core/linux54-headers 5.4.2-1
+    Header files and scripts for building modules for Linux54 kernel
+...
+</pre></div>
+</div>
+<p>一切安装完毕之后，
+重启系统，
+wifi 应该就能够正常工作了。</p>
+<p>Ubuntu 上的安装方法也是类似的，
+可以参考<a class="reference external" href="https://edimax.freshdesk.com/support/solutions/articles/14000065859-how-to-install-ew-7822ulc-ew-7822utc-in-linux-running-kernel-higher-than-v4-15">这个帖子</a>。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>不知道是驱动的问题还是网卡的问题，
+在连接特定 wifi 网络的时候可能会出现无法连接的情况，
+这时删掉已知的 wifi 网络再重新尝试连接即可，
+还不行就多试几次（笑）。</p>
+</div>
 <div class="line-block">
-<div class="line">黄健宏</div>
-<div class="line">2019.8.11</div>
+<div class="line">在使用 Linux 路上匍匐前进的黄健宏</div>
+<div class="line">2019.12.28</div>
 </div>
 </div>
 </div>

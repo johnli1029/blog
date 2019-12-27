@@ -162,7 +162,7 @@
 
 <span class="k">class</span> <span class="nc">Vote</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">vote_target</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">vote_target</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vote_up_set</span> <span class="o">=</span> <span class="n">vote_up_key</span><span class="p">(</span><span class="n">vote_target</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vote_down_set</span> <span class="o">=</span> <span class="n">vote_down_key</span><span class="p">(</span><span class="n">vote_target</span><span class="p">)</span>
@@ -231,8 +231,8 @@
 </div>
 <hr class="docutils" />
 <p>以下代码展示了如何使用这个投票程序去记录一个问题的投票信息：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">redis</span> <span class="k">import</span> <span class="n">Redis</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">vote</span> <span class="k">import</span> <span class="n">Vote</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">redis</span> <span class="kn">import</span> <span class="n">Redis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">vote</span> <span class="kn">import</span> <span class="n">Vote</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">Redis</span><span class="p">(</span><span class="n">decode_responses</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">question_vote</span> <span class="o">=</span> <span class="n">Vote</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;question::10086&#39;</span><span class="p">)</span>  <span class="c1"># 记录问题的投票信息</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">question_vote</span><span class="o">.</span><span class="n">vote_up</span><span class="p">(</span><span class="s1">&#39;peter&#39;</span><span class="p">)</span>    <span class="c1"># 投支持票</span>
@@ -274,7 +274,7 @@
     </p>
     <p>
         &copy; Copyright 2019, 黄健宏.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.<br/>
     </p>
   </div>
 </footer>

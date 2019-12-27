@@ -154,8 +154,8 @@
 <p>代码清单 11-4 用于重置用户密码的脚本代码：<code class="docutils literal notranslate"><span class="pre">/database/reset_user_password.py</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
 
-<span class="kn">from</span> <span class="nn">redis</span> <span class="k">import</span> <span class="n">Redis</span>
-<span class="kn">from</span> <span class="nn">hashlib</span> <span class="k">import</span> <span class="n">sha256</span>
+<span class="kn">from</span> <span class="nn">redis</span> <span class="kn">import</span> <span class="n">Redis</span>
+<span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha256</span>
 
 <span class="k">def</span> <span class="nf">generate_new_password</span><span class="p">():</span>
     <span class="n">random_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">getrandbits</span><span class="p">(</span><span class="mi">256</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
@@ -190,7 +190,7 @@
 重置之前的用户密码是未经加密的。</p>
 <hr class="docutils" />
 <p>表 11-5 重置之前的用户数据</p>
-<table class="docutils align-center">
+<table class="docutils align-default">
 <colgroup>
 <col style="width: 17%" />
 <col style="width: 30%" />
@@ -223,7 +223,7 @@
 </table>
 <hr class="docutils" />
 <p>表 11-6 重置之后的用户数据</p>
-<table class="docutils align-center">
+<table class="docutils align-default">
 <colgroup>
 <col style="width: 13%" />
 <col style="width: 24%" />
@@ -269,7 +269,7 @@
     </p>
     <p>
         &copy; Copyright 2019, 黄健宏.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.<br/>
     </p>
   </div>
 </footer>
