@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   manjaro-wifi
    go-scope
    go-leap-year
    var-and-const-in-go
