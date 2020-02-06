@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'blog.huangz.me'
-copyright = u'2019, 黄健宏'
+copyright = u'2020, 黄健宏'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
