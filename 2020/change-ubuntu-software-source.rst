@@ -91,5 +91,5 @@ Ubuntu 的软件源配置文件为 ``/etc/apt/sources.list`` ，
         Calculating upgrade... Done
         0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
 
-| 黄健宏
+| 觉得更新系统速度一定要快的黄健宏
 | 2020.2.6

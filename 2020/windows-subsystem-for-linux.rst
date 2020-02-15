@@ -41,5 +41,5 @@ Windows 为 WSL 提供了 Ubuntu 、SUSE 、Kali 等多种 Linux 发行版可选
 所以为了正常使用，
 别忘了在安装系统之后执行 ``apt update`` 命令和 ``apt upgrade`` 命令安装和更新系统中的软件。
 
-| 黄健宏
+| 感叹 Windows 居然爱上了 Linux 的黄健宏
 | 2020.2.6
